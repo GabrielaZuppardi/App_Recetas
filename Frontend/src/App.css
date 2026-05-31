@@ -1,0 +1,332 @@
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      box-shadow: 0 6px 20px rgba(15, 23, 42, 0.05);
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 22px;
+      margin-bottom: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: #f97316;
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .brand p, .muted {
+      margin: 4px 0 0;
+      color: #64748b;
+      font-size: 12px;
+    }
+
+    .user-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #fff7ed;
+      color: #c2410c;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-weight: 700;
+      cursor: pointer;
+      background: #f97316;
+      color: #fff;
+    }
+
+    .btn.secondary {
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #0f172a, #020617);
+      color: white;
+      padding: 24px;
+      margin-bottom: 24px;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr auto;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .hero h2 { margin: 0 0 8px; font-size: 22px; }
+    .hero p { margin: 0; color: #cbd5e1; font-size: 13px; }
+
+    .progress {
+      height: 10px;
+      background: #334155;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .progress span {
+      display: block;
+      width: 75%;
+      height: 100%;
+      background: #f59e0b;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.3fr;
+      gap: 24px;
+      margin-bottom: 24px;
+      align-items: start;
+    }
+
+    .section-title {
+      padding: 18px 20px;
+      border-bottom: 1px solid #e2e8f0;
+      background: #fff7ed;
+      border-radius: 20px 20px 0 0;
+    }
+
+    .section-title h3 {
+      margin: 0;
+      font-size: 15px;
+    }
+
+    form, .content {
+      padding: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #475569;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 13px;
+      margin-bottom: 14px;
+      outline: none;
+    }
+
+    textarea { min-height: 60px; resize: vertical; }
+
+    .two-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .tag {
+      border: 1px solid #fed7aa;
+      color: #9a3412;
+      background: #fff7ed;
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .filters {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .recipes {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .recipe {
+      overflow: hidden;
+      border-radius: 16px;
+      border: 1px solid #e2e8f0;
+      background: #fff;
+    }
+
+    .recipe img {
+      width: 100%;
+      height: 135px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .recipe-body {
+      padding: 14px;
+    }
+
+    .recipe h4 {
+      margin: 0 0 8px;
+      font-size: 14px;
+    }
+
+    .recipe p {
+      margin: 0 0 12px;
+      color: #64748b;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .recipe-footer {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #64748b;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 10px;
+    }
+
+    .inspiration, .analytics {
+      padding: 22px;
+      margin-bottom: 24px;
+    }
+
+    .inspiration-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .mini-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .mini-card img {
+      width: 100%;
+      height: 95px;
+      object-fit: cover;
+    }
+
+    .mini-card div { padding: 12px; }
+    .mini-card h4 { margin: 0 0 5px; font-size: 13px; }
+    .mini-card p { margin: 0; color: #64748b; font-size: 11px; }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .stat {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 24px;
+      margin-bottom: 4px;
+    }
+
+    footer {
+      text-align: center;
+      color: #64748b;
+      font-size: 12px;
+      padding: 18px;
+    }
+
+    @media (max-width: 850px) {
+      .navbar, .hero { grid-template-columns: 1fr; flex-direction: column; align-items: flex-start; }
+      .grid { grid-template-columns: 1fr; }
+      .recipes, .inspiration-grid, .stats-grid { grid-template-columns: 1fr; }
+      .two-cols { grid-template-columns: 1fr; }
+    }
+
+    .ai-result {
+  margin: 16px 0;
+  padding: 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+.ai-result h4 {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.ai-result p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.formulario-receta {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+  
