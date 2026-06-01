@@ -4,11 +4,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import contadorReducer from "../features/contador.slice";
 import recetasReducer from "../features/recetas.slice";
+import usuariosReducer from "../features/usuarios.slice";
+import categoriasReducer from "../features/categorias.slice";
 
 export const store = configureStore({
   reducer: {
     contador: contadorReducer,
     recetas: recetasReducer,
+    usuarios: usuariosReducer,
+    categorias: categoriasReducer,
   },
 }); 
 export default store;
