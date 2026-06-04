@@ -456,6 +456,7 @@ Respondé SOLO en JSON con:
 };
 
 export const obtenerRecetasConFiltrosService = async ({
+  usuarioId,
   dificultad,
   categoria,
   tiempoMin,
@@ -465,7 +466,9 @@ export const obtenerRecetasConFiltrosService = async ({
   page = 1,
   limit = 3
 }) => {
-  const filtro = {};
+  const filtro = {usuario: usuarioId
+
+  };
 
   if (dificultad) {
     filtro.dificultad = dificultad;

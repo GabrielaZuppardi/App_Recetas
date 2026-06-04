@@ -13,13 +13,10 @@ export const categoriasSlice = createSlice({
       state.categorias = action.payload;
     },
 
-    guardarCategoria: (state, action) => {
-      // Agrega una categoría nueva
-      state.categorias.push(action.payload);
-    },
-  },
+   
+  }
 });
 
-export const { agregarCategorias, guardarCategoria } = categoriasSlice.actions;
+export const { agregarCategorias } = categoriasSlice.actions;
 
 export default categoriasSlice.reducer;
