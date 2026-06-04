@@ -6,11 +6,12 @@ const LoginForm = () => {
 
   const navigate = useNavigate();
   const idCampo = useId();
-  const refCampo = useRef();
+  const refCampo = useRef(null);
 
   const ingresar = () => {
     const correoElectronico = refCampo.current.value;
     if (correoElectronico === "a@a.com") {
+      localStorage.setItem("usuario", correoElectronico);
       navigate('/dashboard');
     } else {
     
