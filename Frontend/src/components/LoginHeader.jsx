@@ -3,8 +3,7 @@ import React from 'react'
 const LoginHeader = () => {
   return (
     <section className="header">
-      <div className="badge">MOCKUP UI</div>
-      <div className="logo">🍳</div>
+            <div className="logo">🍳</div>
       <h1>
         GourmetSaaS
         <span>Studio</span>
