@@ -7,6 +7,8 @@ import Estadisticas from '../components/dashboard/Estadisticas'
 
 
 const DashboardPage = () => {
+
+  
   return (
     <>
       <BarraNavegacion />

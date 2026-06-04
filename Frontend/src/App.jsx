@@ -4,7 +4,9 @@ import RegisterPage from './pages/RegisterPage'
 import DashboardPage from './pages/DashboardPage'
 import AdminLoginPage from './pages/AdminLoginPage'
 import AdminDashboardPage from './pages/AdminDashboardPage'
+import ContainerPage from './pages/ContainerPage'
 import NotFoundPage from './pages/NotFoundPage'
+import ProtectedRoute from './components/ProtectedRoute'
 import { Provider } from 'react-redux'
 import store from './store/store'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
@@ -14,12 +16,19 @@ function App() {
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/registro" element={<RegisterPage />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/loginAdmin" element={<AdminLoginPage />} />
-          <Route path="/dashboardAdmin" element={<AdminDashboardPage />} />
-          <Route path="*" element={<NotFoundPage />} />  
+          
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/loginAdmin" element={<AdminLoginPage />} />
+            <Route path="/registro" element={<RegisterPage />} />
+            <Route path="/"element={<ContainerPage />}>
+            
+            <Route element={<ProtectedRoute />}>
+              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/dashboardAdmin" element={<AdminDashboardPage />} />
+            </Route>
+            <Route path="*" element={<NotFoundPage />} />
+          </Route>
+
         </Routes>
       </BrowserRouter>
     </Provider>

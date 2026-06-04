@@ -397,9 +397,9 @@
 .login-card .form-group label {
   display: block;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 8px;
-  color: #334155;
+  color: #0f172a;
 }
 
 .login-card .top-row {
@@ -408,67 +408,53 @@
   align-items: center;
   margin-bottom: 8px;
 }
-
-.login-card .top-row label {
+.login-card .input-wrap .icon {
+  position: absolute;
+  left: 12px;
+  font-size: 18px;
+  color: #94a3b8;
+  pointer-events: none;
+}
+.login-card .input-wrap input {
+  width: 100%;
+  padding: 14px 12px 14px 46px;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  font-size: 15px;
+  color: #0f172a;
   margin: 0;
+  transition: border-color 0.18s, box-shadow 0.18s;
 }
 
-.login-card .forgot {
-  background: none;
-  border: none;
-  color: #f97316;
-  font-size: 12px;
-  cursor: pointer;
-  padding: 0;
-  font-weight: 600;
-  text-decoration: none;
+.login-card .input-wrap input::placeholder {
+  color: #94a3b8;
+  opacity: 1;
+}
+
+.login-card .input-wrap input:focus-visible {
+  outline: none;
+  border-color: #f97316;
+  box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.10);
 }
 
 .login-card .forgot:hover {
   text-decoration: underline;
 }
 
-.login-card .input-wrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.login-card .input-wrap .icon {
-  position: absolute;
-  left: 12px;
-  font-size: 18px;
-  pointer-events: none;
-}
-
-.login-card .input-wrap input {
-  width: 100%;
-  padding: 12px 12px 12px 42px;
-  border: 1px solid #cbd5e1;
-  border-radius: 12px;
-  font-size: 14px;
-  margin: 0;
-  transition: border-color 0.2s;
-}
-
-.login-card .input-wrap input:focus {
-  outline: none;
-  border-color: #f97316;
-  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
-}
+/* cleaned duplicate .input-wrap rules above (kept improved styles) */
 
 .login-card .submit-btn {
   width: 100%;
-  padding: 14px;
+  padding: 16px;
   background: #f97316;
   color: white;
   border: none;
-  border-radius: 12px;
-  font-size: 15px;
-  font-weight: 700;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 800;
   cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
-  margin-top: 8px;
+  transition: background 0.18s, transform 0.08s, box-shadow 0.18s;
+  margin-top: 12px;
 }
 
 .login-card .submit-btn:hover {
