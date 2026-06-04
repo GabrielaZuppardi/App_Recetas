@@ -1,10 +1,10 @@
 
 import { joiResolver } from '@hookform/resolvers/joi'
 import { useForm } from 'react-hook-form'
-import { crearRecetaSchema } from '../validators/receta.validators'
+import { crearRecetaSchema } from '../../validators/receta.validators'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
-import { guardarReceta } from '../features/recetas.slice'
+import { guardarReceta } from '../../features/recetas.slice'
 
 
 
