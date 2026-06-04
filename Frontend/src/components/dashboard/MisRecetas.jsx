@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import TarjetaReceta from './TarjetaReceta'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { agregarReceta } from '../features/recetas.slice'
+import { agregarReceta } from '../../features/recetas.slice'
 
 const Recetas = () => {
   const dispatch = useDispatch()

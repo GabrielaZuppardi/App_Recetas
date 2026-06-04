@@ -7,7 +7,7 @@ import LoginFooter from '../components/login/LoginFooter'
 
 const LoginPage = () => {
   return (
-    <div>
+    <div >
 
       <LoginHeader />
       <h1>Login</h1>
