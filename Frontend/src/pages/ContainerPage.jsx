@@ -5,11 +5,11 @@ const ContainerPage = () => {
     return (
         <div>
             <header>
-                <h3>Aplicación</h3>
+                <h3> 🍳 App Recetas</h3>
                 <nav>
 
                     <NavLink to="/dashboard">Inicio</NavLink>
-                    <NavLink to="/login">Login</NavLink>
+                    <NavLink to="/">Login</NavLink>
                     <NavLink to="/registro">Registro</NavLink>
 
                 </nav>
