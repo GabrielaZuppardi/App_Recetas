@@ -1,10 +1,16 @@
+//1.TRAE RECETAS DESDE LA API
+//2. GUARDA LAS RECETAS EN EL ESTADO GLOBAL REDUX UseDispatch
+//3. LEE LAS RECETAS DESDE EL ESTADO GLOBAL REDUX UseSelector
+//4. MUESTRA LAS RECETAS EN LA PANTALLA
+
+
 import React, { useEffect } from 'react'
 import TarjetaReceta from './TarjetaReceta'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { agregarReceta } from '../../features/recetas.slice'
 
-const Recetas = () => {
+const MisRecetas = () => {
   const dispatch = useDispatch()
 
   const recetas = useSelector((state) => state.recetas.recetas)
@@ -70,4 +76,4 @@ const Recetas = () => {
   )
 }
 
-export default Recetas
+export default MisRecetas

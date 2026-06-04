@@ -1,15 +1,24 @@
-import React from 'react'
-import { useNavigate } from 'react-router'
-import { useEffect } from 'react'
+
+import BarraNavegacion from '../components/dashboard/BarraNavegacion'
+import Membresia from '../components/dashboard/Membresia'
+import Contenido from '../components/dashboard/Contenido'
+import Estadisticas from '../components/dashboard/Estadisticas'
+
+
 
 const DashboardPage = () => {
 
   
   return (
-    <div>
-      <h1>Dashboard</h1>
-    </div>
+    <>
+      <BarraNavegacion />
+         <Membresia />
+      <Contenido />
+      <Estadisticas />
+    </>
   )
 }
 
 export default DashboardPage
+
+

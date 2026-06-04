@@ -3,8 +3,13 @@ import { joiResolver } from '@hookform/resolvers/joi'
 import { useForm } from 'react-hook-form'
 import { crearRecetaSchema } from '../../validators/receta.validators'
 import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import { guardarReceta } from '../../features/recetas.slice'
+
+
 
 const CrearRecetaForm = () => {
+  const dispatch = useDispatch()
   const {
     register,
     handleSubmit,
@@ -42,7 +47,7 @@ const procesarForm = async (data) => {
 
     console.log("RECETA CREADA");
     console.log(respuesta.data);
-
+dispatch(guardarReceta(respuesta.data))
   } catch (error) {
     console.log(error.response?.data);
   }
