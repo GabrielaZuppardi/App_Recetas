@@ -8,7 +8,7 @@ const Login = () => {
    return (
     <main className="login-card">
       <LoginHeader />
-      <DemoBox />
+      
       <LoginForm />
       <LoginFooter />
     </main>
