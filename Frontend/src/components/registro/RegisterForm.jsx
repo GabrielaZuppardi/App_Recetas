@@ -2,12 +2,15 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { joiResolver } from '@hookform/resolvers/joi'
 import { useNavigate } from 'react-router'
+import { useDispatch } from 'react-redux'
 import api from '../../api/api'
 import { crearUsuarioSchema } from '../../validators/usuario.validators'
+import { guardarUsuarioLogueado } from '../../features/usuarios.slice'
 
 const RegisterForm = () => {
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const {
     register,
@@ -18,23 +21,25 @@ const RegisterForm = () => {
   })
 
   const procesarForm = (data) => {
-  api.post('/auth/registro', data)
-    .then(() => {
-      return api.post('/auth/login', {
-        email: data.email,
-        password: data.password
+    api.post('/auth/registro', data)
+      .then(() => {
+        return api.post('/auth/login', {
+          email: data.email,
+          password: data.password
+        })
       })
-    })
-    .then(res => {
-      localStorage.setItem("token", res.data.token)
-      localStorage.setItem("usuario", JSON.stringify(res.data.usuario))
+      .then(res => {
+        localStorage.setItem("token", res.data.token)
+        localStorage.setItem("usuario", JSON.stringify(res.data.usuario))
 
-      navigate('/dashboard')
-    })
-    .catch(err => {
-      console.error('Error al registrar o iniciar sesión:', err)
-    })
-}
+        dispatch(guardarUsuarioLogueado(res.data.usuario))
+
+        navigate('/dashboard')
+      })
+      .catch(err => {
+        console.error('Error al registrar o iniciar sesión:', err)
+      })
+  }
 
   return (
     <form onSubmit={handleSubmit(procesarForm)}>

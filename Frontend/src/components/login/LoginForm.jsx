@@ -1,15 +1,16 @@
-import React, { useState } from 'react'
-import Joi from 'joi'
+import React from 'react'
 import { joiResolver } from '@hookform/resolvers/joi'
 import { useForm } from 'react-hook-form'
 import { loginSchema } from '../../validators/usuario.validators'
 import { useNavigate } from 'react-router'
+import { useDispatch } from 'react-redux'
 import api from '../../api/api'
+import { guardarUsuarioLogueado } from '../../features/usuarios.slice'
 
 const LoginForm = () => {
 
   const navigate = useNavigate()
-
+  const dispatch = useDispatch()
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: joiResolver(loginSchema)
@@ -24,6 +25,8 @@ const LoginForm = () => {
 
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("usuario", JSON.stringify(res.data.usuario));
+
+        dispatch(guardarUsuarioLogueado(res.data.usuario));
 
         navigate('/dashboard');
       })
@@ -45,7 +48,6 @@ const LoginForm = () => {
       <div className="form-group">
         <div className="top-row">
           <label>Contraseña</label>
-         
         </div>
         <div className="input-wrap">
           <span className="icon">🔒</span>
@@ -56,8 +58,6 @@ const LoginForm = () => {
       <button type="submit" className="submit-btn">
         Ingresar a la Plataforma →
       </button>
-
-
     </form>
   )
 }

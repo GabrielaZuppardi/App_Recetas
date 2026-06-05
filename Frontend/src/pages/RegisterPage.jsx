@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
-import RegisterForm from '../components/Registro/RegisterForm'
+import RegisterForm from '../components/registro/RegisterForm'
 
 const RegisterPage = () => {
   return (
