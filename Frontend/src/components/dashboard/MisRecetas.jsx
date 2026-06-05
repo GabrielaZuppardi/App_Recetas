@@ -6,27 +6,51 @@
 
 import React, { useEffect } from 'react'
 import TarjetaReceta from './TarjetaReceta'
-import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { agregarReceta } from '../../features/recetas.slice'
+import api from '../../api/api'
 
 const MisRecetas = () => {
+
   const dispatch = useDispatch()
 
   const recetas = useSelector((state) => state.recetas.recetas)
-  const[loading, setLoading] = React.useState(true)
+  const [loading, setLoading] = React.useState(true)
+
+  const categorias = useSelector((state) => state.categorias.categorias)
+  const [categoriaFiltro, setCategoriaFiltro] = React.useState("")
+
+  const filtrarRecetas = (categoria) => {
+    api.get("/recetas/filtros", {
+      params: {
+        categoria: categoria || undefined,
+        limit: 100
+      }
+    })
+      .then((r) => {
+        console.log("RECETAS FILTRADAS", r.data)
+        dispatch(agregarReceta(r.data.recetas))
+      })
+      .catch((error) => {
+        console.log(error.response?.data || error.message)
+      })
+  }
+
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/v1/recetas-test")
+    api
+      .get("/recetas/mias")
       .then((r) => {
-        console.log(r.data.recetas)
+
+        console.log("RESPUESTA COMPLETA:", r.data)
+        console.log("RECETAS:", r.data.recetas)
+
         dispatch(agregarReceta(r.data.recetas))
-        
+
       })
       .catch((error) => {
         console.log(error)
-        
+
       })
       .finally(() => {
         setLoading(false)
@@ -43,11 +67,29 @@ const MisRecetas = () => {
         <div className="filters">
           <span className="muted">Filtrar recetas</span>
 
-          <select style={{ maxWidth: 160, margin: 0 }}>
-            <option>Todas</option>
-            <option>Pasta</option>
-            <option>Carnes</option>
-            <option>Postres</option>
+          <select
+            style={{ maxWidth: 160, margin: 0 }}
+            value={categoriaFiltro}
+           onChange={(e) => {
+  const categoriaSeleccionada = e.target.value
+
+  console.log("Categoria elegida:", categoriaSeleccionada)
+
+  setCategoriaFiltro(categoriaSeleccionada)
+
+  filtrarRecetas(categoriaSeleccionada)
+}}
+          >
+            <option value="">Todas</option>
+
+            {categorias.map((categoria) => (
+              <option
+                key={categoria._id}
+                value={categoria._id}
+              >
+                {categoria.nombre}
+              </option>
+            ))}
           </select>
 
           <select style={{ maxWidth: 160, margin: 0 }}>
@@ -59,16 +101,16 @@ const MisRecetas = () => {
         </div>
 
         <div className="recipes">
-          {loading ? <p>Cargando recetas...</p> : 
-          recetas.length > 0 ? (
-            recetas.map((receta) => (
-              <TarjetaReceta key={receta._id}
-                receta={receta}
-              />
-            ))
-          ) : (
-            <p className="muted">No hay recetas para mostrar</p>
-          )}
+          {loading ? <p>Cargando recetas...</p> :
+            recetas.length > 0 ? (
+              recetas.map((receta) => (
+                <TarjetaReceta key={receta._id}
+                  receta={receta}
+                />
+              ))
+            ) : (
+              <p className="muted">No hay recetas para mostrar</p>
+            )}
         </div>
       </div>
 
