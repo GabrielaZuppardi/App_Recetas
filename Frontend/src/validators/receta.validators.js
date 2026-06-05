@@ -77,13 +77,16 @@ export const crearRecetaSchema = Joi.object({
       "any.required": "Las porciones son obligatorias"
     }),
 
-  imageUrl: Joi.string()
-    .trim()
-    .uri()
-    .optional()
-    .messages({
-      "string.uri": "La URL de la imagen debe ser válida"
-    }),
+ imagenUrl: Joi.string()
+  .trim()
+  .uri()
+  .optional()
+  .allow("")
+  .messages({
+    "string.uri": "La URL de la imagen debe ser válida"
+  }),
+
+imagen: Joi.any().optional(),
     
   categoria: Joi.string()
   .hex()

@@ -23,6 +23,6 @@ router.use(authenticateMiddleware); //todas las rutas debajo de esta línea esta
 router.use("/usuarios", usuariosRouter);
 router.use("/categorias", categoriasRouter);
 router.use("/recetas", recetasRouter);  
-
+router.use("/uploads", uploadsRouter);
 
 export default router;

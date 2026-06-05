@@ -69,17 +69,31 @@ export const crearRecetaController = async (req, res, next) => {
         let imagenPublicId = null;
 
         if (req.file) {
-            const result = await uploadBufferToCloudinary(
-                cloudinary,
-                req.file.buffer,
-                {
-                    resource_type: "auto",
-                    folder: "recetas"
-                }
-            );
+          console.log('DEBUG: req.file:', {
+            originalname: req.file.originalname,
+            mimetype: req.file.mimetype,
+            size: req.file.size
+          });
 
-            imagenUrl = result.secure_url;
-            imagenPublicId = result.public_id;
+          // Log first bytes length to ensure buffer is not empty
+          console.log('DEBUG: buffer length', req.file.buffer?.length);
+
+          const result = await uploadBufferToCloudinary(
+            cloudinary,
+            req.file.buffer,
+            {
+              resource_type: "auto",
+              folder: "recetas"
+            }
+          );
+
+          console.log('DEBUG: cloudinary result:', {
+            public_id: result.public_id,
+            secure_url: result.secure_url
+          });
+
+          imagenUrl = result.secure_url;
+          imagenPublicId = result.public_id;
         }
 
         const datosReceta = {

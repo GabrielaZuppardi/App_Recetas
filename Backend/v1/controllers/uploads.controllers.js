@@ -20,7 +20,11 @@ export const subirImagen = async (req, res) => {
             folder,
         });
 
-        return res.json({ url: result.secure_url, folder: result.folder });
+       // return res.json({ url: result.secure_url, folder: result.folder });
+       return res.json({
+  imagenUrl: result.secure_url,
+  imagenPublicId: result.public_id,
+});
     } catch (error) {
         console.error("Error al subir imagen:", error);
         return res.status(500).json({ error: "Error al subir imagen" });

@@ -4,8 +4,9 @@ import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { agregarCategorias } from "../features/categorias.slice"
 import api from "../api/api"
-import Dashboard from "../components/dashboard/Dashboard"
 
+
+import Dashboard from "../components/dashboard/Dashboard"
 
 const DashboardPage = () => {
 const dispatch = useDispatch()
