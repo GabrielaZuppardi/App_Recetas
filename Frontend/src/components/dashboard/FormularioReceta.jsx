@@ -1,13 +1,9 @@
 import { joiResolver } from '@hookform/resolvers/joi'
 import { useForm } from 'react-hook-form'
 import { crearRecetaSchema } from '../../validators/receta.validators'
-import axios from 'axios'
-import { useDispatch } from 'react-redux'
-import { useSelector } from 'react-redux'
-import { guardarReceta } from '../../features/recetas.slice'
 import api from '../../api/api'
-import { useEffect } from "react"
-import { agregarCategorias } from "../../features/categorias.slice"
+import { useDispatch, useSelector } from 'react-redux'
+import { guardarReceta } from '../../features/recetas.slice'
 //FormularioReceta.jsx → usa categorías del store //FormularioReceta solo las lee con useSelector.
 
 
@@ -29,29 +25,37 @@ const CrearRecetaForm = () => {
 
   const procesarForm = async (data) => {
     try {
-      api.post("/recetas", data)
-      const recetaParaEnviar = {
-        ...data,
-        ingredientes: data.ingredientes
-          .split(",")
-          .map(i => i.trim())
-          .filter(i => i !== ""),
+      // Construir FormData para enviar multipart/form-data (incluye el archivo)
+      const formData = new FormData()
 
-        pasos: data.pasos
-          .split(",")
-          .map(p => p.trim())
-          .filter(p => p !== "")
-      };
+      formData.append('titulo', data.titulo)
+      formData.append('descripcion', data.descripcion)
+      formData.append('tiempoPreparacion', data.tiempoPreparacion)
+      formData.append('dificultad', data.dificultad)
+      formData.append('porciones', data.porciones)
+      formData.append('categoria', data.categoria)
 
-      const respuesta = await api.post("/recetas", recetaParaEnviar)
+      // Ingredientes y pasos: enviar cada elemento como campo repetido para que multer los reciba como array
+      const ingredientesArr = (data.ingredientes || "").split(',').map(i => i.trim()).filter(i => i !== '')
+      ingredientesArr.forEach(i => formData.append('ingredientes', i))
 
-      console.log("RECETA CREADA", respuesta.data);
+      const pasosArr = (data.pasos || "").split(',').map(p => p.trim()).filter(p => p !== '')
+      pasosArr.forEach(p => formData.append('pasos', p))
 
+      // Archivo (campo 'imagen') — register('imagen') devuelve FileList
+      if (data.imagen && data.imagen.length > 0) {
+        formData.append('imagen', data.imagen[0])
+      }
+
+      const respuesta = await api.post('/recetas', formData)
+
+      console.log('RECETA CREADA')
+      console.log(respuesta.data)
       dispatch(guardarReceta(respuesta.data.receta))
     } catch (error) {
-      console.log(error.response?.data || error.message);
+      console.log(error.response?.data || error.message)
     }
-  };
+};
   return (
     <div className="formulario-receta">
 
@@ -174,13 +178,13 @@ const CrearRecetaForm = () => {
           />
           {errors.descripcion && <span className="error">{errors.descripcion.message}</span>}
 
-          <label>URL de imagen</label>
+          <label>Imagen</label>
           <input
-            type="url"
-            placeholder="https://ejemplo.com/imagen.jpg"
-            {...register("imageUrl")}
+            type="file"
+            accept="image/*"
+            {...register("imagen")}
           />
-          {errors.imageUrl && <span className="error">{errors.imageUrl.message}</span>}
+          {errors.imagen && <span className="error">{errors.imagen.message}</span>}
 
           <button
             type="submit"

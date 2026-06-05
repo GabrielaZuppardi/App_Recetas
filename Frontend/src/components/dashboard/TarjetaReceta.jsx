@@ -5,7 +5,7 @@ const TarjetaReceta = ({receta}) => {
   return (
    <div className="recipe">
     <img
-      src={receta.imageUrl || "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=700&q=80"}
+      src={receta.imagenUrl || "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=700&q=80"}
         alt={receta.titulo}
     />
     <div className="recipe-body">
