@@ -24,9 +24,9 @@ const LoginForm = () => {
         console.log(res.data);
         const usuario = res.data.usuario;
 
-        if(usuario.rol === "administrador") {
+        if(usuario.rol === "usuario") {
               alert("Este acceso es exclusivo para usuarios.");
-          navigate('/loginAdmin')
+          navigate('/')
           return;
   
         }
@@ -36,7 +36,7 @@ const LoginForm = () => {
 
         dispatch(guardarUsuarioLogueado(res.data.usuario));
 
-        navigate('/dashboard');
+        navigate('/dashboardAdmin');
       })
       .catch(err => {
         console.error('Error al iniciar sesión:', err);

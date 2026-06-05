@@ -1,9 +1,19 @@
 import React from 'react'
+import { Link } from 'react-router'
+import LoginForm from '../components/loginAdmin/LoginAdminForm'
+
+import LoginFooter from '../components/loginAdmin/LoginAdminFooter'
+
 
 const AdminLoginPage = () => {
   return (
-    <div>
-      <h1>Login Admin</h1>
+    <div >
+      <header>
+        <h1>🍳 Acceso Administradores</h1>
+        <p className="subtitle">Plataforma Inteligente para la Gestión de Recetas</p>
+      </header>
+      <LoginForm />
+      <LoginFooter />
     </div>
   )
 }
