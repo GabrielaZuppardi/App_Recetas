@@ -45,9 +45,7 @@ const LoginForm = () => {
       <div className="form-group">
         <div className="top-row">
           <label>Contraseña</label>
-          <button type="button" className="forgot">
-            ¿Olvidó contraseña?
-          </button>
+         
         </div>
         <div className="input-wrap">
           <span className="icon">🔒</span>

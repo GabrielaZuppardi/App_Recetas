@@ -4,13 +4,7 @@ import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { agregarCategorias } from "../features/categorias.slice"
 import api from "../api/api"
-
-import BarraNavegacion from '../components/dashboard/BarraNavegacion'
-import Membresia from '../components/dashboard/Membresia'
-import Contenido from '../components/dashboard/Contenido'
-import Estadisticas from '../components/dashboard/Estadisticas'
 import Dashboard from "../components/dashboard/Dashboard"
-
 
 
 const DashboardPage = () => {
