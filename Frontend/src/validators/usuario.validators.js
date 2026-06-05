@@ -98,3 +98,4 @@ export const modificarUsuarioSchema = Joi.object({
   "object.min": "Debes enviar al menos un campo para modificar",
   "object.unknown": "El campo '{#label}' no está permitido"
 });
+
