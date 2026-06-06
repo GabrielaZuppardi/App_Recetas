@@ -19,11 +19,15 @@ const MisRecetas = () => {
 
   const categorias = useSelector((state) => state.categorias.categorias)
   const [categoriaFiltro, setCategoriaFiltro] = React.useState("")
+  const [dificultadFiltro, setDificultadFiltro] = React.useState("")
+  const [tiempoMaximoFiltro, setTiempoMaximoFiltro] = React.useState("")
 
-  const filtrarRecetas = (categoria) => {
+  const filtrarRecetas = (categoria, dificultad, tiempoMaximo) => {
     api.get("/recetas/filtros", {
       params: {
         categoria: categoria || undefined,
+        dificultad: dificultad || undefined,
+        tiempoMax: tiempoMaximo || undefined,
         limit: 100
       }
     })
@@ -70,15 +74,15 @@ const MisRecetas = () => {
           <select
             style={{ maxWidth: 160, margin: 0 }}
             value={categoriaFiltro}
-           onChange={(e) => {
-  const categoriaSeleccionada = e.target.value
+            onChange={(e) => {
+              const categoriaSeleccionada = e.target.value
 
-  console.log("Categoria elegida:", categoriaSeleccionada)
+              console.log("Categoria elegida:", categoriaSeleccionada)
 
-  setCategoriaFiltro(categoriaSeleccionada)
+              setCategoriaFiltro(categoriaSeleccionada)
 
-  filtrarRecetas(categoriaSeleccionada)
-}}
+              filtrarRecetas(categoriaSeleccionada, dificultadFiltro, tiempoMaximoFiltro)
+            }}
           >
             <option value="">Todas</option>
 
@@ -92,11 +96,42 @@ const MisRecetas = () => {
             ))}
           </select>
 
-          <select style={{ maxWidth: 160, margin: 0 }}>
-            <option>Todas</option>
-            <option>Fácil</option>
-            <option>Media</option>
-            <option>Difícil</option>
+          <select
+            style={{ maxWidth: 160, margin: 0 }}
+            value={dificultadFiltro}
+            onChange={(e) => {
+              const dificultadSeleccionada = e.target.value
+
+              console.log("Dificultad elegida:", dificultadSeleccionada)
+
+              setDificultadFiltro(dificultadSeleccionada)
+
+              filtrarRecetas(categoriaFiltro, dificultadSeleccionada, tiempoMaximoFiltro)
+            }}
+          >
+            <option value="">Todas</option>
+            <option value="facil">Fácil</option>
+            <option value="media">Media</option>
+            <option value="dificil">Difícil</option>
+          </select>
+
+          <select
+            style={{ maxWidth: 160, margin: 0 }}
+            value={tiempoMaximoFiltro}
+            onChange={(e) => {
+              const tiempoMaximoSeleccionado = e.target.value
+
+              console.log("Tiempo máximo elegido:", tiempoMaximoSeleccionado)
+
+              setTiempoMaximoFiltro(tiempoMaximoSeleccionado)
+
+              filtrarRecetas(categoriaFiltro, dificultadFiltro, tiempoMaximoSeleccionado)
+            }}
+          >
+            <option value="">Todas</option>
+            <option value="30">Hasta 30 min</option>
+            <option value="60">Hasta 60 min</option>
+            <option value="90">Hasta 90 min</option>
           </select>
         </div>
 

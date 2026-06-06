@@ -466,9 +466,12 @@ export const obtenerRecetasConFiltrosService = async ({
   page = 1,
   limit = 3
 }) => {
-  const filtro = {usuario: usuarioId
+  const filtro = {};
 
-  };
+  // Si se pasó usuarioId (ruta protegida), aplicarlo como filtro; si no, dejar buscar global
+  if (usuarioId) {
+    filtro.usuario = usuarioId;
+  }
 
   if (dificultad) {
     filtro.dificultad = dificultad;
@@ -524,6 +527,7 @@ export const obtenerRecetasConFiltrosService = async ({
     .populate("categoria", "nombre")
     .skip(skip)
     .limit(limit);
+  console.log('DEBUG filtros aplicados:', filtro);
 
   return {
     recetas,
