@@ -10,6 +10,7 @@ import {obtenerRecetasService,
         generarDescripcionRecetaService,
         generarDescripcionParaRecetaService,
         obtenerRecetasConFiltrosService, 
+          sugerirDescripcionParaRecetaService,
         generarRecetaService} from "../services/recetas.services.js";
 import { runMulterSingle } from "../utils/multer.util.js";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -177,6 +178,26 @@ export const generarDescripcionRecetaController = async (req, res, next) => {
   });
 };
 
+//************************************************************* */
+
+export const sugerirDescripcionRecetaController = async (req, res, next) => {
+  const { id } = req.params;
+
+  const descripcionSugerida = await sugerirDescripcionParaRecetaService(
+    id,
+    req.usuario
+  );
+
+  res.status(200).json({
+    mensaje: "Descripción sugerida correctamente",
+    descripcion: descripcionSugerida
+  });
+};
+
+  
+
+ 
+
 export const generarRecetaController = async (req, res) => {
   const { ingredientes, dificultad, tiempoMaximo } = req.body;
 
@@ -199,7 +220,8 @@ export const obtenerRecetasConFiltrosController = async (req, res, next) => {
   try {
     const usuarioId = req.usuario.id;
     const resultado = await obtenerRecetasConFiltrosService({ ...req.validatedQuery, usuarioId });
-
+console.log("QUERY ORIGINAL:", req.query)
+console.log("QUERY VALIDADA:", req.validatedQuery)
     res.status(200).json({
       mensaje: "Recetas filtradas correctamente",
       ...resultado

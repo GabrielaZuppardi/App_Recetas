@@ -16,10 +16,21 @@ export const recetasSlice = createSlice({
     guardarReceta: (state, action) => {
       // Agrega una receta nueva
       state.recetas.push(action.payload);
-    }
+    },
+    eliminarReceta: (state, action) => {
+      state.recetas = state.recetas.filter(
+        (receta) => receta._id !== action.payload
+      )
+    },
+   modificarReceta: (state, action) => {
+  state.recetas = state.recetas.map((receta) =>
+    receta._id === action.payload._id ? action.payload : receta
+  )
+}
   }
 });
 
-export const { agregarReceta, guardarReceta } = recetasSlice.actions;
 
+export const { agregarReceta, guardarReceta, eliminarReceta, modificarReceta } = recetasSlice.actions;
+  
 export default recetasSlice.reducer;

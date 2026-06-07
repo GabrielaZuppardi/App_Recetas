@@ -1,19 +1,29 @@
 
 //Dashboard.jsx → estructura visual del dashboard
 
+import FormularioReceta from './FormularioReceta'
+import MisRecetas from './MisRecetas'
 import Membresia from './Membresia'
-import Contenido from './Contenido'
 import Estadisticas from './Estadisticas'
+import GeneradorRecetaIA from './GeneradorRecetaIA'
+import BuscadorRecetasExternas from './BuscadorRecetasExternas'
 
 
 const Dashboard = () => {
-  
+
 
   return (
     <>
-
       <Membresia />
-      <Contenido />
+      <div className="grid">
+        <div>
+          <GeneradorRecetaIA />
+          <FormularioReceta />
+        </div>
+
+        <MisRecetas />
+      </div>
+    <BuscadorRecetasExternas />
       <Estadisticas />
     </>
   )
