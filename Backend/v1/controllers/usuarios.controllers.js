@@ -1,34 +1,40 @@
-import {obtenerUsuariosService, 
-        obtenerUsuarioPorIdService, 
-        crearAdministradorService, 
-        actualizarUsuarioService, 
-        eliminarUsuarioService,
-        cambiarPlanAPremiumService} from "../services/usuarios.services.js";
+import {
+    obtenerUsuariosService,
+    obtenerUsuarioPorIdService,
+    crearAdministradorService,
+    actualizarUsuarioService,
+    eliminarUsuarioService,
+    cambiarPlanAPremiumService
+} from "../services/usuarios.services.js";
 
 export const obtenerUsuariosController = async (req, res, next) => {
-    
-        const { page, limit } = req.query;
 
-        const respuesta = await obtenerUsuariosService(page, limit);
+    const { page, limit, nombre, email, rol, plan } = req.query;
 
-        res.status(200).json({
-            mensaje: "Usuarios obtenidos correctamente",
-            ...respuesta
-        });   
+    const respuesta = await obtenerUsuariosService(page, limit, {
+        nombre,
+        email,
+        rol,
+        plan
+    });
+
+    res.status(200).json({
+        mensaje: "Usuarios obtenidos correctamente",
+        ...respuesta
+    });
 };
 
 export const obtenerUsuarioPorIdController = async (req, res, next) => {
-   
-        const { id } = req.params;
 
-        const usuarioEncontrado = await obtenerUsuarioPorIdService(id);
+    const { id } = req.params;
 
-        res.status(200).json({
-            mensaje: "Usuario obtenido correctamente",
-            usuario: usuarioEncontrado
-        });
+    const usuarioEncontrado = await obtenerUsuarioPorIdService(id);
 
-   }; 
+    res.status(200).json({
+        mensaje: "Usuario obtenido correctamente",
+        usuario: usuarioEncontrado
+    });
+};
 
 export const crearAdministradorController = async (req, res, next) => {
     try {
@@ -44,42 +50,38 @@ export const crearAdministradorController = async (req, res, next) => {
     }
 };
 
-
 export const actualizarUsuarioController = async (req, res, next) => {
-   
-        const { id } = req.params;
 
-        const usuarioActualizado = await actualizarUsuarioService(id, req.body);
+    const { id } = req.params;
 
-        res.status(200).json({
-            mensaje: "Usuario actualizado correctamente",
-            usuario: usuarioActualizado
-        });
-   };
+    const usuarioActualizado = await actualizarUsuarioService(id, req.body);
+
+    res.status(200).json({
+        mensaje: "Usuario actualizado correctamente",
+        usuario: usuarioActualizado
+    });
+};
 
 export const eliminarUsuarioController = async (req, res, next) => {
- 
-        const { id } = req.params;
 
-        const usuarioEliminado = await eliminarUsuarioService(id);
+    const { id } = req.params;
 
-        res.status(200).json({
-            mensaje: "Usuario eliminado correctamente",
-            usuario: usuarioEliminado
-        });
-   
+    const usuarioEliminado = await eliminarUsuarioService(id);
+
+    res.status(200).json({
+        mensaje: "Usuario eliminado correctamente",
+        usuario: usuarioEliminado
+    });
 };
 
 export const cambiarPlanAPremiumController = async (req, res, next) => {
-  
+
     const usuarioId = req.usuario.id;
 
     const usuarioActualizado = await cambiarPlanAPremiumService(usuarioId);
 
     res.status(200).json({
-      mensaje: "Plan actualizado a premium correctamente",
-      usuario: usuarioActualizado
+        mensaje: "Plan actualizado a premium correctamente",
+        usuario: usuarioActualizado
     });
-
-  
 };
