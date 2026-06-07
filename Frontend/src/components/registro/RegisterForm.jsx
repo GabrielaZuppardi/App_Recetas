@@ -6,6 +6,8 @@ import { useDispatch } from 'react-redux'
 import api from '../../api/api'
 import { crearUsuarioSchema } from '../../validators/usuario.validators'
 import { guardarUsuarioLogueado } from '../../features/usuarios.slice'
+import {FiUser, FiMail, FiLock} from 'react-icons/fi'
+
 
 const RegisterForm = () => {
 
@@ -50,7 +52,7 @@ const RegisterForm = () => {
         </label>
 
         <div className="input-wrap">
-          <span className="icon">👤</span>
+          <span className="icon"><FiUser /></span>
 
           <input
             id="nombre"
@@ -73,7 +75,7 @@ const RegisterForm = () => {
         </label>
 
         <div className="input-wrap">
-          <span className="icon">✉️</span>
+          <span className="icon"><FiMail /> </span>
 
           <input
             id="email"
@@ -96,7 +98,7 @@ const RegisterForm = () => {
         </label>
 
         <div className="input-wrap">
-          <span className="icon">🔒</span>
+          <span className="icon"><FiLock /></span>
 
           <input
             id="password"

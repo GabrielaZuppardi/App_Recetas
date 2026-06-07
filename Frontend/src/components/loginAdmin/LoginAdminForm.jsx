@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router'
 import { useDispatch } from 'react-redux'
 import api from '../../api/api'
 import { guardarUsuarioLogueado } from '../../features/usuarios.slice'
+import {FiMail, FiLock} from 'react-icons/fi' 
+
 
 const LoginForm = () => {
 
@@ -48,7 +50,7 @@ const LoginForm = () => {
       <div className="form-group">
         <label>Correo electrónico</label>
         <div className="input-wrap">
-          <span className="icon">✉️</span>
+          <span className="icon"><FiMail /> </span>
           <input type="email" placeholder="ejemplo@gourmet.com" {...register('email')} />
           {errors.email && <span className="error">{errors.email.message}</span>}
         </div>
@@ -58,7 +60,7 @@ const LoginForm = () => {
           <label>Contraseña</label>
         </div>
         <div className="input-wrap">
-          <span className="icon">🔒</span>
+          <span className="icon"><FiLock /></span>
           <input type="password" placeholder="••••••••" {...register('password')} />
           {errors.password && <span className="error">{errors.password.message}</span>}
         </div>

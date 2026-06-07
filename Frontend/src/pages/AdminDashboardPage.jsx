@@ -1,9 +1,14 @@
 import React from 'react'
+import UsuariosAdmin from '../components/admin/UsuariosAdmin'
+
 
 const AdminDashboardPage = () => {
   return (
-    <div>
-      <h1>Dashboard Admin</h1>
+    <div className="container">
+     
+      <UsuariosAdmin />
+    {/* <CategoriasAdmin /> */}
+{/* <RecetasAdmin /> */}
     </div>
   )
 }

@@ -146,23 +146,30 @@ code {
 .brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 1rem;
 }
 
+
 .logo {
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+
+  width: 60px;
+  height: 60px;
+
   background: #f97316;
   color: white;
-  display: grid;
-  place-items: center;
-  font-size: 24px;
+  border-radius: 16px;
+
+  font-size: 1.6rem;
 }
 
 .brand h1 {
   margin: 0;
-  font-size: 20px;
+  font-size: 2rem;
+  font-weight: 700;
 }
 
 .brand p,
@@ -696,71 +703,75 @@ footer {
   gap: 24px;
 }
 
-/* ===== LOGIN ===== */
-.login-card {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 40px 32px;
-  background: white;
-  border-radius: 24px;
-  box-shadow: 0 10px 40px rgba(15, 23, 42, 0.1);
+/* ===== LOGIN / REGISTRO ===== */
+
+.login-page,
+.register-page {
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
   justify-content: center;
+  align-items: flex-start;
+  padding: 96px 16px 40px;
+  background: #fffaf3;
 }
 
-.login-card .header {
+.login-card,
+.register-card {
+  width: 100%;
+  max-width: 480px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.1);
+  padding: 40px 32px;
+  font-family: var(--sans);
+}
+
+.register-card {
+  margin-top: 24px;
+  padding-bottom: 0;
+  overflow: hidden;
+}
+
+.login-card header,
+.register-card header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 28px;
 }
 
-.login-card .badge {
-  display: inline-block;
-  background: #fef3c7;
-  color: #b45309;
-  padding: 6px 12px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: 700;
-  margin-bottom: 16px;
-  letter-spacing: 0.5px;
+.login-card h1,
+.register-card h1 {
+  margin: 0 0 8px;
+  font-size: 42px;
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: #08060d;
 }
 
-.login-card .logo {
-  font-size: 48px;
-  margin: 12px 0;
-  display: block;
+.register-card h1 {
+  font-size: 34px;
 }
 
-.login-card .header h1 {
-  margin: 0;
-  font-size: 28px;
-  font-weight: 700;
-  color: #1e293b;
-}
-
-.login-card .header h1 span {
-  color: #f97316;
-  font-weight: 700;
-}
-
-.login-card .subtitle {
-  margin: 8px 0 0;
+.login-card .subtitle,
+.register-card .subtitle {
   color: #64748b;
   font-size: 14px;
 }
 
-.login-card form {
+.login-card form,
+.register-card form {
   padding: 0;
-  margin-bottom: 24px;
 }
 
-.login-card .form-group {
+.login-card .form-group,
+.register-card .form-group {
+  text-align: left;
   margin-bottom: 20px;
 }
 
-.login-card .form-group label {
+.login-card label,
+.register-card label {
   display: block;
   font-size: 13px;
   font-weight: 700;
@@ -768,89 +779,122 @@ footer {
   color: #0f172a;
 }
 
-.login-card .top-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
+.login-card .input-wrap,
+.register-card .input-wrap {
+  position: relative;
+  width: 100%;
 }
 
-.login-card .input-wrap .icon {
+.login-card .input-wrap .icon,
+.register-card .input-wrap .icon,
+.login-card .input-wrap .input-icon,
+.register-card .input-wrap .input-icon {
   position: absolute;
-  left: 12px;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: #64748b;
   font-size: 18px;
-  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   pointer-events: none;
 }
 
-.login-card .input-wrap input {
+.login-card input,
+.register-card input {
   width: 100%;
-  padding: 14px 12px 14px 46px;
+  height: 48px;
   border: 1px solid #cbd5e1;
-  border-radius: 12px;
-  font-size: 15px;
+  border-radius: 13px;
+  padding: 0 14px 0 46px;
+  font-size: 14px;
   color: #0f172a;
+  background: #eff6ff;
   margin: 0;
-  transition: border-color 0.18s, box-shadow 0.18s;
-}
-
-.login-card .input-wrap input::placeholder {
-  color: #94a3b8;
-  opacity: 1;
-}
-
-.login-card .input-wrap input:focus-visible {
   outline: none;
+  transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+}
+
+.login-card input::placeholder,
+.register-card input::placeholder {
+  color: #94a3b8;
+}
+
+.login-card input:focus,
+.register-card input:focus {
   border-color: #f97316;
-  box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.10);
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.12);
 }
 
-.login-card .forgot:hover {
-  text-decoration: underline;
-}
-
-/* cleaned duplicate .input-wrap rules above (kept improved styles) */
-
-.login-card .submit-btn {
+.login-card .submit-btn,
+.register-card .submit-btn {
   width: 100%;
-  padding: 16px;
-  background: #f97316;
-  color: white;
+  height: 52px;
   border: none;
   border-radius: 14px;
-  font-size: 16px;
+  background: #f97316;
+  color: #fff;
+  font-size: 15px;
   font-weight: 800;
   cursor: pointer;
+  margin-top: 8px;
+  box-shadow: 0 10px 22px rgba(249, 115, 22, 0.18);
   transition: background 0.18s, transform 0.08s, box-shadow 0.18s;
-  margin-top: 12px;
 }
 
-.login-card .submit-btn:hover {
+.login-card .submit-btn:hover,
+.register-card .submit-btn:hover {
   background: #ea580c;
+  box-shadow: 0 14px 26px rgba(249, 115, 22, 0.24);
 }
 
-.login-card .submit-btn:active {
+.login-card .submit-btn:active,
+.register-card .submit-btn:active {
   transform: scale(0.98);
 }
 
-.login-card .demo-box {
-  background: #fef3c7;
-  border: 1px solid #fcd34d;
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 24px;
+.login-card .footer,
+.register-card .footer {
   text-align: center;
+  margin-top: 22px;
+  color: #64748b;
+  font-size: 13px;
 }
 
-/* Inline error styles for login form */
-.login-card .error {
+.register-card .footer {
+  margin: 28px -32px 0;
+  padding: 18px 24px;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+}
+
+.login-card .footer a,
+.register-card .footer a {
+  color: #ea580c;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.login-card .footer a:hover,
+.register-card .footer a:hover {
+  text-decoration: underline;
+}
+
+/* Errores login / registro */
+.login-card .error,
+.register-card .error {
   display: block;
   margin-top: 8px;
   color: #b91c1c;
   font-size: 13px;
 }
 
-.login-card .form-error {
+.login-card .form-error,
+.register-card .form-error {
   background: #fef2f2;
   color: #991b1b;
   border: 1px solid #fecaca;
@@ -860,289 +904,248 @@ footer {
   font-size: 14px;
 }
 
-.login-card .demo-box strong {
-  display: block;
-  color: #b45309;
-  font-size: 14px;
-  margin-bottom: 8px;
-}
+/* ===== ADMIN DASHBOARD ===== */
 
-.login-card .demo-box span {
-  display: block;
-  color: #a16207;
-  font-size: 13px;
-  line-height: 1.5;
-  margin-bottom: 12px;
-}
+/* ===== ADMIN TABLE ===== */
 
-.login-card .demo-buttons {
-  display: flex;
-  gap: 8px;
-  flex-direction: column;
-}
-
-.login-card .demo-buttons button {
-  padding: 10px 14px;
-  border: 1px solid #f59e0b;
-  background: white;
-  color: #b45309;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.login-card .demo-buttons button:hover {
-  background: #fffbeb;
-}
-
-.login-card .footer {
-  text-align: center;
-  color: #64748b;
-  font-size: 14px;
-}
-
-.login-card .footer a {
-  color: #f97316;
-  text-decoration: none;
-  font-weight: 600;
-  margin-left: 4px;
-}
-
-.login-card .footer a:hover {
-  text-decoration: underline;
-}
-
-/* ===== REGISTRO ===== */
-.register-card {
+.admin-table{
   width: 100%;
-  max-width: 430px;
+  border-collapse: collapse;
+  font-size: 14px;
+  text-align: left;
   background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 24px;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
-  animation: fadeUp 0.5s ease;
-  margin: 0 auto;
-  min-height: 100vh;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #fde7d3;
+}
+
+.admin-table th {
+   background: #fff7ed;
+  color: #9a3412;
+  font-weight: 800;
+}
+
+.admin-table td {
+  color: #475569;
+}
+
+.admin-table tr:hover {
+  background: #fff7ed;
+}
+
+
+/* ===== ADMIN MODAL ===== */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
   display: flex;
-  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(25px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.register-card .header {
+.modal-card {
+  background: linear-gradient(180deg, #ffffff, #fff7ed);
+  width: 440px;
+  max-width: 90%;
+  padding: 2.2rem;
+  border-radius: 22px;
   position: relative;
   text-align: center;
-  padding: 34px 28px 26px;
-  background: linear-gradient(135deg, #fffbeb, #fff7ed, #fffbeb);
-  border-bottom: 1px solid #fed7aa;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.28);
+  border: 1px solid #fed7aa;
 }
 
-.register-card .badge {
+.modal-card h2 {
+  color: #111827;
+  margin-bottom: 1.8rem;
+}
+
+.modal-close {
   position: absolute;
-  top: 16px;
-  right: 16px;
-  background: rgba(249, 115, 22, 0.1);
-  color: #c2410c;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 4px 9px;
+  top: 1rem;
+  right: 1rem;
+  border: none;
+  background: #ffedd5;
+  color: #9a3412;
+  width: 34px;
+  height: 34px;
   border-radius: 999px;
-  letter-spacing: 0.06em;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: 0.2s ease;
 }
 
-.register-card .logo {
-  width: 58px;
-  height: 58px;
-  margin: 0 auto 14px;
-  border-radius: 50%;
-  background: #f97316;
+.modal-close:hover {
+  background: #fb923c;
   color: white;
+}
+
+.user-info {
+  background: white;
+  border: 1px solid #fed7aa;
+  border-radius: 16px;
+  padding: 1.2rem;
+}
+
+.user-info p {
+  margin-bottom: .8rem;
+  color: #5b526c;
+}
+
+.user-info strong {
+  color: #9a3412;
+}
+
+
+.acciones {
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 30px;
-  box-shadow: 0 8px 18px rgba(249, 115, 22, 0.22);
+  gap: 8px;
 }
 
-.register-card h1 {
-  margin: 0;
-  font-size: 26px;
-  letter-spacing: -0.03em;
-}
-
-.register-card h1 span {
-  color: #ea580c;
-  font-family: Georgia, serif;
-  font-style: italic;
-  font-size: 18px;
-  font-weight: 500;
-}
-
-.register-card .subtitle {
-  margin: 8px 0 0;
-  color: #64748b;
-  font-size: 13px;
-}
-
-.register-card form {
-  padding: 24px;
-  flex: 1;
-}
-
-.register-card .form-group {
-  margin-bottom: 15px;
-}
-
-.register-card label {
-  display: block;
-  margin-bottom: 6px;
-  color: #475569;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.register-card .input-wrap {
-  position: relative;
-}
-
-.register-card .input-icon {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #94a3b8;
-  font-size: 15px;
-  pointer-events: none;
-}
-
-.register-card input {
-  width: 100%;
-  border: 1px solid #cbd5e1;
-  border-radius: 14px;
-  padding: 11px 14px 11px 38px;
-  font-size: 14px;
-  color: #1e293b;
-  outline: none;
-  transition: 0.2s;
-}
-
-.register-card input::placeholder {
-  color: #cbd5e1;
-}
-
-.register-card input:focus {
-  border-color: #f97316;
-  box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.14);
-}
-
-.register-card .message {
-  display: none;
-  gap: 10px;
-  align-items: flex-start;
-  padding: 12px;
-  margin-bottom: 14px;
-  border-radius: 14px;
-  font-size: 12px;
-  line-height: 1.35;
-}
-
-.register-card .message strong {
-  display: block;
-  margin-bottom: 2px;
-}
-
-.register-card .message.error {
-  background: #fef2f2;
-  color: #b91c1c;
-  border: 1px solid #fecaca;
-}
-
-.register-card .message.success {
-  background: #ecfdf5;
-  color: #047857;
-  border: 1px solid #a7f3d0;
-}
-
-.register-card .submit-btn {
-  width: 100%;
+.btn-admin {
   border: none;
-  border-radius: 14px;
   background: #f97316;
   color: white;
-  padding: 12px 16px;
-  font-size: 14px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-admin:hover {
+  background: #ea580c;
+}
+
+.btn-delete {
+  border: none;
+  background: none;
+  color: #dc2626;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 4px;
+}
+
+.btn-delete:hover {
+  color: #991b1b;
+}
+
+/* ===== BOTONES ADMIN ===== */
+
+.acciones {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-admin {
+  border: none;
+  background: #ff6b1a;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 10px;
   font-weight: 700;
   cursor: pointer;
-  transition: 0.2s;
-  box-shadow: 0 8px 18px rgba(249, 115, 22, 0.16);
-  margin-top: 10px;
+  box-shadow: 0 4px 10px rgba(255, 107, 26, 0.18);
+  transition: 0.2s ease;
 }
 
-.register-card .submit-btn:hover {
+.btn-admin:hover {
   background: #ea580c;
-  box-shadow: 0 12px 24px rgba(249, 115, 22, 0.22);
+  transform: translateY(-1px);
 }
 
-.register-card .footer {
-  text-align: center;
-  padding: 18px 24px;
-  background: #f8fafc;
-  border-top: 1px solid #e2e8f0;
-}
-
-.register-card .footer p {
-  margin: 0;
-  color: #64748b;
-  font-size: 13px;
-}
-
-.register-card .footer a {
-  color: #ea580c;
-  font-weight: 700;
-  text-decoration: none;
-  margin-left: 4px;
-}
-
-.register-card .footer a:hover {
-  text-decoration: underline;
-}
-
-.btn-link {
-  display: inline-block;
-  text-decoration: none;
-  border: 1px solid #e2e8f0;
-  background: #fff;
-  color: #475569;
+.btn-delete {
+  border: 1px solid #fecaca;
+  background: #fff1f2;
+  color: #dc2626;
+  width: 36px;
+  height: 36px;
   border-radius: 10px;
-  padding: 7px 10px;
-  font-size: 11px;
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 15px;
+  transition: 0.2s ease;
+}
+
+.btn-delete:hover {
+  background: #fee2e2;
+  color: #991b1b;
+  transform: translateY(-1px);
+}
+
+
+/* ===== Scroll + paginado ===== */
+.tabla-scroll {
+  max-height: 420px;
+  overflow-y: auto;
+  border-radius: 16px;
+}
+
+.paginado {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+}
+
+.paginado button {
+  border: none;
+  background: #ff6b1a;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 10px;
   font-weight: 700;
-  transition: all 0.2s ease;
+  cursor: pointer;
 }
 
-.btn-link:hover {
-  background: #fff7ed;
-  border-color: #fed7aa;
-  color: #ea580c;
+.paginado button:disabled {
+  background: #e2e8f0;
+  color: #94a3b8;
+  cursor: not-allowed;
 }
 
-.external-results {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-  margin-top: 16px;
+.paginado span {
+  color: #475569;
+  font-weight: 700;
+}
+
+
+/* ===== Filtro admin ===== */
+
+.barra-filtros {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.barra-filtros input {
+  flex: 1;
+  min-width: 250px;
+}
+
+.barra-filtros select {
+  width: 180px;
+  flex-shrink: 0;
+}
+
+.barra-filtros input,
+.barra-filtros select {
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
 }
