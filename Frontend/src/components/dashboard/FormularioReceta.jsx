@@ -18,6 +18,7 @@ const CrearRecetaForm = () => {
   const {
     register,
     handleSubmit,
+      reset,
     formState: { errors, isSubmitting, isValid }
   } = useForm({
     resolver: joiResolver(crearRecetaSchema),
@@ -53,6 +54,7 @@ const CrearRecetaForm = () => {
       console.log('RECETA CREADA')
       console.log(respuesta.data)
       dispatch(guardarReceta(respuesta.data.receta))
+      reset() // Limpiar formulario
     } catch (error) {
       console.log(error.response?.data || error.message)
     }
@@ -167,6 +169,7 @@ const CrearRecetaForm = () => {
             {errors.imagen && <span className="error">{errors.imagen.message}</span>}
 
             <button
+             className="btn"
               type="submit"
 
               style={{ width: "100%" }}

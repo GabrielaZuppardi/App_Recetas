@@ -24,25 +24,29 @@ const TarjetaReceta = ({ receta, onClick, onEliminar, onEditar }) => {
             : receta.descripcion}
         </p>
         <div className="recipe-actions">
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation()
-              onEditar()
-            }}
-          >
-            ✏️
-          </button>
 
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation()
-              onEliminar(receta._id)
-            }}
-          >
-            🗑️
-          </button>
+          {onEditar && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation()
+                onEditar()
+              }}
+            >
+              ✏️
+            </button>
+          )}
+          {onEliminar && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation()
+                onEliminar(receta._id)
+              }}
+            >
+              🗑️
+            </button>
+          )}
         </div>
       </div>
 
