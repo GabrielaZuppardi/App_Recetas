@@ -236,7 +236,7 @@ export const buscarRecetasExternasService = async ({
   query,
   maxReadyTime,
   page = 1,
-  limit = 5
+  limit = 3
 }) => {
   // 🔹 Validar API KEY
   if (!process.env.SPOONACULAR_API_KEY) {

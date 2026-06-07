@@ -60,7 +60,7 @@ const GeneradorRecetaIA = () => {
 
                 <form>
                     <label>
-                        Dejá que la IA te sugiera una receta simple con los ingredientes de tu heladera
+                        Dejá que la IA cree una receta simple con los ingredientes de tu heladera
                     </label>
 
                     <input
