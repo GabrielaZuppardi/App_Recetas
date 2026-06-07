@@ -39,7 +39,7 @@ export const crearRecetaSchema = Joi.object({
   pasos: Joi.string()
     .trim()
     .min(10)
-    .max(500)
+    .max(1000)
     .required()
     .messages({
       "array.base": "Los pasos deben ser un arreglo",

@@ -9,6 +9,7 @@ import {obtenerRecetasController,
         generarDescripcionRecetaController,
         generarRecetaController,
         obtenerRecetasConFiltrosController,
+        sugerirDescripcionRecetaController
         
       } from "../controllers/recetas.controllers.js";
        
@@ -37,6 +38,7 @@ router.get("/mias", obtenerMisRecetasController);
 
 // Rutas con :id después
 router.post("/:id/generar-descripcion", generarDescripcionRecetaController);
+router.post("/:id/sugerir-descripcion", sugerirDescripcionRecetaController);
 
 // CRUD base
 router.get("/", obtenerRecetasController);

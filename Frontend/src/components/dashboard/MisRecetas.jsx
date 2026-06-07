@@ -7,8 +7,9 @@
 import React, { useEffect } from 'react'
 import TarjetaReceta from './TarjetaReceta'
 import { useDispatch, useSelector } from 'react-redux'
-import { agregarReceta } from '../../features/recetas.slice'
+import { agregarReceta, eliminarReceta } from '../../features/recetas.slice'
 import api from '../../api/api'
+import ModalReceta from "./ModalReceta"
 
 const MisRecetas = () => {
 
@@ -16,11 +17,33 @@ const MisRecetas = () => {
 
   const recetas = useSelector((state) => state.recetas.recetas)
   const [loading, setLoading] = React.useState(true)
+  const [recetaSeleccionada, setRecetaSeleccionada] = React.useState(null)
+  console.log("Receta seleccionada:", recetaSeleccionada)
 
   const categorias = useSelector((state) => state.categorias.categorias)
   const [categoriaFiltro, setCategoriaFiltro] = React.useState("")
   const [dificultadFiltro, setDificultadFiltro] = React.useState("")
   const [tiempoMaximoFiltro, setTiempoMaximoFiltro] = React.useState("")
+
+  const [abrirEditando, setAbrirEditando] = React.useState(false)
+  const actualizarRecetaEnVista = (recetaActualizada) => {
+    setRecetaSeleccionada(recetaActualizada)
+  }
+
+  const eliminarR = async (id) => {
+    try {
+      console.log("Eliminar receta:", id)
+
+      await api.delete(`/recetas/${id}`)
+
+      dispatch(eliminarReceta(id))
+
+      console.log("Receta eliminada")
+    } catch (error) {
+      console.log(error.response?.data || error.message)
+    }
+
+  }
 
   const filtrarRecetas = (categoria, dificultad, tiempoMaximo) => {
     api.get("/recetas/filtros", {
@@ -139,14 +162,33 @@ const MisRecetas = () => {
           {loading ? <p>Cargando recetas...</p> :
             recetas.length > 0 ? (
               recetas.map((receta) => (
-                <TarjetaReceta key={receta._id}
+                <TarjetaReceta
+                  key={receta._id}
                   receta={receta}
+                  onClick={() => {
+                    setAbrirEditando(false)
+                    setRecetaSeleccionada(receta)
+                  }}
+                  onEliminar={eliminarR}
+                  onEditar={() => {
+                    setAbrirEditando(true)
+                    setRecetaSeleccionada(receta)
+                  }}
                 />
               ))
             ) : (
               <p className="muted">No hay recetas para mostrar</p>
             )}
         </div>
+        <ModalReceta
+  receta={recetaSeleccionada}
+  abrirEditando={abrirEditando}
+  onClose={() => {
+    setRecetaSeleccionada(null)
+    setAbrirEditando(false)
+  }}
+  onEliminar={eliminarR}
+/>
       </div>
 
     </article>
