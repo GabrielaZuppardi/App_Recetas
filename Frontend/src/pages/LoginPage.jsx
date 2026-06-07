@@ -1,19 +1,23 @@
 import React from 'react'
-import { Link } from 'react-router'
 import LoginForm from '../components/login/LoginForm'
-
 import LoginFooter from '../components/login/LoginFooter'
-
+import LoginHeader from '../components/login/LoginHeader'
+import { GiChefToque } from "react-icons/gi";
+import { MdRestaurantMenu } from "react-icons/md";
+import { LuCookingPot } from "react-icons/lu";
+import { TbToolsKitchen2 } from "react-icons/tb";
+import LoginAdminHeader from '../components/loginAdmin/LoginAdminHeader';
 
 const LoginPage = () => {
   return (
-    <div >
-      <header>
-        <h1>🍳 App Recetas</h1>
-        <p className="subtitle">Plataforma Inteligente para la Gestión de Recetas</p>
-      </header>
-      <LoginForm />
-      <LoginFooter />
+    <div className="login-page">
+      <section className="login-card">
+
+       <LoginHeader />     
+        <LoginForm />
+        <LoginFooter />
+
+      </section>
     </div>
   )
 }

@@ -2,16 +2,34 @@ import Usuario from '../models/usuario.model.js';
 import bcrypt from 'bcryptjs';
 import { isValidObjectId } from "mongoose";
 
-export const obtenerUsuariosService = async (page, limit) => {
-    limit = Number(limit) || 3;
+export const obtenerUsuariosService = async (page, limit, filtros = {}) => {
+    limit = Number(limit) || 10;
     page = Number(page) || 1;
 
     const skip = (page - 1) * limit;
 
-    const totalUsuarios = await Usuario.countDocuments();
+    const query = {};
+
+    if (filtros.nombre) {
+        query.nombre = { $regex: filtros.nombre, $options: "i" };
+    }
+
+    if (filtros.email) {
+        query.email = { $regex: filtros.email, $options: "i" };
+    }
+
+    if (filtros.rol) {
+        query.rol = filtros.rol;
+    }
+
+    if (filtros.plan) {
+        query.plan = filtros.plan;
+    }
+
+    const totalUsuarios = await Usuario.countDocuments(query);
     const totalPages = Math.ceil(totalUsuarios / limit);
 
-    const usuarios = await Usuario.find()
+    const usuarios = await Usuario.find(query)
         .select("-password")
         .skip(skip)
         .limit(limit);

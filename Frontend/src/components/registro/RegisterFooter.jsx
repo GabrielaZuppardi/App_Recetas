@@ -1,12 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router'
 
 const RegisterFooter = () => {
   return (
     <section className="footer">
-      <p>
-        ¿Ya tienes una cuenta registrada?
-        <a href="#"> Inicia Sesión aquí</a>
-      </p>
+    <Link to="/">
+  ¿Ya tienes una cuenta? Inicia sesión aquí
+</Link>
     </section>
   )
 }

@@ -1,5 +1,8 @@
 import React from 'react'
 import { NavLink, useNavigate } from 'react-router'
+import { GiChefToque } from "react-icons/gi";
+import { MdRestaurantMenu } from "react-icons/md";
+
 
 const NavBar = () => {
     const navigate = useNavigate()
@@ -16,11 +19,12 @@ const NavBar = () => {
     return (
         <header className="navbar card">
             <div className="brand">
-                <div className="logo">🍳</div>
-
-                <div>
-                    <h1>App recetas</h1>
-                    <p>Panel simplificado de recetas inteligentes</p>
+                <div className="logo">
+                     <GiChefToque />              
+                </div>
+                  <div>
+                       <h1>Chef-Mate</h1>
+                    
                 </div>
             </div>
 

@@ -21,6 +21,11 @@ export const usuariosSlice = createSlice({
       state.usuarioLogueado = action.payload;
     },
 
+    eliminarUsuario: (state, action) => {
+  state.usuarios = state.usuarios.filter(
+    usuario => usuario._id !== action.payload
+  )},
+
     cerrarSesion: (state) => {
       state.usuarioLogueado = null;
     },
@@ -31,6 +36,7 @@ export const {
   agregarUsuarios,
   guardarUsuario,
   guardarUsuarioLogueado,
+  eliminarUsuario,
   cerrarSesion,
 } = usuariosSlice.actions;
 

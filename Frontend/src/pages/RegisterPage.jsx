@@ -1,19 +1,19 @@
 import React from 'react'
-import { Link } from 'react-router'
 import RegisterForm from '../components/registro/RegisterForm'
+import RegisterFooter from '../components/registro/RegisterFooter'
+import RegisterHeader from '../components/registro/RegisterHeader'
+
 
 const RegisterPage = () => {
   return (
-    <div>
+    <div className="register-page">
+      <section className="register-card">
 
-      <h1>Registro</h1>
+        <RegisterHeader />
+        <RegisterForm />
+        <RegisterFooter />
 
-      <RegisterForm />
-
-      <Link to="/">
-        ¿Ya tienes una cuenta? Inicia sesión aquí
-      </Link>
-
+      </section>
     </div>
   )
 }
