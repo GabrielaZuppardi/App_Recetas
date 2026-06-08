@@ -10,7 +10,7 @@ export const obtenerUsuariosService = async (page, limit, filtros = {}) => {
 
     const query = {};
 
-   
+
     if (filtros.busqueda) {
         query.$or = [
             { nombre: { $regex: filtros.busqueda, $options: "i" } },
@@ -22,7 +22,7 @@ export const obtenerUsuariosService = async (page, limit, filtros = {}) => {
         query.rol = filtros.rol;
     }
 
-    if (filtros.plan) {
+    if (filtros.plan && filtros.rol !== "administrador") {
         query.plan = filtros.plan;
     }
 
@@ -61,10 +61,10 @@ export const obtenerUsuarioPorIdService = async (id) => {
     }
 
     return usuario;
-};  
+};
 
 // Este servicio se puede usar para crear usuarios desde un admin, pero no para el registro público
- export const crearAdministradorService = async (usuario) => {
+export const crearAdministradorService = async (usuario) => {
     const { email } = usuario;
 
     const usuarioExistente = await Usuario.findOne({ email });
@@ -77,7 +77,8 @@ export const obtenerUsuarioPorIdService = async (id) => {
 
     const nuevoUsuario = new Usuario({
         ...usuario,
-        rol: "administrador"
+        rol: "administrador",
+        plan: undefined
     });
 
     await nuevoUsuario.save();
@@ -123,6 +124,14 @@ export const actualizarUsuarioService = async (id, usuario) => {
         datosActualizados.password = passwordHash;
     }
 
+    if (datosActualizados.rol === "administrador") {
+        datosActualizados.plan = undefined;
+    }
+
+    if (datosActualizados.rol === "usuario") {
+        datosActualizados.plan = "plus";
+    }
+
     const usuarioActualizado = await Usuario.findByIdAndUpdate(
         id,
         datosActualizados,
@@ -158,31 +167,31 @@ export const eliminarUsuarioService = async (id) => {
 };
 
 export const cambiarPlanAPremiumService = async (usuarioId) => {
-  const usuario = await Usuario.findById(usuarioId);
+    const usuario = await Usuario.findById(usuarioId);
 
-  if (!usuario) {
-    const error = new Error("Usuario no encontrado");
-    error.status = 404;
-    throw error;
-  }
+    if (!usuario) {
+        const error = new Error("Usuario no encontrado");
+        error.status = 404;
+        throw error;
+    }
 
-  if (usuario.plan !== "plus") {
-    const error = new Error("Solo los usuarios con plan plus pueden cambiar a premium");
-    error.status = 400;
-    throw error;
-  }
+    if (usuario.plan !== "plus") {
+        const error = new Error("Solo los usuarios con plan plus pueden cambiar a premium");
+        error.status = 400;
+        throw error;
+    }
 
-  if (usuario.rol !== "usuario") {
-  const error = new Error("Este perfil de usuario no puede cambiar de plan");
-  error.status = 403;
-  throw error;
-}
+    if (usuario.rol !== "usuario") {
+        const error = new Error("Este perfil de usuario no puede cambiar de plan");
+        error.status = 403;
+        throw error;
+    }
 
-  usuario.plan = "premium";
-  await usuario.save();
+    usuario.plan = "premium";
+    await usuario.save();
 
-  const usuarioSinPassword = usuario.toObject();
-  delete usuarioSinPassword.password;
+    const usuarioSinPassword = usuario.toObject();
+    delete usuarioSinPassword.password;
 
-  return usuarioSinPassword;
+    return usuarioSinPassword;
 };
