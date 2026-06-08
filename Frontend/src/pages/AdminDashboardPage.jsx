@@ -1,17 +1,17 @@
 import React from 'react'
 import UsuariosAdmin from '../components/admin/gestionUsuarios/UsuariosAdmin'
-import CrearUsuarioAdmin from '../components/admin/gestionUsuarios/CrearUsuarioAdmin'
+import CategoriasAdmin from '../components/admin/gestionCategorias/CategoriasAdmin'
+import CrearUsuarioAdmin from '../components/admin/gestionUsuarios/CrearAdmin'
+import CrearCategoria from '../components/admin/gestionCategorias/CrearCategoria'
 
 const AdminDashboardPage = () => {
   return (
     <div className="admin-dashboard">
 
-      {/* Gestión de usuarios */}
       <section className="admin-card">
         <UsuariosAdmin />
       </section>
 
-      {/* Formularios */}
       <div className="admin-form-row">
 
         <section className="admin-card">
@@ -19,14 +19,13 @@ const AdminDashboardPage = () => {
         </section>
 
         <section className="admin-card">
-          <h2>Crear Categoría</h2>
+          <CrearCategoria />
         </section>
 
       </div>
 
-      {/* Gestión categorías */}
       <section className="admin-card">
-        <h2>Gestión de Categorías</h2>
+        <CategoriasAdmin />
       </section>
 
     </div>
