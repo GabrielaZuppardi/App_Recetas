@@ -9,16 +9,24 @@ import Paginado from './Paginado'
 
 const UsuariosAdmin = () => {
 
+  // Obtiene la lista de usuarios desde Redux y permite despachar acciones al store.
   const usuarios = useSelector(state => state.usuarios.usuarios)
   const dispatch = useDispatch()
 
+
+  // Estado del usuario actualmente seleccionado en el modal.
   const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null)
+
+  // Estados utilizados para el paginado.
   const [paginaActual, setPaginaActual] = useState(1)
   const [totalPaginas, setTotalPaginas] = useState(1)
+
+  // Estados de los filtros de búsqueda.
   const [filtroBusqueda, setFiltroBusqueda] = useState('')
   const [filtroRol, setFiltroRol] = useState('')
   const [filtroPlan, setFiltroPlan] = useState('')
 
+  // Obtiene usuarios del backend cada vez que cambian la página o los criterios de búsqueda.
   useEffect(() => {
     api.get('/usuarios', {
       params: {
@@ -35,11 +43,15 @@ const UsuariosAdmin = () => {
           res.data.data ||
           []
 
+        // Actualiza la lista global de usuarios en Redux.
         dispatch(agregarUsuarios(listaUsuarios))
 
+
+        // Actualiza la cantidad total de páginas.
         if (res.data.totalPages) {
           setTotalPaginas(res.data.totalPages)
         }
+        
       })
       .catch(err => {
         console.error('Error al obtener usuarios:', err)
@@ -47,6 +59,7 @@ const UsuariosAdmin = () => {
 
   }, [dispatch, paginaActual, filtroBusqueda, filtroRol, filtroPlan])
 
+  // Elimina un usuario y actualiza Redux para reflejar el cambio en pantalla.
   const eliminarU = (id) => {
     const confirmar = window.confirm('¿Desea eliminar este usuario?')
 
@@ -61,6 +74,8 @@ const UsuariosAdmin = () => {
       })
   }
 
+
+  // Envía los cambios del usuario al backend y actualiza Redux con la versión modificada.
   const editarU = (id, datosActualizados) => {
     api.patch(`/usuarios/${id}`, datosActualizados)
       .then((res) => {
@@ -71,6 +86,7 @@ const UsuariosAdmin = () => {
       })
   }
 
+  // Navegación entre páginas del listado.
   const paginaAnterior = () => {
     if (paginaActual > 1) {
       setPaginaActual(paginaActual - 1)

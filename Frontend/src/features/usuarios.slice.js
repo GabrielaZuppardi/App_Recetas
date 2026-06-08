@@ -13,6 +13,10 @@ export const usuariosSlice = createSlice({
       state.usuarios = action.payload;
     },
 
+    crearAdmin: (state, action) => {
+      state.usuarios.push(action.payload)
+    },
+
     guardarUsuarioLogueado: (state, action) => {
       state.usuarioLogueado = action.payload;
     }, //si bien guardamos la sesion con localStorage, mantenemos esto para que se renderice el cambio en la UI al pasar a premium en Membresía.jsx
@@ -43,6 +47,7 @@ export const usuariosSlice = createSlice({
 
 export const {
   agregarUsuarios,
+  crearAdmin,
   guardarUsuarioLogueado,
   cerrarSesion,
   eliminarUsuario,

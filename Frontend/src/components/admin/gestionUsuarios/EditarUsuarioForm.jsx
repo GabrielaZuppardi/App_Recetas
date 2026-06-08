@@ -1,23 +1,24 @@
 import React, { useState } from 'react'
 
 const EditarUsuarioForm = ({ usuario, editarU, cancelarEdicion, onClose }) => {
+
+  // Estados locales del formulario inicializados con los datos actuales del usuario.
   const [nombre, setNombre] = useState(usuario.nombre)
   const [email, setEmail] = useState(usuario.email)
   const [rol, setRol] = useState(usuario.rol)
+
+  // Si el usuario no tiene plan, por ejemplo porque es administrador,
+  // se usa 'plus' como valor por defecto para cuando pase a rol usuario.
   const [plan, setPlan] = useState(usuario.plan || 'plus')
 
+  // Maneja el cambio de rol y mantiene coherente el campo plan.
+  // Los administradores no tienen plan, por eso se limpia.
+  // Si vuelve a ser usuario y no hay plan seleccionado, se asigna 'plus'.
   const handleCambioRol = (e) => {
     const nuevoRol = e.target.value
-
     setRol(nuevoRol)
-
-    if (nuevoRol === 'administrador') {
-      setPlan('')
-    }
-
-    if (nuevoRol === 'usuario' && !plan) {
-      setPlan('plus')
-    }
+    if (nuevoRol === 'administrador') { setPlan('') }
+    if (nuevoRol === 'usuario' && !plan) { setPlan('plus') }
   }
 
   const handleSubmit = (e) => {
@@ -32,6 +33,7 @@ const EditarUsuarioForm = ({ usuario, editarU, cancelarEdicion, onClose }) => {
 
     editarU(usuario._id, usuarioEditado)
     onClose()
+
   }
 
   return (
