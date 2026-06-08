@@ -10,12 +10,12 @@ export const obtenerUsuariosService = async (page, limit, filtros = {}) => {
 
     const query = {};
 
-    if (filtros.nombre) {
-        query.nombre = { $regex: filtros.nombre, $options: "i" };
-    }
-
-    if (filtros.email) {
-        query.email = { $regex: filtros.email, $options: "i" };
+   
+    if (filtros.busqueda) {
+        query.$or = [
+            { nombre: { $regex: filtros.busqueda, $options: "i" } },
+            { email: { $regex: filtros.busqueda, $options: "i" } }
+        ];
     }
 
     if (filtros.rol) {
@@ -46,7 +46,6 @@ export const obtenerUsuariosService = async (page, limit, filtros = {}) => {
 
 export const obtenerUsuarioPorIdService = async (id) => {
 
-    // 🔹 Validar id
     if (!isValidObjectId(id)) {
         const error = new Error("El id no es válido");
         error.status = 400;
@@ -55,7 +54,6 @@ export const obtenerUsuarioPorIdService = async (id) => {
 
     const usuario = await Usuario.findById(id).select("-password");
 
-    // 🔹 Validar existencia
     if (!usuario) {
         const error = new Error("No se encontró el usuario");
         error.status = 404;
@@ -92,20 +90,16 @@ export const obtenerUsuarioPorIdService = async (id) => {
 
 export const actualizarUsuarioService = async (id, usuario) => {
 
-    // 🔹 Validar id
     if (!isValidObjectId(id)) {
         const error = new Error("El id no es válido");
         error.status = 400;
         throw error;
     }
 
-    // 🔹 Sacamos campos sensibles o que requieren tratamiento especial
     const { email, password, plan, ...datosPermitidos } = usuario;
 
-    // 🔹 Solo los campos permitidos pasan directo
     let datosActualizados = { ...datosPermitidos };
 
-    // 🔹 Validar email duplicado (si viene)
     if (email) {
         const usuarioExistente = await Usuario.findOne({
             email,
@@ -121,7 +115,6 @@ export const actualizarUsuarioService = async (id, usuario) => {
         datosActualizados.email = email;
     }
 
-    // 🔹 Hashear password (si viene)
     if (password) {
         const passwordHash = await bcrypt.hash(
             password,
@@ -130,14 +123,12 @@ export const actualizarUsuarioService = async (id, usuario) => {
         datosActualizados.password = passwordHash;
     }
 
-    // 🔹 Actualizar usuario
     const usuarioActualizado = await Usuario.findByIdAndUpdate(
         id,
         datosActualizados,
         { returnDocument: "after" }
     ).select("-password");
 
-    // 🔹 Validar existencia
     if (!usuarioActualizado) {
         const error = new Error("No se encontró el usuario");
         error.status = 404;
