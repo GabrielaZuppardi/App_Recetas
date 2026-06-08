@@ -43,38 +43,38 @@ export const obtenerCategoriaPorIdService = async (id) => {
     return categoria;
 };
 
+
 export const crearCategoriasService = async (categoria) => {
+  const { nombre } = categoria;
 
-    const { nombre } = categoria;
+  if (!nombre) {
+    const error = new Error("El nombre de la categoría es obligatorio");
+    error.status = 400;
+    throw error;
+  }
 
-    // validación mínima defensiva 
-    if (!nombre) {
-        const error = new Error("El nombre de la categoría es obligatorio");
-        error.status = 400;
-        throw error;
-    }
+  const nombreNormalizado = nombre.trim().toLowerCase();
 
-    const nombreNormalizado = nombre.trim().toLowerCase();
+  const categoriaExistente = await Categoria.findOne({
+    nombre: { $regex: `^${nombreNormalizado}$`, $options: "i" }
+  });
 
-    const categoriaExistente = await Categoria.findOne({
-        nombre: nombreNormalizado
-    });
+  if (categoriaExistente) {
+    const error = new Error("Ya existe una categoría con ese nombre");
+    error.status = 409;
+    throw error;
+  }
 
-    if (categoriaExistente) {
-        const error = new Error("Ya existe una categoría con ese nombre");
-        error.status = 409;
-        throw error;
-    }
+  const nuevaCategoria = new Categoria({
+    ...categoria,
+    nombre: nombreNormalizado
+  });
 
-    const nuevaCategoria = new Categoria({
-        ...categoria,
-        nombre: nombreNormalizado
-    });
+  await nuevaCategoria.save();
 
-    await nuevaCategoria.save();
-
-    return nuevaCategoria;
+  return nuevaCategoria;
 };
+
 
 export const actualizarCategoriaService = async (id, categoria) => {
 
