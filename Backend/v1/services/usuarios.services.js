@@ -97,7 +97,7 @@ export const actualizarUsuarioService = async (id, usuario) => {
         throw error;
     }
 
-    const { email, password, plan, ...datosPermitidos } = usuario;
+    const { email, password, ...datosPermitidos } = usuario;
 
     let datosActualizados = { ...datosPermitidos };
 
@@ -123,12 +123,12 @@ export const actualizarUsuarioService = async (id, usuario) => {
         );
         datosActualizados.password = passwordHash;
     }
-
+    
     if (datosActualizados.rol === "administrador") {
         datosActualizados.plan = undefined;
     }
 
-    if (datosActualizados.rol === "usuario") {
+    if (datosActualizados.rol === "usuario" && !datosActualizados.plan) {
         datosActualizados.plan = "plus";
     }
 
