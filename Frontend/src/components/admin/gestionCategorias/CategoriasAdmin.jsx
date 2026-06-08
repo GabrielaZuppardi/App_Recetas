@@ -22,13 +22,10 @@ const CategoriasAdmin = () => {
   useEffect(() => {
     api.get('/categorias')
       .then(res => {
-        const listaCategorias =
-          res.data.categorias ||
-          res.data.data ||
-          []
 
         // Actualiza la lista global de categorías en Redux.
-        dispatch(agregarCategorias(listaCategorias))
+        dispatch(agregarCategorias( res.data.categorias ))
+
       })
       .catch(err => {
         console.error('Error al obtener categorías:', err)

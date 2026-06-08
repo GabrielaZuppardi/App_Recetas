@@ -18,16 +18,25 @@ function App() {
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
+          
           <Route index element={<LoginPage />} />
           <Route path="/loginAdmin" element={<AdminLoginPage />} />
           <Route path="/registro" element={<RegisterPage />} />
+
           <Route path="/" element={<ContainerPage />}>
-            <Route element={<ProtectedRoute />}>
-              <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/dashboardAdmin" element={<AdminDashboardPage />} />
+
+            <Route element={<ProtectedRoute rolPermitido="usuario" />}>
+              <Route path="dashboard" element={<DashboardPage />} />
             </Route>
+
+            <Route element={<ProtectedRoute rolPermitido="administrador" />}>
+              <Route path="dashboardAdmin" element={<AdminDashboardPage />} />
+            </Route>
+
             <Route path="*" element={<NotFoundPage />} />
+
           </Route>
+        
         </Routes>
       </BrowserRouter>
     </Provider>

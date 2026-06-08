@@ -24,30 +24,41 @@ const CrearUsuarioForm = ({ crearU }) => {
 
   return (
     <form className="form-admin" onSubmit={handleSubmit}>
-      <label>Nombre</label>
-      <input
-        type="text"
-        value={nombre}
-        onChange={(e) => setNombre(e.target.value)}
-      />
 
-      <label>Email</label>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+      <div className="form-group">
+        <label>Nombre</label>
+        <input
+          type="text"
+          placeholder="Ej: Ana Pérez"
+          value={nombre}
+          onChange={(e) => setNombre(e.target.value)}
+        />
+      </div>
 
-      <label>Contraseña</label>
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+      <div className="form-group">
+        <label>Email</label>
+        <input
+          type="email"
+          placeholder="Ej: ana.perez@email.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </div>
+
+      <div className="form-group">
+        <label>Contraseña</label>
+        <input
+          type="password"
+          placeholder="Mínimo 8 caracteres"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </div>
 
       <button type="submit" className="btn-admin">
         Crear administrador
       </button>
+
     </form>
   )
 }

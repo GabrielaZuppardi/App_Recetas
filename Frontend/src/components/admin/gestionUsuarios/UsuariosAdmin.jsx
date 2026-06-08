@@ -38,20 +38,16 @@ const UsuariosAdmin = () => {
       }
     })
       .then(res => {
-        const listaUsuarios =
-          res.data.usuarios ||
-          res.data.data ||
-          []
-
+ 
         // Actualiza la lista global de usuarios en Redux.
-        dispatch(agregarUsuarios(listaUsuarios))
+        dispatch(agregarUsuarios( res.data.usuarios ))
 
 
         // Actualiza la cantidad total de páginas.
         if (res.data.totalPages) {
           setTotalPaginas(res.data.totalPages)
         }
-        
+
       })
       .catch(err => {
         console.error('Error al obtener usuarios:', err)

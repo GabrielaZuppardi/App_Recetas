@@ -1,10 +1,21 @@
 import React from 'react'
 import { Navigate, Outlet } from 'react-router'
 
-const ProtectedRoute = () => {
-  const isAuth = localStorage.getItem("token") !== null;
+const ProtectedRoute = ({ rolPermitido }) => {
+  const token = localStorage.getItem('token')
+  const usuario = JSON.parse(localStorage.getItem('usuario'))
 
-  if (!isAuth) return <Navigate to="/" replace />
+  if (!token) {
+    return <Navigate to="/" replace />
+  }
+
+  if (usuario?.rol !== rolPermitido) {
+    if (usuario?.rol === 'administrador') {
+      return <Navigate to="/dashboardAdmin" replace />
+    }
+
+    return <Navigate to="/dashboard" replace />
+  }
 
   return <Outlet />
 }
