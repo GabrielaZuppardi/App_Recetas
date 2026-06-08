@@ -12,8 +12,7 @@ export const obtenerUsuariosController = async (req, res, next) => {
     const { page, limit, nombre, email, rol, plan } = req.query;
 
     const respuesta = await obtenerUsuariosService(page, limit, {
-        nombre,
-        email,
+       busqueda,
         rol,
         plan
     });
