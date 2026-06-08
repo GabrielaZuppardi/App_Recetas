@@ -8,13 +8,28 @@ const BuscadorRecetasExternas = () => {
     const [recetasExternas, setRecetasExternas] = React.useState([])
     const [total, setTotal] = React.useState(0)
     const [loading, setLoading] = React.useState(false)
+    const [error, setError] = React.useState("")
 
     const buscarRecetaExterna = async () => {
+        if (query.trim() === "") {
+            setError("Ingresá un ingrediente o nombre de receta para buscar.")
+            setRecetasExternas([])
+            setTotal(0)
+            return
+        }
+        if (query.trim().length < 3) {
+            setError("La búsqueda debe tener al menos 3 caracteres.")
+            setRecetasExternas([])
+            setTotal(0)
+            return
+        }
+
         try {
             setLoading(true)
+            setError("")
 
             const datos = {
-                query: query || undefined,
+                query: query.trim(),
                 maxReadyTime: maxReadyTime || undefined,
             }
 
@@ -22,12 +37,20 @@ const BuscadorRecetasExternas = () => {
                 params: datos,
             })
 
-            console.log(respuesta.data)
-
             setRecetasExternas(respuesta.data.resultados)
             setTotal(respuesta.data.total)
+            setQuery("")
+            setMaxReadyTime("")
+
+            if (respuesta.data.resultados.length === 0) {
+                setError("No se encontraron recetas con esos criterios.")
+            }
         } catch (error) {
-            console.log(error.response?.data || error.message)
+            setError(
+                error.response?.data?.mensaje ||
+                "Ocurrió un error al buscar recetas externas. Intentá nuevamente."
+            )
+
             setRecetasExternas([])
             setTotal(0)
         } finally {
@@ -49,22 +72,31 @@ const BuscadorRecetasExternas = () => {
                 type="text"
                 placeholder="Ej. pasta, pollo, ensalada"
                 value={query}
-                onChange={(e) => setQuery(e.target.value)}
+                onChange={(e) => {
+                    setQuery(e.target.value)
+                    setError("")
+                }}
             />
 
             <select
                 value={maxReadyTime}
-                onChange={(e) => setMaxReadyTime(e.target.value)}
+                onChange={(e) => {
+                    setMaxReadyTime(e.target.value)
+                    setError("")
+                }}
             >
                 <option value="">Cualquier tiempo</option>
                 <option value="15">Hasta 15 min</option>
                 <option value="30">Hasta 30 min</option>
                 <option value="60">Hasta 60 min</option>
             </select>
+
+            {error && <p className="error">{error}</p>}
+
             <button
                 type="button"
-                 className="btn"
-                  style={{ width: "25%", marginBottom: 16 }}
+                className="btn"
+                style={{ width: "25%", marginBottom: 16 }}
                 onClick={buscarRecetaExterna}
                 disabled={loading}
             >
@@ -87,7 +119,6 @@ const BuscadorRecetasExternas = () => {
                     ))}
                 </div>
             )}
-
         </article>
     )
 }

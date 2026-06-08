@@ -116,18 +116,41 @@ export const crearRecetaController = async (req, res, next) => {
 };
 
 export const actualizarRecetaController = async (req, res, next) => {
-  const { id } = req.params;
+  try {
+    const { id } = req.params;
 
-  const recetaActualizada = await actualizarRecetaService(
-    id,
-    req.body,
-    req.usuario
-  );
+    await runMulterSingle(upload, "imagen", req, res);
 
-  res.status(200).json({
-    mensaje: "Receta actualizada correctamente",
-    receta: recetaActualizada
-  });
+    const datosActualizados = { ...(req.body || {}) };
+
+    if (req.file) {
+      const result = await uploadBufferToCloudinary(
+        cloudinary,
+        req.file.buffer,
+        {
+          resource_type: "auto",
+          folder: "recetas"
+        }
+      );
+
+      datosActualizados.imagenUrl = result.secure_url;
+      datosActualizados.imagenPublicId = result.public_id;
+    }
+
+    const recetaActualizada = await actualizarRecetaService(
+      id,
+      datosActualizados,
+      req.usuario
+    );
+
+    res.status(200).json({
+      mensaje: "Receta actualizada correctamente",
+      receta: recetaActualizada
+    });
+
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const eliminarRecetaController = async (req, res, next) => {

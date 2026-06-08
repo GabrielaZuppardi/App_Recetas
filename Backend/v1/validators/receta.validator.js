@@ -166,12 +166,15 @@ export const modificarRecetaSchema = Joi.object({
       "number.min": "Debe haber al menos 1 porción"
     }),
 
-  imageUrl: Joi.string()
-    .trim()
-    .uri()
-    .messages({
-      "string.uri": "La URL de la imagen debe ser válida"
-    }),
+ imagenUrl: Joi.string()
+  .trim()
+  .uri()
+  .optional()
+  .allow(""),
+
+imagenPublicId: Joi.string()
+  .optional()
+  .allow(""),
   usuario: Joi.string()
     .hex()
     .length(24)

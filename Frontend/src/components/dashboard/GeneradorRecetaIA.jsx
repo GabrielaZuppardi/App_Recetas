@@ -5,26 +5,47 @@ const GeneradorRecetaIA = () => {
     const [ingredientesTexto, setIngredientesTexto] = React.useState("")
     const [recetaGenerada, setRecetaGenerada] = React.useState(null)
     const [fallback, setFallback] = React.useState(false)
+
     const [loading, setLoading] = React.useState(false)
+    const [error, setError] = React.useState("")
 
     const generarRecetaIA = async () => {
+        const ingredientes = ingredientesTexto
+            .split(",")
+            .map((i) => i.trim())
+            .filter((i) => i !== "")
+
+        if (ingredientes.length === 0) {
+            setError("Ingresá al menos un ingrediente.")
+            setFallback(false)
+            setRecetaGenerada(null)
+            return
+        }
+
+        const ingredientesInvalidos = ingredientes.filter(
+            (ingrediente) => ingrediente.length < 3
+        )
+
+        if (ingredientesInvalidos.length > 0) {
+            setError("Cada ingrediente debe tener al menos 3 caracteres.")
+            setFallback(false)
+            setRecetaGenerada(null)
+            return
+        }
+
         try {
-            const ingredientes = ingredientesTexto
-                .split(",")
-                .map((i) => i.trim())
-                .filter((i) => i !== "")
+            setLoading(true)
+            setError("")
+            setFallback(false)
+            setRecetaGenerada(null)
 
             const datos = {
                 ingredientes,
                 dificultad: "facil",
                 tiempoMaximo: 30,
             }
-            setLoading(true)
-            setFallback(false)
-            setRecetaGenerada(null)
-            const respuesta = await api.post("/recetas/generar", datos)
 
-            console.log("Respuesta IA:", respuesta.data)
+            const respuesta = await api.post("/recetas/generar", datos)
 
             if (respuesta.data.fallback) {
                 setFallback(true)
@@ -32,12 +53,14 @@ const GeneradorRecetaIA = () => {
                 return
             }
 
-            setFallback(false)
             setRecetaGenerada(respuesta.data.receta)
+            setIngredientesTexto("")
+            setError("")
         } catch (error) {
-            console.log(error.response?.data || error.message)
-            setFallback(true)
-            setRecetaGenerada(null)
+            setError(
+                error.response?.data?.mensaje ||
+                "Ocurrió un error al generar la receta. Intentá nuevamente."
+            )
         } finally {
             setLoading(false)
         }
@@ -67,8 +90,13 @@ const GeneradorRecetaIA = () => {
                         type="text"
                         placeholder="Ej. Pollo, tomate, albahaca"
                         value={ingredientesTexto}
-                        onChange={(e) => setIngredientesTexto(e.target.value)}
+                        onChange={(e) => {
+                            setIngredientesTexto(e.target.value)
+                            setError("")
+                        }}
                     />
+
+                    {error && <p className="error">{error}</p>}
 
                     <button
                         type="button"
@@ -110,6 +138,17 @@ const GeneradorRecetaIA = () => {
                                         <li key={index}>{paso}</li>
                                     ))}
                                 </ol>
+
+                                <button
+                                    type="button"
+                                    className="btn"
+                                    onClick={() => {
+                                        setRecetaGenerada(null)
+                                        setIngredientesTexto("")
+                                    }}
+                                >
+                                    ✨ Generar otra receta
+                                </button>
                             </>
                         ) : (
                             <p>
