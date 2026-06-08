@@ -12,6 +12,8 @@ export const store = configureStore({
     recetas: recetasReducer,
     usuarios: usuariosReducer,
     categorias: categoriasReducer,
+
   },
 }); 
+
 export default store;

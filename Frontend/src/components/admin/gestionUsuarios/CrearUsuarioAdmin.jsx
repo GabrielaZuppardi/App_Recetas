@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import api from '../../api/api'
+import api from '../../../api/api'
 
 const CrearUsuarioAdmin = () => {
   const [form, setForm] = useState({
@@ -72,15 +72,6 @@ const CrearUsuarioAdmin = () => {
           onChange={handleChange}
           required
         />
-
-        <select
-          name="plan"
-          value={form.plan}
-          onChange={handleChange}
-        >
-          <option value="plus">Plus</option>
-          <option value="premium">Premium</option>
-        </select>
 
         <button type="submit" className="btn-admin">
           Crear administrador

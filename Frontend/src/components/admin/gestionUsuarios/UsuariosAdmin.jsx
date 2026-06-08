@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import api from '../../api/api'
-import {
-  agregarUsuarios,
-  eliminarUsuario
-} from '../../features/usuarios.slice'
+import { useSelector, useDispatch } from 'react-redux'
+import api from '../../../api/api'
+import { agregarUsuarios, eliminarUsuario, editarUsuario } from '../../../features/usuarios.slice'
 import ModalUsuario from './ModalUsuario'
 import UsuariosFiltros from './UsuariosFiltros'
 import UsuariosTabla from './UsuariosTabla'
@@ -12,15 +9,13 @@ import Paginado from './Paginado'
 
 const UsuariosAdmin = () => {
 
-  const dispatch = useDispatch()
   const usuarios = useSelector(state => state.usuarios.usuarios)
+  const dispatch = useDispatch()
 
   const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null)
-
   const [paginaActual, setPaginaActual] = useState(1)
   const [totalPaginas, setTotalPaginas] = useState(1)
-
-  const [filtroNombre, setFiltroNombre] = useState('')
+  const [filtroBusqueda, setFiltroBusqueda] = useState('')
   const [filtroRol, setFiltroRol] = useState('')
   const [filtroPlan, setFiltroPlan] = useState('')
 
@@ -29,7 +24,7 @@ const UsuariosAdmin = () => {
       params: {
         page: paginaActual,
         limit: 10,
-        nombre: filtroNombre,
+        busqueda: filtroBusqueda,
         rol: filtroRol,
         plan: filtroPlan
       }
@@ -50,7 +45,7 @@ const UsuariosAdmin = () => {
         console.error('Error al obtener usuarios:', err)
       })
 
-  }, [dispatch, paginaActual, filtroNombre, filtroRol, filtroPlan])
+  }, [dispatch, paginaActual, filtroBusqueda, filtroRol, filtroPlan])
 
   const eliminarU = (id) => {
     const confirmar = window.confirm('¿Desea eliminar este usuario?')
@@ -60,6 +55,16 @@ const UsuariosAdmin = () => {
     api.delete(`/usuarios/${id}`)
       .then(() => {
         dispatch(eliminarUsuario(id))
+      })
+      .catch(err => {
+        console.error(err.response?.data || err.message)
+      })
+  }
+
+  const editarU = (id, datosActualizados) => {
+    api.patch(`/usuarios/${id}`, datosActualizados)
+      .then((res) => {
+        dispatch(editarUsuario(res.data.usuario))
       })
       .catch(err => {
         console.error(err.response?.data || err.message)
@@ -84,8 +89,8 @@ const UsuariosAdmin = () => {
       <h2>Usuarios registrados</h2>
 
       <UsuariosFiltros
-        filtroNombre={filtroNombre}
-        setFiltroNombre={setFiltroNombre}
+        filtroBusqueda={filtroBusqueda}
+        setFiltroBusqueda={setFiltroBusqueda}
         filtroRol={filtroRol}
         setFiltroRol={setFiltroRol}
         filtroPlan={filtroPlan}
@@ -96,6 +101,7 @@ const UsuariosAdmin = () => {
       <UsuariosTabla
         usuarios={usuarios}
         setUsuarioSeleccionado={setUsuarioSeleccionado}
+        editarU={editarU}
         eliminarU={eliminarU}
       />
 
@@ -108,6 +114,7 @@ const UsuariosAdmin = () => {
 
       <ModalUsuario
         usuario={usuarioSeleccionado}
+        editarU={editarU}
         onClose={() => setUsuarioSeleccionado(null)}
       />
 

@@ -1,6 +1,6 @@
 import React from 'react'
-import UsuariosAdmin from '../components/admin/UsuariosAdmin'
-import CrearUsuarioAdmin from '../components/admin/CrearUsuarioAdmin'
+import UsuariosAdmin from '../components/admin/gestionUsuarios/UsuariosAdmin'
+import CrearUsuarioAdmin from '../components/admin/gestionUsuarios/CrearUsuarioAdmin'
 
 const AdminDashboardPage = () => {
   return (

@@ -1,8 +1,8 @@
 import React from 'react'
 
 const UsuariosFiltros = ({
-  filtroNombre,
-  setFiltroNombre,
+  filtroBusqueda,
+  setFiltroBusqueda,
   filtroRol,
   setFiltroRol,
   filtroPlan,
@@ -14,10 +14,10 @@ const UsuariosFiltros = ({
 
       <input
         type="text"
-        placeholder="Buscar por nombre..."
-        value={filtroNombre}
+        placeholder="Buscar por nombre o email..."
+        value={filtroBusqueda}
         onChange={(e) => {
-          setFiltroNombre(e.target.value)
+          setFiltroBusqueda(e.target.value)
           setPaginaActual(1)
         }}
       />
@@ -25,7 +25,14 @@ const UsuariosFiltros = ({
       <select
         value={filtroRol}
         onChange={(e) => {
-          setFiltroRol(e.target.value)
+          const nuevoRol = e.target.value
+
+          setFiltroRol(nuevoRol)
+
+          if (nuevoRol === 'administrador') {
+            setFiltroPlan('')
+          }
+
           setPaginaActual(1)
         }}
       >
@@ -40,11 +47,13 @@ const UsuariosFiltros = ({
           setFiltroPlan(e.target.value)
           setPaginaActual(1)
         }}
+        disabled={filtroRol === 'administrador'}
       >
-        <option value="">Todos los planes</option>
+        <option value="">No aplica</option>
         <option value="plus">Plus</option>
         <option value="premium">Premium</option>
       </select>
+
 
     </div>
   )

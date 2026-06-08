@@ -13,31 +13,40 @@ export const usuariosSlice = createSlice({
       state.usuarios = action.payload;
     },
 
-    guardarUsuario: (state, action) => {
-      state.usuarios.push(action.payload);
-    },
-
     guardarUsuarioLogueado: (state, action) => {
       state.usuarioLogueado = action.payload;
-    },
-
-    eliminarUsuario: (state, action) => {
-  state.usuarios = state.usuarios.filter(
-    usuario => usuario._id !== action.payload
-  )},
+    }, //si bien guardamos la sesion con localStorage, mantenemos esto para que se renderice el cambio en la UI al pasar a premium en Membresía.jsx
 
     cerrarSesion: (state) => {
       state.usuarioLogueado = null;
+    }, //aunque también se borra la sesión del localStorage, esto es para mantener coherencia con guardarUsuarioLogueado.
+
+    eliminarUsuario: (state, action) => {
+      state.usuarios = state.usuarios.filter(
+        usuario => usuario._id !== action.payload
+      )
     },
+
+    editarUsuario: (state, action) => {
+      const usuarioActualizado = action.payload;
+
+      const index = state.usuarios.findIndex(
+        usuario => usuario._id === usuarioActualizado._id
+      );
+
+      if (index !== -1) {
+        state.usuarios[index] = usuarioActualizado;
+      }
+    }
   },
 });
 
 export const {
   agregarUsuarios,
-  guardarUsuario,
   guardarUsuarioLogueado,
-  eliminarUsuario,
   cerrarSesion,
+  eliminarUsuario,
+  editarUsuario
 } = usuariosSlice.actions;
 
 export default usuariosSlice.reducer;
