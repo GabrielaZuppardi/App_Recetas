@@ -1121,7 +1121,7 @@ footer {
 
 .paginado button {
   border: none;
-  background: #ff6b1a;
+  background: #eb8650;
   color: white;
   padding: 8px 14px;
   border-radius: 10px;
@@ -1137,7 +1137,7 @@ footer {
 
 .paginado span {
   color: #475569;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 

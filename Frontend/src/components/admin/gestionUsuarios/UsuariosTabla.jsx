@@ -24,8 +24,7 @@ const UsuariosTabla = ({
         </thead>
 
         <tbody>
-          {Array.isArray(usuarios) &&
-            usuarios.map(usuario => (
+          {usuarios.map(usuario => (
               <tr key={usuario._id}>
                 <td>{usuario.nombre}</td>
                 <td>{usuario.email}</td>
