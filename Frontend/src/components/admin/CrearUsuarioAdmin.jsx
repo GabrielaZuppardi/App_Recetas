@@ -6,7 +6,7 @@ const CrearUsuarioAdmin = () => {
     nombre: '',
     email: '',
     password: '',
-    rol: 'admin',
+    rol: 'administrador',
     plan: 'premium'
   })
 
@@ -20,7 +20,7 @@ const CrearUsuarioAdmin = () => {
   const crearUsuario = (e) => {
     e.preventDefault()
 
-    api.post('/usuarios/admin', form)
+    api.post('/usuarios', form)
       .then(res => {
         alert('Usuario administrador creado correctamente')
 
@@ -28,7 +28,7 @@ const CrearUsuarioAdmin = () => {
           nombre: '',
           email: '',
           password: '',
-          rol: 'admin',
+          rol: 'administrador',
           plan: 'premium'
         })
 

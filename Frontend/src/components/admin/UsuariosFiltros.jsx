@@ -31,7 +31,7 @@ const UsuariosFiltros = ({
       >
         <option value="">Todos los roles</option>
         <option value="usuario">Usuario</option>
-        <option value="admin">Administrador</option>
+        <option value="administrador">Administrador</option>
       </select>
 
       <select
