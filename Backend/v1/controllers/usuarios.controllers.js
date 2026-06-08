@@ -9,7 +9,7 @@ import {
 
 export const obtenerUsuariosController = async (req, res, next) => {
 
-    const { page, limit, nombre, email, rol, plan } = req.query;
+    const { page, limit, busqueda, rol, plan } = req.query;
 
     const respuesta = await obtenerUsuariosService(page, limit, {
        busqueda,
