@@ -9,7 +9,7 @@ const LoginAdminHeader = () => {
     return (
 
         <header>
-            <h1>Chef-Mate</h1>
+            <h1>ChefsMate</h1>
             <h2><GiChefToque /> <MdRestaurantMenu /> <LuCookingPot /> <TbToolsKitchen2 /> </h2>
             <p className="subtitle">Inicio de sesión</p>
         </header>

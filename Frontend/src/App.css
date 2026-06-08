@@ -55,6 +55,12 @@ body {
   margin: 0;
 }
 
+header {
+  position: sticky;
+  top: 0;
+}
+
+
 #root {
   width: 1126px;
   max-width: 100%;
@@ -906,6 +912,33 @@ footer {
 
 /* ===== ADMIN DASHBOARD ===== */
 
+.admin-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.admin-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.admin-card {
+  background: #ffffff;
+  border: 1px solid #f1d6c8;
+  border-radius: 18px;
+  padding: 2rem;
+  box-shadow: 0 8px 24px rgba(255, 102, 31, 0.08);
+}
+
+.admin-card h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
 /* ===== ADMIN TABLE ===== */
 
 .admin-table{
@@ -1089,9 +1122,8 @@ footer {
 
 /* ===== Scroll + paginado ===== */
 .tabla-scroll {
-  max-height: 420px;
+  max-height: 360px;
   overflow-y: auto;
-  border-radius: 16px;
 }
 
 .paginado {

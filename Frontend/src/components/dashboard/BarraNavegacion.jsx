@@ -23,7 +23,7 @@ const NavBar = () => {
                      <GiChefToque />              
                 </div>
                   <div>
-                       <h1>Chef-Mate</h1>
+                       <h1>ChefsMate</h1>
                     
                 </div>
             </div>
