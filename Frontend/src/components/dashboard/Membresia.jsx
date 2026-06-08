@@ -13,7 +13,6 @@ const Membresia = () => {
   const usuarioLocal = JSON.parse(localStorage.getItem("usuario"))
 
   const usuario = usuarioRedux || usuarioLocal
-
   const cantidadRecetas = recetas.length
 
   const esPlus = usuario?.plan === "plus"
@@ -27,7 +26,6 @@ const Membresia = () => {
     api.patch('/usuarios/premium')
       .then(res => {
         localStorage.setItem("usuario", JSON.stringify(res.data.usuario))
-
         dispatch(guardarUsuarioLogueado(res.data.usuario))
       })
       .catch(err => {

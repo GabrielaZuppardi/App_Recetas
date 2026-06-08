@@ -24,14 +24,14 @@ export const crearUsuarioSchema = Joi.object({
       "any.required": "El email es obligatorio"
     }),
 
-   password: Joi.string()
-   .min(6)
-   .required()
-   .messages({
-    "string.empty": "La contraseña no puede estar vacía",
-    "string.min": "La contraseña debe tener al menos 6 caracteres",
-    "any.required": "La contraseña es obligatoria"
-  }),
+  password: Joi.string()
+    .min(6)
+    .required()
+    .messages({
+      "string.empty": "La contraseña no puede estar vacía",
+      "string.min": "La contraseña debe tener al menos 6 caracteres",
+      "any.required": "La contraseña es obligatoria"
+    }),
 
   rol: Joi.string()
     .valid("usuario", "administrador")
@@ -89,13 +89,19 @@ export const modificarUsuarioSchema = Joi.object({
     .valid("usuario", "administrador")
     .messages({
       "any.only": "El rol debe ser 'usuario' o 'administrador'"
-    })
+    }),
 
+  plan: Joi.string()
+    .valid("plus", "premium")
+    .optional()
+    .messages({
+      "any.only": "El plan debe ser 'plus' o 'premium'"
+    })
 })
-.min(1)
-.unknown(false)
-.messages({
-  "object.min": "Debes enviar al menos un campo para modificar",
-  "object.unknown": "El campo '{#label}' no está permitido"
-});
+  .min(1)
+  .unknown(false)
+  .messages({
+    "object.min": "Debes enviar al menos un campo para modificar",
+    "object.unknown": "El campo '{#label}' no está permitido"
+  });
 

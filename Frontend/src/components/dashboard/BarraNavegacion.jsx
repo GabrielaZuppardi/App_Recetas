@@ -1,4 +1,6 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { cerrarSesion } from '../../features/usuarios.slice'
 import { NavLink, useNavigate } from 'react-router'
 import { GiChefToque } from "react-icons/gi";
 import { MdRestaurantMenu } from "react-icons/md";
@@ -8,11 +10,12 @@ const NavBar = () => {
     const navigate = useNavigate()
 
     const usuario = JSON.parse(localStorage.getItem('usuario'))
+    const dispatch = useDispatch();
 
-    const cerrarSesion = () => {
+    const handleCerrarSesion = () => {
         localStorage.removeItem('token')
         localStorage.removeItem('usuario')
-
+        dispatch(cerrarSesion());
         navigate('/')
     }
 
@@ -20,11 +23,11 @@ const NavBar = () => {
         <header className="navbar card">
             <div className="brand">
                 <div className="logo">
-                     <GiChefToque />              
+                    <GiChefToque />
                 </div>
-                  <div>
-                       <h1>ChefsMate</h1>
-                    
+                <div>
+                    <h1>ChefsMate</h1>
+
                 </div>
             </div>
 
@@ -50,7 +53,7 @@ const NavBar = () => {
                 <button
                     type="button"
                     className="btn secondary"
-                    onClick={cerrarSesion}
+                    onClick={handleCerrarSesion}
                 >
                     Cerrar sesión
                 </button>

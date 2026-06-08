@@ -4,9 +4,11 @@ import { FaTrash } from 'react-icons/fa'
 const UsuariosTabla = ({
   usuarios,
   setUsuarioSeleccionado,
-  eliminarU
+  eliminarU,
+  editarU
 }) => {
   return (
+
     <div className="tabla-scroll">
 
       <table className="admin-table">
@@ -25,11 +27,10 @@ const UsuariosTabla = ({
           {Array.isArray(usuarios) &&
             usuarios.map(usuario => (
               <tr key={usuario._id}>
-
                 <td>{usuario.nombre}</td>
                 <td>{usuario.email}</td>
                 <td>{usuario.rol}</td>
-                <td>{usuario.plan}</td>
+                <td>{usuario.rol === 'administrador' ? 'No aplica' : usuario.plan} </td>
 
                 <td>
                   <div className="acciones">
@@ -45,6 +46,7 @@ const UsuariosTabla = ({
                       className="btn-delete"
                       onClick={() => eliminarU(usuario._id)}
                     >
+
                       <FaTrash />
                     </button>
 

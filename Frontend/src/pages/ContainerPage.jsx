@@ -1,7 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router'
 import BarraNavegacion from '../components/dashboard/BarraNavegacion'
-import AdminNavBar from "../components/admin/AdminNavBar"
+import AdminNavBar from "../components/admin/gestionUsuarios/AdminNavBar"
 
 const ContainerPage = () => {
     const usuario = JSON.parse(localStorage.getItem('usuario'))
