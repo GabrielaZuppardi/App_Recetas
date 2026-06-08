@@ -20,6 +20,7 @@ import { authenticateMiddleware } from "../middlewares/authenticate.middleware.j
 import { crearRecetaSchema, modificarRecetaSchema } from "../validators/receta.validator.js";
 
 import { filtrosRecetaSchema } from "../validators/recetaQuery.validator.js";
+import { upload } from "../middlewares/multer.middleware.js";
 
 const router = express.Router();
 
@@ -44,8 +45,17 @@ router.post("/:id/sugerir-descripcion", sugerirDescripcionRecetaController);
 router.get("/", obtenerRecetasController);
 router.get("/:id", obtenerRecetaPorIdController);
 
-router.post("/", validateBody(crearRecetaSchema), crearRecetaController);
-router.patch("/:id", validateBody(modificarRecetaSchema), actualizarRecetaController);
+router.post(
+  "/", validateBody(crearRecetaSchema), crearRecetaController);
+
+//Esta ruta originalmente no soporta la edición de la imagen, pero se podría modificar el controlador y 
+// el validador para permitirlo. 
+
+//router.patch("/:id", validateBody(modificarRecetaSchema), actualizarRecetaController);
+
+router.patch(
+  "/:id", validateBody(modificarRecetaSchema), actualizarRecetaController);
+
 router.delete("/:id", eliminarRecetaController);
 
 

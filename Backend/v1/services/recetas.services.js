@@ -134,6 +134,9 @@ export const crearRecetaService = async (receta, usuarioId) => {
 };
 
 export const actualizarRecetaService = async (id, receta, usuarioLogueado) => {
+
+    console.log("SERVICE RECETA:")
+  console.log(receta)
   if (!isValidObjectId(id)) {
     const error = new Error("El id no es válido");
     error.status = 400;
