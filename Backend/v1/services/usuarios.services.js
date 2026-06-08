@@ -123,9 +123,9 @@ export const actualizarUsuarioService = async (id, usuario) => {
         );
         datosActualizados.password = passwordHash;
     }
-    
+
     if (datosActualizados.rol === "administrador") {
-        datosActualizados.plan = undefined;
+        delete datosActualizados.plan;
     }
 
     if (datosActualizados.rol === "usuario" && !datosActualizados.plan) {
