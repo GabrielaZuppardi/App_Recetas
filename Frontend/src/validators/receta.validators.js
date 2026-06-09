@@ -28,11 +28,10 @@ export const crearRecetaSchema = Joi.object({
   ingredientes: Joi.string()
     .trim()
     .min(5)
-    .min(1)
     .required()
     .messages({
-      "array.base": "Los ingredientes deben ser un arreglo",
-      "array.min": "Debe haber al menos un ingrediente",
+      "string.empty": "Los ingredientes no pueden estar vacíos",
+      "string.min": "Los ingredientes deben tener al menos 5 caracteres",
       "any.required": "Los ingredientes son obligatorios"
     }),
 
@@ -42,8 +41,9 @@ export const crearRecetaSchema = Joi.object({
     .max(1000)
     .required()
     .messages({
-      "array.base": "Los pasos deben ser un arreglo",
-      "array.min": "Debe haber al menos un paso",
+      "string.empty": "Los pasos no pueden estar vacíos",
+      "string.min": "Los pasos deben tener al menos 10 caracteres",
+      "string.max": "Los pasos no pueden superar los 1000 caracteres",
       "any.required": "Los pasos son obligatorios"
     }),
 
@@ -62,6 +62,7 @@ export const crearRecetaSchema = Joi.object({
     .valid("facil", "media", "dificil")
     .required()
     .messages({
+      "string.empty": "Debe seleccionar una dificultad",
       "any.only": "La dificultad debe ser 'facil', 'media' o 'dificil'",
       "any.required": "La dificultad es obligatoria"
     }),
@@ -77,29 +78,28 @@ export const crearRecetaSchema = Joi.object({
       "any.required": "Las porciones son obligatorias"
     }),
 
- imagenUrl: Joi.string()
-  .trim()
-  .uri()
-  .optional()
-  .allow("")
-  .messages({
-    "string.uri": "La URL de la imagen debe ser válida"
-  }),
+  imagenUrl: Joi.string()
+    .trim()
+    .uri()
+    .optional()
+    .allow("")
+    .messages({
+      "string.uri": "La URL de la imagen debe ser válida"
+    }),
 
-imagen: Joi.any().optional(),
-    
+  imagen: Joi.any().optional(),
+
   categoria: Joi.string()
-  .hex()
-  .length(24)
-  .required()
-  .messages({
-    "string.hex": "La categoría debe ser un ObjectId válido",
-    "string.length": "La categoría debe tener 24 caracteres",
-    "any.required": "La categoría es obligatoria"
-  })
+    .hex()
+    .length(24)
+    .required()
+    .messages({
+      "string.empty": "Debe seleccionar una categoría",
+      "string.hex": "La categoría debe ser válida",
+      "string.length": "La categoría debe ser válida",
+      "any.required": "La categoría es obligatoria"
+    })
 });
-
-//editar receta 
 
 export const editarRecetaFormSchema = Joi.object({
   titulo: Joi.string()
@@ -131,8 +131,9 @@ export const editarRecetaFormSchema = Joi.object({
     .length(24)
     .required()
     .messages({
-      "string.hex": "La categoría debe ser un ObjectId válido",
-      "string.length": "La categoría debe tener 24 caracteres",
+      "string.empty": "Debe seleccionar una categoría",
+      "string.hex": "La categoría debe ser válida",
+      "string.length": "La categoría debe ser válida",
       "any.required": "La categoría es obligatoria"
     }),
 
@@ -140,6 +141,7 @@ export const editarRecetaFormSchema = Joi.object({
     .valid("facil", "media", "dificil")
     .required()
     .messages({
+      "string.empty": "Debe seleccionar una dificultad",
       "any.only": "La dificultad debe ser 'facil', 'media' o 'dificil'",
       "any.required": "La dificultad es obligatoria"
     }),
@@ -168,11 +170,11 @@ export const editarRecetaFormSchema = Joi.object({
 
   ingredientesTexto: Joi.string()
     .trim()
-    .min(3)
+    .min(5)
     .required()
     .messages({
-      "string.empty": "Debés ingresar al menos un ingrediente",
-      "string.min": "Debés ingresar al menos un ingrediente",
+      "string.empty": "Los ingredientes no pueden estar vacíos",
+      "string.min": "Los ingredientes deben tener al menos 5 caracteres",
       "any.required": "Los ingredientes son obligatorios"
     }),
 
@@ -182,11 +184,11 @@ export const editarRecetaFormSchema = Joi.object({
     .max(1000)
     .required()
     .messages({
-      "string.empty": "Debés ingresar al menos un paso",
+      "string.empty": "Los pasos no pueden estar vacíos",
       "string.min": "Los pasos deben tener al menos 10 caracteres",
       "string.max": "Los pasos no pueden superar los 1000 caracteres",
       "any.required": "Los pasos son obligatorios"
     }),
 
-    imagen: Joi.any().optional()
-})
+  imagen: Joi.any().optional()
+});

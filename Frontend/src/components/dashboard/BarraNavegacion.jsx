@@ -1,65 +1,65 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { cerrarSesion } from '../../features/usuarios.slice'
 import { NavLink, useNavigate } from 'react-router'
-import { GiChefToque } from "react-icons/gi";
-import { MdRestaurantMenu } from "react-icons/md";
-
+import { GiChefToque } from "react-icons/gi"
 
 const NavBar = () => {
-    const navigate = useNavigate()
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-    const usuario = JSON.parse(localStorage.getItem('usuario'))
-    const dispatch = useDispatch();
+  const usuarioRedux = useSelector(state => state.usuarios.usuarioLogueado)
+  const usuarioLocal = JSON.parse(localStorage.getItem('usuario'))
 
-    const handleCerrarSesion = () => {
-        localStorage.removeItem('token')
-        localStorage.removeItem('usuario')
-        dispatch(cerrarSesion());
-        navigate('/')
-    }
+  const usuario = usuarioRedux || usuarioLocal
 
-    return (
-        <header className="navbar card">
-            <div className="brand">
-                <div className="logo">
-                    <GiChefToque />
-                </div>
-                <div>
-                    <h1>ChefsMate</h1>
+  const handleCerrarSesion = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('usuario')
+    dispatch(cerrarSesion())
+    navigate('/')
+  }
 
-                </div>
-            </div>
+  return (
+    <header className="navbar card">
+      <div className="brand">
+        <div className="logo">
+          <GiChefToque />
+        </div>
 
-            <nav className="nav-links">
+        <div>
+          <h1>ChefsMate</h1>
+          <p>Tus recetas, en un solo lugar.</p>
+        </div>
+      </div>
 
+      <nav className="nav-links">
+        {usuario?.rol === 'administrador' && (
+          <NavLink to="/dashboardAdmin">
+            Admin
+          </NavLink>
+        )}
+      </nav>
 
-                {usuario?.rol === 'administrador' && (
-                    <NavLink to="/dashboardAdmin">
-                        Admin
-                    </NavLink>
-                )}
-            </nav>
+      <div className="user-area">
+        <span className="pill">
+          Plan {usuario?.plan === "premium" ? "Premium" : "Plus"}
+        </span>
 
-            <div className="user-area">
-                <span className="pill">
-                    Plan {usuario?.plan || 'Plus'}
-                </span>
+        <span className="pill">
+          Bienvenidx, {usuario?.nombre || 'Usuario'}
+        </span>
 
-                <span className="pill">
-                    Bienvenidx, {usuario?.nombre || 'Usuario'}
-                </span>
-
-                <button
-                    type="button"
-                    className="btn secondary"
-                    onClick={handleCerrarSesion}
-                >
-                    Cerrar sesión
-                </button>
-            </div>
-        </header>
-    )
+        <button
+          type="button"
+          className="btn secondary"
+          onClick={handleCerrarSesion}
+        >
+          Cerrar sesión
+        </button>
+      </div>
+    </header>
+  )
 }
 
 export default NavBar

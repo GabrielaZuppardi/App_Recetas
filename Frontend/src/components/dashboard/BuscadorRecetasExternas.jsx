@@ -36,6 +36,7 @@ const BuscadorRecetasExternas = () => {
             const respuesta = await api.get("/recetas/externas", {
                 params: datos,
             })
+            
 
             setRecetasExternas(respuesta.data.resultados)
             setTotal(respuesta.data.total)

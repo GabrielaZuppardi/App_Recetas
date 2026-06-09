@@ -4,7 +4,6 @@ import api from '../../api/api'
 import { guardarUsuarioLogueado } from '../../features/usuarios.slice'
 
 const Membresia = () => {
-
   const dispatch = useDispatch()
 
   const usuarioRedux = useSelector(state => state.usuarios.usuarioLogueado)
@@ -18,8 +17,10 @@ const Membresia = () => {
   const esPlus = usuario?.plan === "plus"
   const esPremium = usuario?.plan === "premium"
 
+  const limiteRecetas = 4
+
   const porcentaje = esPlus
-    ? (cantidadRecetas / 4) * 100
+    ? Math.min((cantidadRecetas / limiteRecetas) * 100, 100)
     : 100
 
   const pasarAPremium = () => {
@@ -36,18 +37,22 @@ const Membresia = () => {
   return (
     <section className="hero card">
       <div>
-        <h2>App Recetas</h2>
+        <h2>
+          {esPremium ? "Plan Premium" : "Plan Plus"}
+        </h2>
+
         <p>
-          Gestioná recetas, filtrá por ingredientes y simulá generación con IA desde
-          un único panel.
+          {esPremium
+            ? "Ahora podes disfrutar de guardar recetas ilimitadas!"
+            : "En tu plan Plus disponés de un límite de 4 recetas para guardar."}
         </p>
       </div>
 
       <div>
         <small>
-          {esPlus
-            ? `${cantidadRecetas}/4 recetas utilizadas`
-            : `${cantidadRecetas} recetas creadas`}
+          {esPremium
+            ? `${cantidadRecetas} recetas creadas`
+            : `${cantidadRecetas}/${limiteRecetas} recetas utilizadas`}
         </small>
 
         <div className="progress">

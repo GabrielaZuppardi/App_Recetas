@@ -1,88 +1,78 @@
-//1.TRAE RECETAS DESDE LA API
-//2. GUARDA LAS RECETAS EN EL ESTADO GLOBAL REDUX UseDispatch
-//3. LEE LAS RECETAS DESDE EL ESTADO GLOBAL REDUX UseSelector
-//4. MUESTRA LAS RECETAS EN LA PANTALLA
-
-
 import React, { useEffect } from 'react'
 import TarjetaReceta from './TarjetaReceta'
 import { useDispatch, useSelector } from 'react-redux'
 import { agregarReceta, eliminarReceta } from '../../features/recetas.slice'
 import api from '../../api/api'
 import ModalReceta from "./ModalReceta"
+import Paginado from '../../pages/Paginado'
 
 const MisRecetas = () => {
-
   const dispatch = useDispatch()
 
   const recetas = useSelector((state) => state.recetas.recetas)
+  const categorias = useSelector((state) => state.categorias.categorias)
+
   const [loading, setLoading] = React.useState(true)
   const [recetaSeleccionada, setRecetaSeleccionada] = React.useState(null)
-  console.log("Receta seleccionada:", recetaSeleccionada)
+  const [abrirEditando, setAbrirEditando] = React.useState(false)
 
-  const categorias = useSelector((state) => state.categorias.categorias)
   const [categoriaFiltro, setCategoriaFiltro] = React.useState("")
   const [dificultadFiltro, setDificultadFiltro] = React.useState("")
   const [tiempoMaximoFiltro, setTiempoMaximoFiltro] = React.useState("")
 
-  const [abrirEditando, setAbrirEditando] = React.useState(false)
-  const actualizarRecetaEnVista = (recetaActualizada) => {
-    setRecetaSeleccionada(recetaActualizada)
+  const [paginaActual, setPaginaActual] = React.useState(1)
+  const [totalPaginas, setTotalPaginas] = React.useState(1)
+
+  const limite = 4
+
+  const obtenerMisRecetas = async () => {
+    try {
+      setLoading(true)
+
+      const respuesta = await api.get("/recetas/mias", {
+        params: {
+          page: paginaActual,
+          limit: limite,
+          categoria: categoriaFiltro || undefined,
+          dificultad: dificultadFiltro || undefined,
+          tiempoMax: tiempoMaximoFiltro || undefined
+        }
+      })
+
+      dispatch(agregarReceta(respuesta.data.recetas))
+      setTotalPaginas(respuesta.data.totalPages || 1)
+
+    } catch (error) {
+      console.log(error.response?.data || error.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    obtenerMisRecetas()
+  }, [paginaActual, categoriaFiltro, dificultadFiltro, tiempoMaximoFiltro])
+
+  const paginaAnterior = () => {
+    setPaginaActual(prev => prev - 1)
+  }
+
+  const paginaSiguiente = () => {
+    setPaginaActual(prev => prev + 1)
   }
 
   const eliminarR = async (id) => {
     try {
-      console.log("Eliminar receta:", id)
-
       await api.delete(`/recetas/${id}`)
 
       dispatch(eliminarReceta(id))
 
-      console.log("Receta eliminada")
+      obtenerMisRecetas()
+
     } catch (error) {
       console.log(error.response?.data || error.message)
     }
-
   }
-
-  const filtrarRecetas = (categoria, dificultad, tiempoMaximo) => {
-    api.get("/recetas/filtros", {
-      params: {
-        categoria: categoria || undefined,
-        dificultad: dificultad || undefined,
-        tiempoMax: tiempoMaximo || undefined,
-        limit: 100
-      }
-    })
-      .then((r) => {
-        console.log("RECETAS FILTRADAS", r.data)
-        dispatch(agregarReceta(r.data.recetas))
-      })
-      .catch((error) => {
-        console.log(error.response?.data || error.message)
-      })
-  }
-
-
-  useEffect(() => {
-    api
-      .get("/recetas/mias")
-      .then((r) => {
-
-        console.log("RESPUESTA COMPLETA:", r.data)
-        console.log("RECETAS:", r.data.recetas)
-
-        dispatch(agregarReceta(r.data.recetas))
-
-      })
-      .catch((error) => {
-        console.log(error)
-
-      })
-      .finally(() => {
-        setLoading(false)
-      })
-  }, [])
 
   return (
     <article className="card">
@@ -98,13 +88,8 @@ const MisRecetas = () => {
             style={{ maxWidth: 160, margin: 0 }}
             value={categoriaFiltro}
             onChange={(e) => {
-              const categoriaSeleccionada = e.target.value
-
-              console.log("Categoria elegida:", categoriaSeleccionada)
-
-              setCategoriaFiltro(categoriaSeleccionada)
-
-              filtrarRecetas(categoriaSeleccionada, dificultadFiltro, tiempoMaximoFiltro)
+              setCategoriaFiltro(e.target.value)
+              setPaginaActual(1)
             }}
           >
             <option value="">Todas</option>
@@ -123,13 +108,8 @@ const MisRecetas = () => {
             style={{ maxWidth: 160, margin: 0 }}
             value={dificultadFiltro}
             onChange={(e) => {
-              const dificultadSeleccionada = e.target.value
-
-              console.log("Dificultad elegida:", dificultadSeleccionada)
-
-              setDificultadFiltro(dificultadSeleccionada)
-
-              filtrarRecetas(categoriaFiltro, dificultadSeleccionada, tiempoMaximoFiltro)
+              setDificultadFiltro(e.target.value)
+              setPaginaActual(1)
             }}
           >
             <option value="">Todas</option>
@@ -142,13 +122,8 @@ const MisRecetas = () => {
             style={{ maxWidth: 160, margin: 0 }}
             value={tiempoMaximoFiltro}
             onChange={(e) => {
-              const tiempoMaximoSeleccionado = e.target.value
-
-              console.log("Tiempo máximo elegido:", tiempoMaximoSeleccionado)
-
-              setTiempoMaximoFiltro(tiempoMaximoSeleccionado)
-
-              filtrarRecetas(categoriaFiltro, dificultadFiltro, tiempoMaximoSeleccionado)
+              setTiempoMaximoFiltro(e.target.value)
+              setPaginaActual(1)
             }}
           >
             <option value="">Todas</option>
@@ -159,38 +134,46 @@ const MisRecetas = () => {
         </div>
 
         <div className="recipes">
-          {loading ? <p>Cargando recetas...</p> :
-            recetas.length > 0 ? (
-              recetas.map((receta) => (
-                <TarjetaReceta
-                  key={receta._id}
-                  receta={receta}
-                  onClick={() => {
-                    setAbrirEditando(false)
-                    setRecetaSeleccionada(receta)
-                  }}
-                  onEliminar={eliminarR}
-                  onEditar={() => {
-                    setAbrirEditando(true)
-                    setRecetaSeleccionada(receta)
-                  }}
-                />
-              ))
-            ) : (
-              <p className="muted">No hay recetas para mostrar</p>
-            )}
+          {loading ? (
+            <p>Cargando recetas...</p>
+          ) : recetas.length > 0 ? (
+            recetas.map((receta) => (
+              <TarjetaReceta
+                key={receta._id}
+                receta={receta}
+                onClick={() => {
+                  setAbrirEditando(false)
+                  setRecetaSeleccionada(receta)
+                }}
+                onEliminar={eliminarR}
+                onEditar={() => {
+                  setAbrirEditando(true)
+                  setRecetaSeleccionada(receta)
+                }}
+              />
+            ))
+          ) : (
+            <p className="muted">No hay recetas para mostrar</p>
+          )}
         </div>
-        <ModalReceta
-  receta={recetaSeleccionada}
-  abrirEditando={abrirEditando}
-  onClose={() => {
-    setRecetaSeleccionada(null)
-    setAbrirEditando(false)
-  }}
-  onEliminar={eliminarR}
-/>
-      </div>
 
+        <Paginado
+          paginaActual={paginaActual}
+          totalPaginas={totalPaginas}
+          paginaAnterior={paginaAnterior}
+          paginaSiguiente={paginaSiguiente}
+        />
+
+        <ModalReceta
+          receta={recetaSeleccionada}
+          abrirEditando={abrirEditando}
+          onClose={() => {
+            setRecetaSeleccionada(null)
+            setAbrirEditando(false)
+          }}
+          onEliminar={eliminarR}
+        />
+      </div>
     </article>
   )
 }
