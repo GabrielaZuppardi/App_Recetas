@@ -17,18 +17,27 @@ import { upload } from "../middlewares/multer.middleware.js";
 import cloudinary from "../config/cloudinary.js";
 import { uploadBufferToCloudinary } from "../utils/cloudinary.util.js";
  
- export const obtenerMisRecetasController = async (req, res, next) => {
-    
-        const { page, limit } = req.query;
-        const usuarioId = req.usuario.id;
+//AJUSTO EL CÓDIGO PARA QUE ACEPTE PAGINACIÓN Y FILTROS, Y PARA QUE EN MIS RECETAS SOLO TRAIGA LAS DEL USUARIO LOGUEADO. SI NO SE PASA EL USUARIO, DEVUELVE DE TODOS LOS USUARIOS.
+export const obtenerMisRecetasController = async (req, res, next) => {
+  console.log("ENTRÓ A /recetas/mias");
+  console.log("REQ QUERY:", req.query);
 
-        const respuesta = await obtenerMisRecetasService(usuarioId, page, limit);
+  const { page, limit, categoria, dificultad, tiempoMax } = req.query;
+  const usuarioId = req.usuario.id;
 
-        res.status(200).json({
-            mensaje: "Recetas del usuario obtenidas correctamente",
-            ...respuesta
-        });
+  const respuesta = await obtenerMisRecetasService(
+    usuarioId,
+    page,
+    limit,
+    categoria,
+    dificultad,
+    tiempoMax
+  );
 
+  res.status(200).json({
+    mensaje: "Recetas del usuario obtenidas correctamente",
+    ...respuesta
+  });
 };
         
 export const obtenerRecetasController = async (req, res, next) => {

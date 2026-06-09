@@ -18,11 +18,11 @@ const CrearRecetaForm = () => {
   const {
     register,
     handleSubmit,
-      reset,
+    reset,
     formState: { errors, isSubmitting, isValid }
   } = useForm({
     resolver: joiResolver(crearRecetaSchema),
-    // mode: "onChange"
+    mode: "onChange"
   });
 
   const procesarForm = async (data) => {
@@ -60,127 +60,126 @@ const CrearRecetaForm = () => {
     }
   };
   return (
-    
 
-      <article className="card">
-        <div
-          className="section-title"
-          onClick={() => setMostrarFormulario(!mostrarFormulario)}
-          style={{ cursor: "pointer" }}
-        >
-          <h3>
-            {mostrarFormulario ? "➖ Ocultar formulario" : "➕ Crear nueva receta"}
-          </h3>
-        </div>
 
-        {mostrarFormulario && (
-          <form onSubmit={handleSubmit(procesarForm)}>
-            <label>Título de la receta</label>
-            <input
-              type="text"
-              placeholder="Ej. Pasta cremosa con tomates"
-              {...register("titulo")}
-            />
-            {errors.titulo && <span className="error">{errors.titulo.message}</span>}
-            <div className="two-cols">
-              <div>
-                <label>Categoría</label>
+    <article className="card">
+      <div
+        className="section-title"
+        onClick={() => setMostrarFormulario(!mostrarFormulario)}
+        style={{ cursor: "pointer" }}
+      >
+        <h3>
+          {mostrarFormulario ? "➖ Ocultar formulario" : "➕ Crear nueva receta"}
+        </h3>
+      </div>
 
-                <select {...register("categoria")}>
-                  <option value="">Seleccionar categoría</option>
+      {mostrarFormulario && (
+        <form onSubmit={handleSubmit(procesarForm)}>
+          <label>Título de la receta</label>
+          <input
+            type="text"
+            placeholder="Ej. Pasta cremosa con tomates"
+            {...register("titulo")}
+          />
+          {errors.titulo && <span className="error">{errors.titulo.message}</span>}
+          <div className="two-cols">
+            <div>
+              <label>Categoría</label>
 
-                  {categorias.map((categoria) => (
-                    <option key={categoria._id} value={categoria._id}>
-                      {categoria.nombre}
-                    </option>
-                  ))}
-                </select>
+              <select {...register("categoria")}>
+                <option value="">Seleccionar categoría</option>
 
-                {errors.categoria && (
-                  <span className="error">{errors.categoria.message}</span>
-                )}
-              </div>
+                {categorias.map((categoria) => (
+                  <option key={categoria._id} value={categoria._id}>
+                    {categoria.nombre}
+                  </option>
+                ))}
+              </select>
 
-              <div>
-                <label>Dificultad</label>
-                <select {...register("dificultad")}>
-                  <option value="">Seleccionar dificultad</option>
-                  <option value="facil">Fácil</option>
-                  <option value="media">Media</option>
-                  <option value="dificil">Difícil</option>
-                </select>
-                {errors.dificultad && <span className="error">{errors.dificultad.message}</span>}
-              </div>
+              {errors.categoria && (
+                <span className="error">{errors.categoria.message}</span>
+              )}
             </div>
 
-            <div className="two-cols">
-              <div>
-                <label>Tiempo</label>
-                <input
-                  type="number"
-                  defaultValue={30}
-                  {...register("tiempoPreparacion", { valueAsNumber: true })}
-                />
-                {errors.tiempoPreparacion && <span className="error">{errors.tiempoPreparacion.message}</span>}
-              </div>
+            <div>
+              <label>Dificultad</label>
+              <select {...register("dificultad")}>
+                <option value="">Seleccionar dificultad</option>
+                <option value="facil">Fácil</option>
+                <option value="media">Media</option>
+                <option value="dificil">Difícil</option>
+              </select>
+              {errors.dificultad && <span className="error">{errors.dificultad.message}</span>}
+            </div>
+          </div>
 
-              <div>
-                <label>Porciones</label>
-                <input
-                  type="number"
-                  defaultValue={2}
-                  {...register("porciones", { valueAsNumber: true })}
-                />
-                {errors.porciones && <span className="error">{errors.porciones.message}</span>}
-
-              </div>
+          <div className="two-cols">
+            <div>
+              <label>Tiempo</label>
+              <input
+                type="number"
+                {...register("tiempoPreparacion", { valueAsNumber: true })}
+              />
+              {errors.tiempoPreparacion && <span className="error">{errors.tiempoPreparacion.message}</span>}
             </div>
 
-            <label>Ingredientes</label>
-            <textarea
-              {...register("ingredientes")}
-              placeholder="Ej. 200 g de pasta, 2 tomates, albahaca fresca..."
-              defaultValue=""
-            />
-            {errors.ingredientes && <span className="error">{errors.ingredientes.message}</span>}
+            <div>
+              <label>Porciones</label>
+              <input
+                type="number"
 
-            <label>Pasos</label>
-            <textarea
-              {...register("pasos")}
-              placeholder="Ej. 1. Hervir la pasta. 2. Preparar la salsa. 3. Mezclar y servir."
-              defaultValue=""
-            />
-            {errors.pasos && <span className="error">{errors.pasos.message}</span>}
+                {...register("porciones", { valueAsNumber: true })}
+              />
+              {errors.porciones && <span className="error">{errors.porciones.message}</span>}
 
-            <label>Descripción</label>
-            <textarea
-              {...register("descripcion")}
-              placeholder="Describí la preparación..."
-              defaultValue=""
-            />
-            {errors.descripcion && <span className="error">{errors.descripcion.message}</span>}
+            </div>
+          </div>
 
-            <label>Imagen</label>
-            <input
-              type="file"
-              accept="image/*"
-              {...register("imagen")}
-            />
-            {errors.imagen && <span className="error">{errors.imagen.message}</span>}
+          <label>Ingredientes</label>
+          <textarea
+            {...register("ingredientes")}
+            placeholder="Ej. 200 g de pasta, 2 tomates, albahaca fresca..."
+            defaultValue=""
+          />
+          {errors.ingredientes && <span className="error">{errors.ingredientes.message}</span>}
 
-            <button
-             className="btn"
-              type="submit"
+          <label>Pasos</label>
+          <textarea
+            {...register("pasos")}
+            placeholder="Ej. 1. Hervir la pasta. 2. Preparar la salsa. 3. Mezclar y servir."
+            defaultValue=""
+          />
+          {errors.pasos && <span className="error">{errors.pasos.message}</span>}
 
-              style={{ width: "100%" }}
-            >
-              Guardar receta
-            </button>
-          </form>
-        )}
-      </article>
+          <label>Descripción</label>
+          <textarea
+            {...register("descripcion")}
+            placeholder="Describí la preparación..."
+            defaultValue=""
+          />
+          {errors.descripcion && <span className="error">{errors.descripcion.message}</span>}
 
-    
+          <label>Imagen</label>
+          <input
+            type="file"
+            accept="image/*"
+            {...register("imagen")}
+          />
+          {errors.imagen && <span className="error">{errors.imagen.message}</span>}
+
+          <button
+            className="btn"
+            type="submit"
+
+            style={{ width: "100%" }}
+          >
+            Guardar receta
+          </button>
+        </form>
+      )}
+    </article>
+
+
   )
 }
 

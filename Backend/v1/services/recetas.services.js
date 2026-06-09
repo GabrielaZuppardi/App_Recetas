@@ -5,7 +5,66 @@ import { isValidObjectId } from 'mongoose';
 import Usuario from '../models/usuario.model.js';
 import Categoria from '../models/categoria.model.js';
 
-export const obtenerMisRecetasService = async (usuarioId, page, limit) => {
+
+//AJUSTO ESTE SERVICE PARA QUE ACEPTE FILTROS OPCIONALES Y PAGINACIÓN, PARA USARLO TANTO EN MIS RECETAS COMO EN LA BÚSQUEDA GLOBAL. SI SE PASA EL USUARIO, FILTRA POR ÉL; SI NO, DEVUELVE DE TODOS LOS USUARIOS.
+export const obtenerMisRecetasService = async (
+  usuarioId,
+  page,
+  limit,
+  categoria,
+  dificultad,
+  tiempoMax
+) => {
+  limit = Number(limit) || 3;
+  page = Number(page) || 1;
+
+  const skip = (page - 1) * limit;
+
+  const filtro = {
+    usuario: usuarioId
+  };
+
+  if (categoria) {
+    filtro.categoria = categoria;
+  }
+
+  if (dificultad) {
+    filtro.dificultad = dificultad;
+  }
+
+  if (tiempoMax) {
+    filtro.tiempoPreparacion = { $lte: Number(tiempoMax) };
+  }
+
+  console.log("QUERY RECIBIDA:", {
+    page,
+    limit,
+    categoria,
+    dificultad,
+    tiempoMax
+  });
+
+  console.log("FILTRO ARMADO:", filtro);
+
+  const totalRecetas = await Receta.countDocuments(filtro);
+
+  const totalPages = Math.ceil(totalRecetas / limit);
+
+  const recetas = await Receta.find(filtro)
+    .skip(skip)
+    .limit(limit);
+
+  return {
+    recetas,
+    totalRecetas,
+    totalPages,
+    page,
+    limit
+  };
+};
+
+/*export const obtenerMisRecetasService = async (usuarioId, page, limit) => {
+
   limit = Number(limit) || 3; //si no se envía un límite, se establece en 10 por defecto
   page = Number(page) || 1; //si no se envía un número de página, se establece en 1 por defecto
   const skip = (page - 1) * limit; //calcula cuántos documentos saltar según la página y el límite
@@ -18,7 +77,7 @@ export const obtenerMisRecetasService = async (usuarioId, page, limit) => {
 
   return { recetas, totalRecetas, totalPages, page, limit };
 }
-
+*/
 export const obtenerRecetasService = async (page, limit) => {
 
   limit = Number(limit) || 3; //si no se envía un límite, se establece en 3 por defecto
