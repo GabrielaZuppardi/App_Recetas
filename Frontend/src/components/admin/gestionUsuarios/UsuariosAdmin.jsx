@@ -5,7 +5,7 @@ import { agregarUsuarios, eliminarUsuario, editarUsuario } from '../../../featur
 import ModalUsuario from './ModalUsuario'
 import UsuariosFiltros from './UsuariosFiltros'
 import UsuariosTabla from './UsuariosTabla'
-import Paginado from './Paginado'
+import Paginado from '../../../pages/Paginado'
 
 const UsuariosAdmin = () => {
 
