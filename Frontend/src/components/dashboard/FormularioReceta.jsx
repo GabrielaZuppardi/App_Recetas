@@ -7,13 +7,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { guardarReceta } from '../../features/recetas.slice'
 //FormularioReceta.jsx → usa categorías del store //FormularioReceta solo las lee con useSelector.
 
-
 const CrearRecetaForm = () => {
   const dispatch = useDispatch()
   const [mostrarFormulario, setMostrarFormulario] = useState(false)
-  const categorias = useSelector(
-    (state) => state.categorias.categorias
-  )
+  const categorias = useSelector((state) => state.categorias.categorias)
 
   const {
     register,
@@ -22,8 +19,8 @@ const CrearRecetaForm = () => {
     formState: { errors, isSubmitting, isValid }
   } = useForm({
     resolver: joiResolver(crearRecetaSchema),
-    mode: "onChange"
-  });
+    mode: 'onChange'
+  })
 
   const procesarForm = async (data) => {
     try {
@@ -38,11 +35,17 @@ const CrearRecetaForm = () => {
       formData.append('categoria', data.categoria)
 
       // Ingredientes y pasos: enviar cada elemento como campo repetido para que multer los reciba como array
-      const ingredientesArr = (data.ingredientes || "").split(',').map(i => i.trim()).filter(i => i !== '')
-      ingredientesArr.forEach(i => formData.append('ingredientes', i))
+      const ingredientesArr = (data.ingredientes || '')
+        .split(',')
+        .map((i) => i.trim())
+        .filter((i) => i !== '')
+      ingredientesArr.forEach((i) => formData.append('ingredientes', i))
 
-      const pasosArr = (data.pasos || "").split(',').map(p => p.trim()).filter(p => p !== '')
-      pasosArr.forEach(p => formData.append('pasos', p))
+      const pasosArr = (data.pasos || '')
+        .split(',')
+        .map((p) => p.trim())
+        .filter((p) => p !== '')
+      pasosArr.forEach((p) => formData.append('pasos', p))
 
       // Archivo (campo 'imagen') — register('imagen') devuelve FileList
       if (data.imagen && data.imagen.length > 0) {
@@ -58,35 +61,27 @@ const CrearRecetaForm = () => {
     } catch (error) {
       console.log(error.response?.data || error.message)
     }
-  };
+  }
   return (
-
-
     <article className="card">
       <div
         className="section-title"
         onClick={() => setMostrarFormulario(!mostrarFormulario)}
-        style={{ cursor: "pointer" }}
+        style={{ cursor: 'pointer' }}
       >
-        <h3>
-          {mostrarFormulario ? "➖ Ocultar formulario" : "➕ Crear nueva receta"}
-        </h3>
+        <h3>{mostrarFormulario ? '➖ Ocultar formulario' : '➕ Crear nueva receta'}</h3>
       </div>
 
       {mostrarFormulario && (
         <form onSubmit={handleSubmit(procesarForm)}>
           <label>Título de la receta</label>
-          <input
-            type="text"
-            placeholder="Ej. Pasta cremosa con tomates"
-            {...register("titulo")}
-          />
+          <input type="text" placeholder="Ej. Pasta cremosa con tomates" {...register('titulo')} />
           {errors.titulo && <span className="error">{errors.titulo.message}</span>}
           <div className="two-cols">
             <div>
               <label>Categoría</label>
 
-              <select {...register("categoria")}>
+              <select {...register('categoria')}>
                 <option value="">Seleccionar categoría</option>
 
                 {categorias.map((categoria) => (
@@ -96,14 +91,12 @@ const CrearRecetaForm = () => {
                 ))}
               </select>
 
-              {errors.categoria && (
-                <span className="error">{errors.categoria.message}</span>
-              )}
+              {errors.categoria && <span className="error">{errors.categoria.message}</span>}
             </div>
 
             <div>
               <label>Dificultad</label>
-              <select {...register("dificultad")}>
+              <select {...register('dificultad')}>
                 <option value="">Seleccionar dificultad</option>
                 <option value="facil">Fácil</option>
                 <option value="media">Media</option>
@@ -116,28 +109,22 @@ const CrearRecetaForm = () => {
           <div className="two-cols">
             <div>
               <label>Tiempo</label>
-              <input
-                type="number"
-                {...register("tiempoPreparacion", { valueAsNumber: true })}
-              />
-              {errors.tiempoPreparacion && <span className="error">{errors.tiempoPreparacion.message}</span>}
+              <input type="number" {...register('tiempoPreparacion', { valueAsNumber: true })} />
+              {errors.tiempoPreparacion && (
+                <span className="error">{errors.tiempoPreparacion.message}</span>
+              )}
             </div>
 
             <div>
               <label>Porciones</label>
-              <input
-                type="number"
-
-                {...register("porciones", { valueAsNumber: true })}
-              />
+              <input type="number" {...register('porciones', { valueAsNumber: true })} />
               {errors.porciones && <span className="error">{errors.porciones.message}</span>}
-
             </div>
           </div>
 
           <label>Ingredientes</label>
           <textarea
-            {...register("ingredientes")}
+            {...register('ingredientes')}
             placeholder="Ej. 200 g de pasta, 2 tomates, albahaca fresca..."
             defaultValue=""
           />
@@ -145,7 +132,7 @@ const CrearRecetaForm = () => {
 
           <label>Pasos</label>
           <textarea
-            {...register("pasos")}
+            {...register('pasos')}
             placeholder="Ej. 1. Hervir la pasta. 2. Preparar la salsa. 3. Mezclar y servir."
             defaultValue=""
           />
@@ -153,33 +140,22 @@ const CrearRecetaForm = () => {
 
           <label>Descripción</label>
           <textarea
-            {...register("descripcion")}
+            {...register('descripcion')}
             placeholder="Describí la preparación..."
             defaultValue=""
           />
           {errors.descripcion && <span className="error">{errors.descripcion.message}</span>}
 
           <label>Imagen</label>
-          <input
-            type="file"
-            accept="image/*"
-            {...register("imagen")}
-          />
+          <input type="file" accept="image/*" {...register('imagen')} />
           {errors.imagen && <span className="error">{errors.imagen.message}</span>}
 
-          <button
-            className="btn"
-            type="submit"
-
-            style={{ width: "100%" }}
-          >
+          <button className="btn" type="submit" style={{ width: '100%' }}>
             Guardar receta
           </button>
         </form>
       )}
     </article>
-
-
   )
 }
 

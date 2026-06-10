@@ -1,4 +1,3 @@
-
 //Dashboard.jsx → estructura visual del dashboard
 
 import FormularioReceta from './FormularioReceta'
@@ -8,10 +7,7 @@ import Estadisticas from './Estadisticas'
 import GeneradorRecetaIA from './GeneradorRecetaIA'
 import BuscadorRecetasExternas from './BuscadorRecetasExternas'
 
-
 const Dashboard = () => {
-
-
   return (
     <>
       <Membresia />
@@ -23,7 +19,7 @@ const Dashboard = () => {
 
         <MisRecetas />
       </div>
-    <BuscadorRecetasExternas />
+      <BuscadorRecetasExternas />
       <Estadisticas />
     </>
   )

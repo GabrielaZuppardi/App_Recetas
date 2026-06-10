@@ -3,7 +3,6 @@ import EditarUsuarioForm from './EditarUsuarioForm'
 import TarjetaUsuario from './TarjetaUsuario'
 
 const ModalUsuario = ({ usuario, editarU, onClose }) => {
-
   // Determina si el modal está mostrando el detalle del usuario o el formulario de edición.
   const [modoEdicion, setModoEdicion] = useState(false)
 
@@ -17,7 +16,6 @@ const ModalUsuario = ({ usuario, editarU, onClose }) => {
   return (
     <div className="modal-overlay">
       <div className="modal-card">
-
         <button className="modal-close" onClick={onClose}>
           ✕
         </button>
@@ -40,7 +38,6 @@ const ModalUsuario = ({ usuario, editarU, onClose }) => {
             onClose={onClose}
           />
         )}
-
       </div>
     </div>
   )

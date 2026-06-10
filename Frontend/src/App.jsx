@@ -12,19 +12,16 @@ import NotFoundPage from './pages/NotFoundPage'
 
 import './App.css'
 
-
 function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          
           <Route index element={<LoginPage />} />
           <Route path="/loginAdmin" element={<AdminLoginPage />} />
           <Route path="/registro" element={<RegisterPage />} />
 
           <Route path="/" element={<ContainerPage />}>
-
             <Route element={<ProtectedRoute rolPermitido="usuario" />}>
               <Route path="dashboard" element={<DashboardPage />} />
             </Route>
@@ -34,9 +31,7 @@ function App() {
             </Route>
 
             <Route path="*" element={<NotFoundPage />} />
-
           </Route>
-        
         </Routes>
       </BrowserRouter>
     </Provider>

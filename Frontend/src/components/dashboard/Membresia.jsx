@@ -6,30 +6,29 @@ import { guardarUsuarioLogueado } from '../../features/usuarios.slice'
 const Membresia = () => {
   const dispatch = useDispatch()
 
-  const usuarioRedux = useSelector(state => state.usuarios.usuarioLogueado)
-  const recetas = useSelector(state => state.recetas.recetas)
+  const usuarioRedux = useSelector((state) => state.usuarios.usuarioLogueado)
+  const recetas = useSelector((state) => state.recetas.recetas)
 
-  const usuarioLocal = JSON.parse(localStorage.getItem("usuario"))
+  const usuarioLocal = JSON.parse(localStorage.getItem('usuario'))
 
   const usuario = usuarioRedux || usuarioLocal
   const cantidadRecetas = recetas.length
 
-  const esPlus = usuario?.plan === "plus"
-  const esPremium = usuario?.plan === "premium"
+  const esPlus = usuario?.plan === 'plus'
+  const esPremium = usuario?.plan === 'premium'
 
   const limiteRecetas = 4
 
-  const porcentaje = esPlus
-    ? Math.min((cantidadRecetas / limiteRecetas) * 100, 100)
-    : 100
+  const porcentaje = esPlus ? Math.min((cantidadRecetas / limiteRecetas) * 100, 100) : 100
 
   const pasarAPremium = () => {
-    api.patch('/usuarios/premium')
-      .then(res => {
-        localStorage.setItem("usuario", JSON.stringify(res.data.usuario))
+    api
+      .patch('/usuarios/premium')
+      .then((res) => {
+        localStorage.setItem('usuario', JSON.stringify(res.data.usuario))
         dispatch(guardarUsuarioLogueado(res.data.usuario))
       })
-      .catch(err => {
+      .catch((err) => {
         console.error('Error al pasar a premium:', err)
       })
   }
@@ -37,14 +36,12 @@ const Membresia = () => {
   return (
     <section className="hero card">
       <div>
-        <h2>
-          {esPremium ? "Plan Premium" : "Plan Plus"}
-        </h2>
+        <h2>{esPremium ? 'Plan Premium' : 'Plan Plus'}</h2>
 
         <p>
           {esPremium
-            ? "Ahora podes disfrutar de guardar recetas ilimitadas!"
-            : "En tu plan Plus disponés de un límite de 4 recetas para guardar."}
+            ? 'Ahora podes disfrutar de guardar recetas ilimitadas!'
+            : 'En tu plan Plus disponés de un límite de 4 recetas para guardar.'}
         </p>
       </div>
 
