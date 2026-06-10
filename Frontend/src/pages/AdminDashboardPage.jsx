@@ -7,13 +7,11 @@ import CrearCategoria from '../components/admin/gestionCategorias/CrearCategoria
 const AdminDashboardPage = () => {
   return (
     <div className="admin-dashboard">
-
       <section className="admin-card">
         <UsuariosAdmin />
       </section>
 
       <div className="admin-form-row">
-
         <section className="admin-card">
           <CrearUsuarioAdmin />
         </section>
@@ -21,13 +19,11 @@ const AdminDashboardPage = () => {
         <section className="admin-card">
           <CrearCategoria />
         </section>
-
       </div>
 
       <section className="admin-card">
         <CategoriasAdmin />
       </section>
-
     </div>
   )
 }

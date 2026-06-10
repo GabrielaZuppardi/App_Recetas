@@ -4,7 +4,6 @@ import { joiResolver } from '@hookform/resolvers/joi'
 import { modificarUsuarioSchema } from '../../../validators/usuario.validators'
 
 const EditarUsuarioForm = ({ usuario, editarU, cancelarEdicion, onClose }) => {
-
   const {
     register,
     handleSubmit,
@@ -56,7 +55,6 @@ const EditarUsuarioForm = ({ usuario, editarU, cancelarEdicion, onClose }) => {
 
   return (
     <form className="form-modal" onSubmit={handleSubmit(procesarForm)}>
-
       <label>Nombre</label>
       <input
         type="text"
@@ -64,11 +62,7 @@ const EditarUsuarioForm = ({ usuario, editarU, cancelarEdicion, onClose }) => {
           onChange: () => clearErrors('root')
         })}
       />
-      {errors.nombre && (
-        <span className="error">
-          {errors.nombre.message}
-        </span>
-      )}
+      {errors.nombre && <span className="error">{errors.nombre.message}</span>}
 
       <label>Email</label>
       <input
@@ -77,25 +71,14 @@ const EditarUsuarioForm = ({ usuario, editarU, cancelarEdicion, onClose }) => {
           onChange: () => clearErrors('root')
         })}
       />
-      {errors.email && (
-        <span className="error">
-          {errors.email.message}
-        </span>
-      )}
+      {errors.email && <span className="error">{errors.email.message}</span>}
 
       <label>Rol</label>
-      <select
-        {...register('rol')}
-        onChange={handleCambioRol}
-      >
+      <select {...register('rol')} onChange={handleCambioRol}>
         <option value="usuario">Usuario</option>
         <option value="administrador">Administrador</option>
       </select>
-      {errors.rol && (
-        <span className="error">
-          {errors.rol.message}
-        </span>
-      )}
+      {errors.rol && <span className="error">{errors.rol.message}</span>}
 
       <label>Plan</label>
       <select
@@ -107,32 +90,19 @@ const EditarUsuarioForm = ({ usuario, editarU, cancelarEdicion, onClose }) => {
         <option value="plus">Plus</option>
         <option value="premium">Premium</option>
       </select>
-      {errors.plan && (
-        <span className="error">
-          {errors.plan.message}
-        </span>
-      )}
+      {errors.plan && <span className="error">{errors.plan.message}</span>}
 
-      {errors.root && (
-        <span className="error">
-          {errors.root.message}
-        </span>
-      )}
+      {errors.root && <span className="error">{errors.root.message}</span>}
 
       <div className="modal-actions">
         <button type="submit" className="btn-admin">
           Guardar
         </button>
 
-        <button
-          type="button"
-          className="btn secondary"
-          onClick={cancelarEdicion}
-        >
+        <button type="button" className="btn secondary" onClick={cancelarEdicion}>
           Cancelar
         </button>
       </div>
-
     </form>
   )
 }

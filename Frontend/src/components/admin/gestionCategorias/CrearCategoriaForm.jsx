@@ -4,7 +4,6 @@ import { joiResolver } from '@hookform/resolvers/joi'
 import { crearCategoriaSchema } from '../../../validators/categoria.validators'
 
 const CrearCategoriaForm = ({ crearCategoria }) => {
-
   const {
     register,
     handleSubmit,
@@ -25,7 +24,6 @@ const CrearCategoriaForm = ({ crearCategoria }) => {
 
   return (
     <form className="crear-categoria-form" onSubmit={handleSubmit(procesarForm)}>
-
       <div className="form-group">
         <label>Nombre</label>
         <input
@@ -36,11 +34,7 @@ const CrearCategoriaForm = ({ crearCategoria }) => {
           })}
         />
 
-        {errors.nombre && (
-          <span className="error">
-            {errors.nombre.message}
-          </span>
-        )}
+        {errors.nombre && <span className="error">{errors.nombre.message}</span>}
       </div>
 
       <div className="form-group">
@@ -52,23 +46,14 @@ const CrearCategoriaForm = ({ crearCategoria }) => {
           })}
         />
 
-        {errors.descripcion && (
-          <span className="error">
-            {errors.descripcion.message}
-          </span>
-        )}
+        {errors.descripcion && <span className="error">{errors.descripcion.message}</span>}
       </div>
 
-      {errors.root && (
-        <span className="error error-general">
-          {errors.root.message}
-        </span>
-      )}
+      {errors.root && <span className="error error-general">{errors.root.message}</span>}
 
       <button className="btn-admin" type="submit">
         Crear categoría
       </button>
-
     </form>
   )
 }

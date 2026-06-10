@@ -3,10 +3,8 @@ import EditarCategoriaForm from './EditarCategoriaForm'
 import TarjetaCategoria from './TarjetaCategoria'
 
 const ModalCategoria = ({ categoria, editarC, onClose }) => {
-
   // Determina si el modal está mostrando el detalle de la categoría o el formulario de edición.
   const [modoEdicion, setModoEdicion] = useState(false)
-
 
   /* Cada vez que se selecciona una categoría distinta, el modal vuelve al modo visualización.
   De esta forma evito que el modo edición quede persistido entre categorías distintas y garantizo que cada categoría se abra inicialmente en modo visualización */
@@ -20,7 +18,6 @@ const ModalCategoria = ({ categoria, editarC, onClose }) => {
   return (
     <div className="modal-overlay">
       <div className="modal-card">
-
         <button className="modal-close" onClick={onClose}>
           ✕
         </button>
@@ -43,7 +40,6 @@ const ModalCategoria = ({ categoria, editarC, onClose }) => {
             onClose={onClose}
           />
         )}
-
       </div>
     </div>
   )

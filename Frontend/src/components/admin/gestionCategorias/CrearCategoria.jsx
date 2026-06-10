@@ -5,28 +5,25 @@ import { agregarCategorias } from '../../../features/categorias.slice'
 import CrearCategoriaForm from './CrearCategoriaForm'
 
 const CrearCategoria = () => {
-
   const dispatch = useDispatch()
 
   const crearCategoria = (nuevaCategoria, setError, reset) => {
-    api.post('/categorias', nuevaCategoria)
+    api
+      .post('/categorias', nuevaCategoria)
       .then(() => {
         return api.get('/categorias')
       })
-      .then(res => {
+      .then((res) => {
         const listaCategorias = res.data.categorias || res.data
 
         dispatch(agregarCategorias(listaCategorias))
 
         reset()
       })
-      .catch(err => {
-
+      .catch((err) => {
         setError('root', {
           type: 'manual',
-          message:
-            err.response?.data?.message ||
-            'No se pudo crear la categoría'
+          message: err.response?.data?.message || 'No se pudo crear la categoría'
         })
 
         console.error('Error al crear categoría:', err)

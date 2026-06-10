@@ -10,9 +10,8 @@ import ModalCategoria from './ModalCategoria'
 import CategoriasTabla from './CategoriasTabla'
 
 const CategoriasAdmin = () => {
-
   // Obtiene la lista de categorías desde Redux y permite despachar acciones al store.
-  const categorias = useSelector(state => state.categorias.categorias)
+  const categorias = useSelector((state) => state.categorias.categorias)
   const dispatch = useDispatch()
 
   // Estado de la categoría actualmente seleccionada en el modal.
@@ -20,17 +19,15 @@ const CategoriasAdmin = () => {
 
   // Obtiene todas las categorías del backend al cargar el componente.
   useEffect(() => {
-    api.get('/categorias')
-      .then(res => {
-
+    api
+      .get('/categorias')
+      .then((res) => {
         // Actualiza la lista global de categorías en Redux.
         dispatch(agregarCategorias(res.data.categorias))
-
       })
-      .catch(err => {
+      .catch((err) => {
         console.error('Error al obtener categorías:', err)
       })
-
   }, [dispatch])
 
   // Elimina una categoría y actualiza Redux para reflejar el cambio en pantalla.
@@ -39,39 +36,36 @@ const CategoriasAdmin = () => {
 
     if (!confirmar) return
 
-    api.delete(`/categorias/${id}`)
+    api
+      .delete(`/categorias/${id}`)
       .then(() => {
         dispatch(eliminarCategoria(id))
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err.response?.data || err.message)
       })
   }
 
   // Envía los cambios de la categoría al backend y actualiza Redux con la versión modificada.
   const editarC = (id, datosActualizados, setError, onClose) => {
-    api.patch(`/categorias/${id}`, datosActualizados)
+    api
+      .patch(`/categorias/${id}`, datosActualizados)
       .then((res) => {
         dispatch(editarCategoria(res.data.categoria))
         onClose()
       })
-      .catch(err => {
-
+      .catch((err) => {
         setError('root', {
           type: 'manual',
-          message:
-            err.response?.data?.message ||
-            'No se pudo editar la categoría'
+          message: err.response?.data?.message || 'No se pudo editar la categoría'
         })
 
         console.error('Error al editar categoría:', err)
       })
-
   }
-  
+
   return (
     <section className="categorias-admin">
-
       <h2>Categorías registradas</h2>
 
       <CategoriasTabla
@@ -85,7 +79,6 @@ const CategoriasAdmin = () => {
         editarC={editarC}
         onClose={() => setCategoriaSeleccionada(null)}
       />
-
     </section>
   )
 }

@@ -8,58 +8,60 @@ import api from '../../api/api'
 import { guardarUsuarioLogueado } from '../../features/usuarios.slice'
 import { FiMail, FiLock } from 'react-icons/fi'
 
-
 const LoginForm = () => {
-
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const { register, handleSubmit, setError, clearErrors, formState: { errors, isSubmitting, isDirty, isValid } } = useForm({
+  const {
+    register,
+    handleSubmit,
+    setError,
+    clearErrors,
+    formState: { errors, isSubmitting, isDirty, isValid }
+  } = useForm({
     resolver: joiResolver(loginSchema),
     mode: 'onChange'
-  });
+  })
 
   const procesarForm = (data) => {
-    console.log(data);
-    clearErrors('root');
+    console.log(data)
+    clearErrors('root')
 
-    api.post('/auth/login', data)
-      .then(res => {
+    api
+      .post('/auth/login', data)
+      .then((res) => {
+        console.log(res.data)
+        const usuario = res.data.usuario
 
-        console.log(res.data);
-        const usuario = res.data.usuario;
-
-        if (usuario.rol === "usuario") {
+        if (usuario.rol === 'usuario') {
           setError('root', {
             type: 'manual',
-            message: 'Este acceso es exclusivo para administradores. Ingresá desde el login de usuario.'
+            message:
+              'Este acceso es exclusivo para administradores. Ingresá desde el login de usuario.'
           })
 
           setTimeout(() => {
             navigate('/')
           }, 1500)
 
-          return;
+          return
         }
 
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("usuario", JSON.stringify(res.data.usuario));
+        localStorage.setItem('token', res.data.token)
+        localStorage.setItem('usuario', JSON.stringify(res.data.usuario))
 
-        dispatch(guardarUsuarioLogueado(res.data.usuario));
+        dispatch(guardarUsuarioLogueado(res.data.usuario))
 
-        navigate('/dashboardAdmin');
+        navigate('/dashboardAdmin')
       })
-      .catch(err => {
-
+      .catch((err) => {
         setError('root', {
           type: 'manual',
-          message:
-            err.response?.data?.error ||
-            'Email o contraseña incorrectos'
+          message: err.response?.data?.error || 'Email o contraseña incorrectos'
         })
 
         console.error('Error al iniciar sesión:', err)
-      });
+      })
   }
 
   return (
@@ -67,8 +69,14 @@ const LoginForm = () => {
       <div className="form-group">
         <label>Correo electrónico</label>
         <div className="input-wrap">
-          <span className="icon"><FiMail /> </span>
-          <input type="email" placeholder="ejemplo@gourmet.com" {...register('email', {onChange: () => clearErrors('root')})}/>
+          <span className="icon">
+            <FiMail />{' '}
+          </span>
+          <input
+            type="email"
+            placeholder="ejemplo@gourmet.com"
+            {...register('email', { onChange: () => clearErrors('root') })}
+          />
           {errors.email && <span className="error">{errors.email.message}</span>}
         </div>
       </div>
@@ -78,17 +86,19 @@ const LoginForm = () => {
           <label>Contraseña</label>
         </div>
         <div className="input-wrap">
-          <span className="icon"><FiLock /></span>
-          <input type="password" placeholder="••••••••" {...register('password', {onChange: () => clearErrors('root')})}/>
+          <span className="icon">
+            <FiLock />
+          </span>
+          <input
+            type="password"
+            placeholder="••••••••"
+            {...register('password', { onChange: () => clearErrors('root') })}
+          />
           {errors.password && <span className="error">{errors.password.message}</span>}
         </div>
       </div>
 
-      {errors.root && (
-        <span className="error error-general">
-          {errors.root.message}
-        </span>
-      )}
+      {errors.root && <span className="error error-general">{errors.root.message}</span>}
 
       <button type="submit" className="submit-btn">
         Ingresar a la Plataforma →

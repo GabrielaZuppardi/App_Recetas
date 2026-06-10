@@ -3,7 +3,7 @@ import TarjetaReceta from './TarjetaReceta'
 import { useDispatch, useSelector } from 'react-redux'
 import { agregarReceta, eliminarReceta } from '../../features/recetas.slice'
 import api from '../../api/api'
-import ModalReceta from "./ModalReceta"
+import ModalReceta from './ModalReceta'
 import Paginado from '../../pages/Paginado'
 
 const MisRecetas = () => {
@@ -16,9 +16,9 @@ const MisRecetas = () => {
   const [recetaSeleccionada, setRecetaSeleccionada] = React.useState(null)
   const [abrirEditando, setAbrirEditando] = React.useState(false)
 
-  const [categoriaFiltro, setCategoriaFiltro] = React.useState("")
-  const [dificultadFiltro, setDificultadFiltro] = React.useState("")
-  const [tiempoMaximoFiltro, setTiempoMaximoFiltro] = React.useState("")
+  const [categoriaFiltro, setCategoriaFiltro] = React.useState('')
+  const [dificultadFiltro, setDificultadFiltro] = React.useState('')
+  const [tiempoMaximoFiltro, setTiempoMaximoFiltro] = React.useState('')
 
   const [paginaActual, setPaginaActual] = React.useState(1)
   const [totalPaginas, setTotalPaginas] = React.useState(1)
@@ -29,7 +29,7 @@ const MisRecetas = () => {
     try {
       setLoading(true)
 
-      const respuesta = await api.get("/recetas/mias", {
+      const respuesta = await api.get('/recetas/mias', {
         params: {
           page: paginaActual,
           limit: limite,
@@ -41,7 +41,6 @@ const MisRecetas = () => {
 
       dispatch(agregarReceta(respuesta.data.recetas))
       setTotalPaginas(respuesta.data.totalPages || 1)
-
     } catch (error) {
       console.log(error.response?.data || error.message)
     } finally {
@@ -54,11 +53,11 @@ const MisRecetas = () => {
   }, [paginaActual, categoriaFiltro, dificultadFiltro, tiempoMaximoFiltro])
 
   const paginaAnterior = () => {
-    setPaginaActual(prev => prev - 1)
+    setPaginaActual((prev) => prev - 1)
   }
 
   const paginaSiguiente = () => {
-    setPaginaActual(prev => prev + 1)
+    setPaginaActual((prev) => prev + 1)
   }
 
   const eliminarR = async (id) => {
@@ -68,7 +67,6 @@ const MisRecetas = () => {
       dispatch(eliminarReceta(id))
 
       obtenerMisRecetas()
-
     } catch (error) {
       console.log(error.response?.data || error.message)
     }
@@ -95,10 +93,7 @@ const MisRecetas = () => {
             <option value="">Todas</option>
 
             {categorias.map((categoria) => (
-              <option
-                key={categoria._id}
-                value={categoria._id}
-              >
+              <option key={categoria._id} value={categoria._id}>
                 {categoria.nombre}
               </option>
             ))}

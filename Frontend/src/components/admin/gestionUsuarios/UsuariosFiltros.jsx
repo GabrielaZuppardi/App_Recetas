@@ -11,7 +11,6 @@ const UsuariosFiltros = ({
 }) => {
   return (
     <div className="barra-filtros">
-
       <input
         type="text"
         placeholder="Buscar por nombre o email..."
@@ -53,8 +52,6 @@ const UsuariosFiltros = ({
         <option value="plus">Plus</option>
         <option value="premium">Premium</option>
       </select>
-
-
     </div>
   )
 }

@@ -4,7 +4,6 @@ import { joiResolver } from '@hookform/resolvers/joi'
 import { crearUsuarioSchema } from '../../../validators/usuario.validators'
 
 const CrearUsuarioForm = ({ crearU }) => {
-
   const {
     register,
     handleSubmit,
@@ -30,7 +29,6 @@ const CrearUsuarioForm = ({ crearU }) => {
 
   return (
     <form className="form-admin" onSubmit={handleSubmit(procesarForm)}>
-
       <div className="form-group">
         <label>Nombre</label>
         <input
@@ -40,11 +38,7 @@ const CrearUsuarioForm = ({ crearU }) => {
             onChange: () => clearErrors('root')
           })}
         />
-        {errors.nombre && (
-          <span className="error">
-            {errors.nombre.message}
-          </span>
-        )}
+        {errors.nombre && <span className="error">{errors.nombre.message}</span>}
       </div>
 
       <div className="form-group">
@@ -56,11 +50,7 @@ const CrearUsuarioForm = ({ crearU }) => {
             onChange: () => clearErrors('root')
           })}
         />
-        {errors.email && (
-          <span className="error">
-            {errors.email.message}
-          </span>
-        )}
+        {errors.email && <span className="error">{errors.email.message}</span>}
       </div>
 
       <div className="form-group">
@@ -72,23 +62,14 @@ const CrearUsuarioForm = ({ crearU }) => {
             onChange: () => clearErrors('root')
           })}
         />
-        {errors.password && (
-          <span className="error">
-            {errors.password.message}
-          </span>
-        )}
+        {errors.password && <span className="error">{errors.password.message}</span>}
       </div>
 
-      {errors.root && (
-        <span className="error error-general">
-          {errors.root.message}
-        </span>
-      )}
+      {errors.root && <span className="error error-general">{errors.root.message}</span>}
 
       <button type="submit" className="btn-admin">
         Crear administrador
       </button>
-
     </form>
   )
 }

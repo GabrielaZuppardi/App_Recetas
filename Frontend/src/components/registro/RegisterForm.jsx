@@ -8,9 +8,7 @@ import { registroSchema } from '../../validators/auth.validators'
 import { guardarUsuarioLogueado } from '../../features/usuarios.slice'
 import { FiUser, FiMail, FiLock } from 'react-icons/fi'
 
-
 const RegisterForm = () => {
-
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -28,28 +26,26 @@ const RegisterForm = () => {
   const procesarForm = (data) => {
     clearErrors('root')
 
-    api.post('/auth/registro', data)
+    api
+      .post('/auth/registro', data)
       .then(() => {
         return api.post('/auth/login', {
           email: data.email,
           password: data.password
         })
       })
-      .then(res => {
-        localStorage.setItem("token", res.data.token)
-        localStorage.setItem("usuario", JSON.stringify(res.data.usuario))
+      .then((res) => {
+        localStorage.setItem('token', res.data.token)
+        localStorage.setItem('usuario', JSON.stringify(res.data.usuario))
 
         dispatch(guardarUsuarioLogueado(res.data.usuario))
 
         navigate('/dashboard')
       })
-      .catch(err => {
-
+      .catch((err) => {
         setError('root', {
           type: 'manual',
-          message:
-            err.response?.data?.message ||
-            'No se pudo completar el registro'
+          message: err.response?.data?.message || 'No se pudo completar el registro'
         })
 
         console.error('Error al registrar:', err)
@@ -58,14 +54,13 @@ const RegisterForm = () => {
 
   return (
     <form onSubmit={handleSubmit(procesarForm)}>
-
       <div className="form-group">
-        <label htmlFor="nombre">
-          Nombre Completo
-        </label>
+        <label htmlFor="nombre">Nombre Completo</label>
 
         <div className="input-wrap">
-          <span className="icon"><FiUser /></span>
+          <span className="icon">
+            <FiUser />
+          </span>
 
           <input
             id="nombre"
@@ -75,22 +70,17 @@ const RegisterForm = () => {
               onChange: () => clearErrors('root')
             })}
           />
-          {errors.nombre &&
-            <span className="error">
-              {errors.nombre.message}
-            </span>
-          }
+          {errors.nombre && <span className="error">{errors.nombre.message}</span>}
         </div>
       </div>
 
       <div className="form-group">
-        <label htmlFor="email">
-          Correo electrónico
-        </label>
+        <label htmlFor="email">Correo electrónico</label>
 
         <div className="input-wrap">
-          <span className="icon"><FiMail /> </span>
-
+          <span className="icon">
+            <FiMail />{' '}
+          </span>
 
           <input
             id="email"
@@ -101,21 +91,17 @@ const RegisterForm = () => {
             })}
           />
 
-          {errors.email &&
-            <span className="error">
-              {errors.email.message}
-            </span>
-          }
+          {errors.email && <span className="error">{errors.email.message}</span>}
         </div>
       </div>
 
       <div className="form-group">
-        <label htmlFor="password">
-          Contraseña
-        </label>
+        <label htmlFor="password">Contraseña</label>
 
         <div className="input-wrap">
-          <span className="icon"><FiLock /></span>
+          <span className="icon">
+            <FiLock />
+          </span>
 
           <input
             id="password"
@@ -125,27 +111,15 @@ const RegisterForm = () => {
               onChange: () => clearErrors('root')
             })}
           />
-          {errors.password &&
-            <span className="error">
-              {errors.password.message}
-            </span>
-          }
+          {errors.password && <span className="error">{errors.password.message}</span>}
         </div>
       </div>
 
-      {errors.root && (
-        <span className="error error-general">
-          {errors.root.message}
-        </span>
-      )}
+      {errors.root && <span className="error error-general">{errors.root.message}</span>}
 
-      <button
-        type="submit"
-        className="submit-btn"
-      >
+      <button type="submit" className="submit-btn">
         Crear mi Cuenta Gratis
       </button>
-
     </form>
   )
 }
