@@ -1,38 +1,50 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { useForm } from 'react-hook-form'
+import { joiResolver } from '@hookform/resolvers/joi'
+import { crearUsuarioSchema } from '../../../validators/usuario.validators'
 
 const CrearUsuarioForm = ({ crearU }) => {
-  const [nombre, setNombre] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const {
+    register,
+    handleSubmit,
+    setError,
+    clearErrors,
+    reset,
+    formState: { errors }
+  } = useForm({
+    resolver: joiResolver(crearUsuarioSchema),
+    mode: 'onChange'
+  })
+
+  const procesarForm = (data) => {
+    clearErrors('root')
 
     const nuevoUsuario = {
-      nombre,
-      email,
-      password,
+      ...data,
       rol: 'administrador'
     }
 
-    crearU(nuevoUsuario)
-
-    setNombre('')
-    setEmail('')
-    setPassword('')
+    crearU(nuevoUsuario, setError, reset)
   }
 
   return (
-    <form className="form-admin" onSubmit={handleSubmit}>
+    <form className="form-admin" onSubmit={handleSubmit(procesarForm)}>
 
       <div className="form-group">
         <label>Nombre</label>
         <input
           type="text"
           placeholder="Ej: Ana Pérez"
-          value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
+          {...register('nombre', {
+            onChange: () => clearErrors('root')
+          })}
         />
+        {errors.nombre && (
+          <span className="error">
+            {errors.nombre.message}
+          </span>
+        )}
       </div>
 
       <div className="form-group">
@@ -40,20 +52,38 @@ const CrearUsuarioForm = ({ crearU }) => {
         <input
           type="email"
           placeholder="Ej: ana.perez@email.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          {...register('email', {
+            onChange: () => clearErrors('root')
+          })}
         />
+        {errors.email && (
+          <span className="error">
+            {errors.email.message}
+          </span>
+        )}
       </div>
 
       <div className="form-group">
         <label>Contraseña</label>
         <input
           type="password"
-          placeholder="Mínimo 8 caracteres"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Mínimo 6 caracteres"
+          {...register('password', {
+            onChange: () => clearErrors('root')
+          })}
         />
+        {errors.password && (
+          <span className="error">
+            {errors.password.message}
+          </span>
+        )}
       </div>
+
+      {errors.root && (
+        <span className="error error-general">
+          {errors.root.message}
+        </span>
+      )}
 
       <button type="submit" className="btn-admin">
         Crear administrador

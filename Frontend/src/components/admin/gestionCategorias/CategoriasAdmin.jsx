@@ -24,7 +24,7 @@ const CategoriasAdmin = () => {
       .then(res => {
 
         // Actualiza la lista global de categorías en Redux.
-        dispatch(agregarCategorias( res.data.categorias ))
+        dispatch(agregarCategorias(res.data.categorias))
 
       })
       .catch(err => {
@@ -49,16 +49,26 @@ const CategoriasAdmin = () => {
   }
 
   // Envía los cambios de la categoría al backend y actualiza Redux con la versión modificada.
-  const editarC = (id, datosActualizados) => {
+  const editarC = (id, datosActualizados, setError, onClose) => {
     api.patch(`/categorias/${id}`, datosActualizados)
       .then((res) => {
         dispatch(editarCategoria(res.data.categoria))
+        onClose()
       })
       .catch(err => {
-        console.error(err.response?.data || err.message)
-      })
-  }
 
+        setError('root', {
+          type: 'manual',
+          message:
+            err.response?.data?.message ||
+            'No se pudo editar la categoría'
+        })
+
+        console.error('Error al editar categoría:', err)
+      })
+
+  }
+  
   return (
     <section className="categorias-admin">
 

@@ -72,15 +72,24 @@ const UsuariosAdmin = () => {
 
 
   // Envía los cambios del usuario al backend y actualiza Redux con la versión modificada.
-  const editarU = (id, datosActualizados) => {
-    api.patch(`/usuarios/${id}`, datosActualizados)
-      .then((res) => {
-        dispatch(editarUsuario(res.data.usuario))
+  const editarU = (id, datosActualizados, setError, onClose) => {
+  api.patch(`/usuarios/${id}`, datosActualizados)
+    .then((res) => {
+      dispatch(editarUsuario(res.data.usuario))
+      onClose()
+    })
+    .catch(err => {
+
+      setError('root', {
+        type: 'manual',
+        message:
+          err.response?.data?.message ||
+          'No se pudo editar el usuario'
       })
-      .catch(err => {
-        console.error(err.response?.data || err.message)
-      })
-  }
+
+      console.error('Error al editar usuario:', err)
+    })
+}
 
   // Navegación entre páginas del listado.
   const paginaAnterior = () => {
