@@ -4,9 +4,9 @@ import { joiResolver } from '@hookform/resolvers/joi'
 import { useNavigate } from 'react-router'
 import { useDispatch } from 'react-redux'
 import api from '../../api/api'
-import { crearUsuarioSchema } from '../../validators/usuario.validators'
+import { registroSchema } from '../../validators/auth.validators'
 import { guardarUsuarioLogueado } from '../../features/usuarios.slice'
-import {FiUser, FiMail, FiLock} from 'react-icons/fi'
+import { FiUser, FiMail, FiLock } from 'react-icons/fi'
 
 
 const RegisterForm = () => {
@@ -17,12 +17,17 @@ const RegisterForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    setError,
+    clearErrors,
+    formState: { errors, isSubmitting, isDirty, isValid }
   } = useForm({
-    resolver: joiResolver(crearUsuarioSchema)
+    resolver: joiResolver(registroSchema),
+    mode: 'onChange'
   })
 
   const procesarForm = (data) => {
+    clearErrors('root')
+
     api.post('/auth/registro', data)
       .then(() => {
         return api.post('/auth/login', {
@@ -39,7 +44,15 @@ const RegisterForm = () => {
         navigate('/dashboard')
       })
       .catch(err => {
-        console.error('Error al registrar o iniciar sesión:', err)
+
+        setError('root', {
+          type: 'manual',
+          message:
+            err.response?.data?.message ||
+            'No se pudo completar el registro'
+        })
+
+        console.error('Error al registrar:', err)
       })
   }
 
@@ -58,9 +71,10 @@ const RegisterForm = () => {
             id="nombre"
             type="text"
             placeholder="Ingresa tu nombre"
-            {...register('nombre')}
+            {...register('nombre', {
+              onChange: () => clearErrors('root')
+            })}
           />
-
           {errors.nombre &&
             <span className="error">
               {errors.nombre.message}
@@ -77,11 +91,14 @@ const RegisterForm = () => {
         <div className="input-wrap">
           <span className="icon"><FiMail /> </span>
 
+
           <input
             id="email"
             type="email"
             placeholder="chef@gourmet.io"
-            {...register('email')}
+            {...register('email', {
+              onChange: () => clearErrors('root')
+            })}
           />
 
           {errors.email &&
@@ -104,9 +121,10 @@ const RegisterForm = () => {
             id="password"
             type="password"
             placeholder="Mínimo 6 caracteres"
-            {...register('password')}
+            {...register('password', {
+              onChange: () => clearErrors('root')
+            })}
           />
-
           {errors.password &&
             <span className="error">
               {errors.password.message}
@@ -114,6 +132,12 @@ const RegisterForm = () => {
           }
         </div>
       </div>
+
+      {errors.root && (
+        <span className="error error-general">
+          {errors.root.message}
+        </span>
+      )}
 
       <button
         type="submit"
