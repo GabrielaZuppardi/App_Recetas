@@ -70,10 +70,7 @@ const CrearRecetaForm = () => {
       setMensajeExito('')
       setError('root', {
         type: 'manual',
-        message:
-          error.response?.data?.mensaje ||
-          error.response?.data?.message ||
-          'No se pudo crear la receta'
+        message: error.response?.data?.mensaje || error.response?.data?.message || 'No se pudo crear la receta'
       })
 
       console.log(error.response?.data || error.message)
@@ -81,11 +78,7 @@ const CrearRecetaForm = () => {
   }
   return (
     <article className="card">
-      <div
-        className="section-title"
-        onClick={() => setMostrarFormulario(!mostrarFormulario)}
-        style={{ cursor: 'pointer' }}
-      >
+      <div className="section-title" onClick={() => setMostrarFormulario(!mostrarFormulario)} style={{ cursor: 'pointer' }}>
         <h3>{mostrarFormulario ? '➖ Ocultar formulario' : '➕ Crear nueva receta'}</h3>
       </div>
 
@@ -127,9 +120,7 @@ const CrearRecetaForm = () => {
             <div>
               <label>Tiempo</label>
               <input type="number" {...register('tiempoPreparacion', { valueAsNumber: true })} />
-              {errors.tiempoPreparacion && (
-                <span className="error">{errors.tiempoPreparacion.message}</span>
-              )}
+              {errors.tiempoPreparacion && <span className="error">{errors.tiempoPreparacion.message}</span>}
             </div>
 
             <div>
@@ -140,27 +131,15 @@ const CrearRecetaForm = () => {
           </div>
 
           <label>Ingredientes</label>
-          <textarea
-            {...register('ingredientes')}
-            placeholder="Ej. 200 g de pasta, 2 tomates, albahaca fresca..."
-            defaultValue=""
-          />
+          <textarea {...register('ingredientes')} placeholder="Ej. 200 g de pasta, 2 tomates, albahaca fresca..." defaultValue="" />
           {errors.ingredientes && <span className="error">{errors.ingredientes.message}</span>}
 
           <label>Pasos</label>
-          <textarea
-            {...register('pasos')}
-            placeholder="Ej. Hervir la pasta, Preparar la salsa, Mezclar y servir."
-            defaultValue=""
-          />
+          <textarea {...register('pasos')} placeholder="Ej. Hervir la pasta, Preparar la salsa, Mezclar y servir." defaultValue="" />
           {errors.pasos && <span className="error">{errors.pasos.message}</span>}
 
           <label>Descripción</label>
-          <textarea
-            {...register('descripcion')}
-            placeholder="Describí la preparación..."
-            defaultValue=""
-          />
+          <textarea {...register('descripcion')} placeholder="Describí la preparación..." defaultValue="" />
           {errors.descripcion && <span className="error">{errors.descripcion.message}</span>}
 
           <label>Imagen</label>
@@ -170,7 +149,7 @@ const CrearRecetaForm = () => {
           {errors.root && <span className="error error-general">{errors.root.message}</span>}
           {mensajeExito && <span className="success-message">{mensajeExito}</span>}
 
-          <button className="btn" type="submit" type="button" className="btn secondary" style={{ width: '100%' }}>
+          <button className="btn secondary" type="submit" style={{ width: '100%' }}>
             Guardar receta
           </button>
         </form>
