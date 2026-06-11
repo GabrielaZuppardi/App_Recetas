@@ -7,13 +7,12 @@ import { TbToolsKitchen2 } from 'react-icons/tb'
 
 const LoginAdminHeader = () => {
   return (
-    <header>
-      <h1>ChefsMate</h1>
-      <h2>
-        <GiChefToque /> <MdRestaurantMenu /> <LuCookingPot /> <TbToolsKitchen2 />
-      </h2>
-      <p className="subtitle">Acceso Administradores</p>
-    </header>
+    
+<header className="login-header">
+         <h1>ChefsMate</h1>
+                 <h2><GiChefToque /> <MdRestaurantMenu /> <LuCookingPot /> <TbToolsKitchen2 /></h2>
+                   <p className="subtitle">Acceso Administradores</p>
+               </header>
   )
 }
 

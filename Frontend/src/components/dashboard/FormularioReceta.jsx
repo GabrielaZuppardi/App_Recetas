@@ -132,8 +132,8 @@ const CrearRecetaForm = () => {
 
           <label>Pasos</label>
           <textarea
-            {...register('pasos')}
-            placeholder="Ej. 1. Hervir la pasta. 2. Preparar la salsa. 3. Mezclar y servir."
+            {...register("pasos")}
+            placeholder="Ej. Hervir la pasta, Preparar la salsa, Mezclar y servir."
             defaultValue=""
           />
           {errors.pasos && <span className="error">{errors.pasos.message}</span>}
