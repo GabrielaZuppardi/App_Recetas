@@ -900,6 +900,16 @@ footer {
   text-decoration: underline;
 }
 
+/* Exitooo */
+.success-message {
+  display: block;
+  margin-top: 10px;
+  color: #198754;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+
 /* Errores login / registro */
 .login-card .error,
 .register-card .error {

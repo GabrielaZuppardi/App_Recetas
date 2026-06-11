@@ -2,7 +2,6 @@ import React from 'react'
 import { FaTrash } from 'react-icons/fa'
 
 const UsuariosTabla = ({ usuarios, setUsuarioSeleccionado, eliminarU, editarU }) => {
-   
   return (
     <div className="tabla-scroll">
       <table className="admin-table">

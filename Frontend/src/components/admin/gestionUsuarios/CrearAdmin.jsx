@@ -2,30 +2,34 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import api from '../../../api/api'
 import { crearAdmin as crearAdminAction } from '../../../features/usuarios.slice'
-import CrearUsuarioForm from './CrearAdminForm'
+import CrearAdminForm from './CrearAdminForm'
+
+const [mensajeExito, setMensajeExito] = useState('')
 
 const CrearUsuarioAdmin = () => {
-  
   const dispatch = useDispatch()
 
   const crearU = (nuevoUsuario, setError, reset) => {
     api
       .post('/usuarios', nuevoUsuario)
       .then((res) => {
-      
+        const adminCreado = res.data.administrador
 
-        const usuarioCreado = res.data
+        dispatch(crearAdminAction(adminCreado))
+        setMensajeExito('Administrador creado correctamente')
 
-        console.log('USUARIO CREADO:', usuarioCreado)
-
-        dispatch(crearAdminAction(usuarioCreado))
         reset()
+
+        setTimeout(() => {
+        setMensajeExito('')
+      }, 2000)
       })
       .catch((err) => {
         setError('root', {
           type: 'manual',
           message:
             err.response?.data?.message ||
+            err.response?.data?.errores?.[0] ||
             'No se pudo crear el administrador'
         })
 
@@ -36,8 +40,7 @@ const CrearUsuarioAdmin = () => {
   return (
     <section className="admin-card">
       <h2>Crear administrador</h2>
-
-      <CrearUsuarioForm crearU={crearU} />
+      <CrearAdminForm crearU={crearU} mensajeExito={mensajeExito} />
     </section>
   )
 }
