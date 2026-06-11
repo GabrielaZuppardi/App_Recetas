@@ -42,7 +42,7 @@ const LoginForm = () => {
 
           setTimeout(() => {
             navigate('/loginAdmin')
-          }, 1500)
+          }, 2000)
 
           return
         }

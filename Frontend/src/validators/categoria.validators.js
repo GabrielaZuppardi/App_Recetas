@@ -22,6 +22,7 @@ export const modificarCategoriaSchema = Joi.object({
   }),
 
   descripcion: Joi.string().trim().min(10).max(300).optional().messages({
+     'string.empty': 'La descripción de la categoría no puede estar vacía',
     'string.min': 'La descripción de la categoría debe tener al menos 10 caracteres',
     'string.max': 'La descripción de la categoría no puede superar los 300 caracteres'
   })

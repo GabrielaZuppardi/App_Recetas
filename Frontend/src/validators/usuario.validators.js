@@ -39,6 +39,7 @@ export const modificarUsuarioSchema = Joi.object({
   }),
 
   email: Joi.string().trim().email().messages({
+    'string.empty': 'El email no puede estar vacío',
     'string.email': 'El email debe ser válido'
   }),
 

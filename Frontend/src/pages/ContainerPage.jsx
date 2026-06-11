@@ -16,7 +16,7 @@ const ContainerPage = () => {
       </main>
 
       <footer>
-        <p>© 2026 Mi Aplicación. Todos los derechos reservados.</p>
+        <p>© Obligatorio Full Stack 2026 - 331770 - 240962</p>
       </footer>
     </div>
   )

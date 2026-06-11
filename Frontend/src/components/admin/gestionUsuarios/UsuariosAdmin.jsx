@@ -7,6 +7,7 @@ import UsuariosFiltros from './UsuariosFiltros'
 import UsuariosTabla from './UsuariosTabla'
 import Paginado from '../../../pages/Paginado'
 
+
 const UsuariosAdmin = () => {
   // Obtiene la lista de usuarios desde Redux y permite despachar acciones al store.
   const usuarios = useSelector((state) => state.usuarios.usuarios)
@@ -23,6 +24,7 @@ const UsuariosAdmin = () => {
   const [filtroBusqueda, setFiltroBusqueda] = useState('')
   const [filtroRol, setFiltroRol] = useState('')
   const [filtroPlan, setFiltroPlan] = useState('')
+
 
   // Obtiene usuarios del backend cada vez que cambian la página o los criterios de búsqueda.
   useEffect(() => {
@@ -84,6 +86,7 @@ const UsuariosAdmin = () => {
       })
   }
 
+ 
   // Navegación entre páginas del listado.
   const paginaAnterior = () => {
     if (paginaActual > 1) {
@@ -130,6 +133,7 @@ const UsuariosAdmin = () => {
         editarU={editarU}
         onClose={() => setUsuarioSeleccionado(null)}
       />
+
     </section>
   )
 }
