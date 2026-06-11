@@ -147,6 +147,7 @@ code {
   gap: 16px;
   padding: 18px 22px;
   margin-bottom: 24px;
+  z-index: 100;
 }
 
 .brand {
@@ -459,6 +460,11 @@ textarea {
 .recipe-placeholder-icon {
   font-size: 56px;
   opacity: 0.7;
+    position: static;
+}
+
+.logo-chef svg {
+  position: absolute;
 }
 
 .modal-overlay {
@@ -671,6 +677,8 @@ footer {
     grid-template-columns: 1fr;
     flex-direction: column;
     align-items: flex-start;
+     position: relative;
+  z-index: 10
   }
 
   .grid {
@@ -681,6 +689,9 @@ footer {
   .inspiration-grid,
   .stats-grid {
     grid-template-columns: 1fr;
+    position: relative;
+  z-index: 1;
+  overflow: hidden;
   }
 
   .two-cols {
@@ -1363,3 +1374,30 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+
+input,
+select,
+textarea {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 13px;
+  font-family: inherit;
+  margin-bottom: 14px;
+  outline: none;
+}
+input::placeholder,
+textarea::placeholder {
+  font-family: inherit;
+  font-size: inherit;
+}
+.login-card .footer a,
+.register-card .footer a,
+.login-card .subtitle,
+.register-card .subtitle {
+  color: #ea580c;
+  font-weight: 700;
+  text-decoration: none;
+}
+
