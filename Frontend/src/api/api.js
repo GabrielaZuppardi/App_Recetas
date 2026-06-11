@@ -3,7 +3,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: 'https://app-recetas-qrrs.vercel.app/',
+    baseURL: 'https://app-recetas-qrrs.vercel.app/v1',
         
            
 
