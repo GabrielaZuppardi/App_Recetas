@@ -3,8 +3,8 @@
 import axios from 'axios'
 
 const api = axios.create({
-  //baseURL: 'https://app-recetas-qrrs.vercel.app/v1',
-  baseURL: 'http://localhost:3000/v1'
+  baseURL: 'https://app-recetas-qrrs.vercel.app/v1',
+  //baseURL: 'http://localhost:3000/v1'
 })
 
 api.interceptors.request.use((config) => {
