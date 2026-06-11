@@ -1,13 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import api from '../../../api/api'
 import { crearAdmin as crearAdminAction } from '../../../features/usuarios.slice'
 import CrearAdminForm from './CrearAdminForm'
 
-const [mensajeExito, setMensajeExito] = useState('')
-
 const CrearUsuarioAdmin = () => {
   const dispatch = useDispatch()
+  const [mensajeExito, setMensajeExito] = useState('')
 
   const crearU = (nuevoUsuario, setError, reset) => {
     api
@@ -21,8 +20,8 @@ const CrearUsuarioAdmin = () => {
         reset()
 
         setTimeout(() => {
-        setMensajeExito('')
-      }, 2000)
+          setMensajeExito('')
+        }, 2000)
       })
       .catch((err) => {
         setError('root', {
