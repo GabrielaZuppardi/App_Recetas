@@ -10,12 +10,14 @@ import { guardarReceta } from '../../features/recetas.slice'
 const CrearRecetaForm = () => {
   const dispatch = useDispatch()
   const [mostrarFormulario, setMostrarFormulario] = useState(false)
+ const [mensajeExito, setMensajeExito] = useState('')
   const categorias = useSelector((state) => state.categorias.categorias)
 
   const {
     register,
     handleSubmit,
     reset,
+    setError,
     formState: { errors, isSubmitting, isValid }
   } = useForm({
     resolver: joiResolver(crearRecetaSchema),
@@ -57,8 +59,18 @@ const CrearRecetaForm = () => {
       console.log('RECETA CREADA')
       console.log(respuesta.data)
       dispatch(guardarReceta(respuesta.data.receta))
+      setMensajeExito('Receta creada con éxito.')
       reset() // Limpiar formulario
     } catch (error) {
+      setMensajeExito('')
+      setError('root', {
+        type: 'manual',
+        message:
+          error.response?.data?.mensaje ||
+          error.response?.data?.message ||
+          'No se pudo crear la receta'
+      })
+
       console.log(error.response?.data || error.message)
     }
   }
@@ -148,7 +160,17 @@ const CrearRecetaForm = () => {
 
           <label>Imagen</label>
           <input type="file" accept="image/*" {...register('imagen')} />
+
+
           {errors.imagen && <span className="error">{errors.imagen.message}</span>}
+
+          {errors.root && (
+            <span className="error">{errors.root.message}</span>
+          )}
+
+          {mensajeExito && (
+  <span className="success-message">{mensajeExito}</span>
+)}
 
           <button className="btn" type="submit" style={{ width: '100%' }}>
             Guardar receta

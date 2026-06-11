@@ -4,7 +4,7 @@ import axios from "axios";
 
 const api = axios.create({
     baseURL: 'https://app-recetas-qrrs.vercel.app/v1',
-        
+       //"http://localhost:3000/v1" 
            
 
 });
