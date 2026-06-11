@@ -1,14 +1,11 @@
 import React from 'react'
-import { LuChefHat } from "react-icons/lu"
+import { LuChefHat } from 'react-icons/lu'
 
 const TarjetaReceta = ({ receta, onClick, onEliminar, onEditar }) => {
   return (
     <div className="recipe" onClick={onClick}>
       {receta.imagenUrl ? (
-        <img
-          src={receta.imagenUrl}
-          alt={receta.titulo}
-        />
+        <img src={receta.imagenUrl} alt={receta.titulo} />
       ) : (
         <div className="recipe-placeholder">
           <LuChefHat className="recipe-placeholder-icon" />
@@ -20,11 +17,10 @@ const TarjetaReceta = ({ receta, onClick, onEliminar, onEditar }) => {
 
         <p>
           {receta.descripcion?.length > 120
-            ? receta.descripcion.slice(0, 120) + "..."
+            ? receta.descripcion.slice(0, 120) + '...'
             : receta.descripcion}
         </p>
         <div className="recipe-actions">
-
           {onEditar && (
             <button
               type="button"

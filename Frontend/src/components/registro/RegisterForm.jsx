@@ -4,124 +4,122 @@ import { joiResolver } from '@hookform/resolvers/joi'
 import { useNavigate } from 'react-router'
 import { useDispatch } from 'react-redux'
 import api from '../../api/api'
-import { crearUsuarioSchema } from '../../validators/usuario.validators'
+import { registroSchema } from '../../validators/auth.validators'
 import { guardarUsuarioLogueado } from '../../features/usuarios.slice'
-import {FiUser, FiMail, FiLock} from 'react-icons/fi'
-
+import { FiUser, FiMail, FiLock } from 'react-icons/fi'
 
 const RegisterForm = () => {
-
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    setError,
+    clearErrors,
+    formState: { errors, isSubmitting, isDirty, isValid }
   } = useForm({
-    resolver: joiResolver(crearUsuarioSchema)
+    resolver: joiResolver(registroSchema),
+    mode: 'onChange'
   })
 
   const procesarForm = (data) => {
-    api.post('/auth/registro', data)
+    clearErrors('root')
+
+    api
+      .post('/auth/registro', data)
       .then(() => {
         return api.post('/auth/login', {
           email: data.email,
           password: data.password
         })
       })
-      .then(res => {
-        localStorage.setItem("token", res.data.token)
-        localStorage.setItem("usuario", JSON.stringify(res.data.usuario))
+      .then((res) => {
+        localStorage.setItem('token', res.data.token)
+        localStorage.setItem('usuario', JSON.stringify(res.data.usuario))
 
         dispatch(guardarUsuarioLogueado(res.data.usuario))
 
         navigate('/dashboard')
       })
-      .catch(err => {
-        console.error('Error al registrar o iniciar sesión:', err)
+      .catch((err) => {
+        setError('root', {
+          type: 'manual',
+          message: err.response?.data?.message || 'No se pudo completar el registro'
+        })
+
+        console.error('Error al registrar:', err)
       })
   }
 
   return (
     <form onSubmit={handleSubmit(procesarForm)}>
-
       <div className="form-group">
-        <label htmlFor="nombre">
-          Nombre Completo
-        </label>
+        <label htmlFor="nombre">Nombre Completo</label>
 
         <div className="input-wrap">
-          <span className="icon"><FiUser /></span>
+          <span className="icon">
+            <FiUser />
+          </span>
 
           <input
             id="nombre"
             type="text"
             placeholder="Ingresa tu nombre"
-            {...register('nombre')}
+            {...register('nombre', {
+              onChange: () => clearErrors('root')
+            })}
           />
-
-          {errors.nombre &&
-            <span className="error">
-              {errors.nombre.message}
-            </span>
-          }
+          {errors.nombre && <span className="error">{errors.nombre.message}</span>}
         </div>
       </div>
 
       <div className="form-group">
-        <label htmlFor="email">
-          Correo electrónico
-        </label>
+        <label htmlFor="email">Correo electrónico</label>
 
         <div className="input-wrap">
-          <span className="icon"><FiMail /> </span>
+          <span className="icon">
+            <FiMail />{' '}
+          </span>
 
           <input
             id="email"
             type="email"
             placeholder="chef@gourmet.io"
-            {...register('email')}
+            {...register('email', {
+              onChange: () => clearErrors('root')
+            })}
           />
 
-          {errors.email &&
-            <span className="error">
-              {errors.email.message}
-            </span>
-          }
+          {errors.email && <span className="error">{errors.email.message}</span>}
         </div>
       </div>
 
       <div className="form-group">
-        <label htmlFor="password">
-          Contraseña
-        </label>
+        <label htmlFor="password">Contraseña</label>
 
         <div className="input-wrap">
-          <span className="icon"><FiLock /></span>
+          <span className="icon">
+            <FiLock />
+          </span>
 
           <input
             id="password"
             type="password"
             placeholder="Mínimo 6 caracteres"
-            {...register('password')}
+            {...register('password', {
+              onChange: () => clearErrors('root')
+            })}
           />
-
-          {errors.password &&
-            <span className="error">
-              {errors.password.message}
-            </span>
-          }
+          {errors.password && <span className="error">{errors.password.message}</span>}
         </div>
       </div>
 
-      <button
-        type="submit"
-        className="submit-btn"
-      >
+      {errors.root && <span className="error error-general">{errors.root.message}</span>}
+
+      <button type="submit" className="submit-btn">
         Crear mi Cuenta Gratis
       </button>
-
     </form>
   )
 }

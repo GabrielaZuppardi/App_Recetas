@@ -1,14 +1,10 @@
 import React from 'react'
 
-const TarjetaCategoria = ({
-  categoria,
-  onEditar
-}) => {
-
+const TarjetaCategoria = ({ categoria, onEditar }) => {
   return (
     <div className="admin-info-card">
-
       <p>
+        {' '}
         <strong>Nombre:</strong> {categoria.nombre}
       </p>
 
@@ -21,7 +17,6 @@ const TarjetaCategoria = ({
       <button className="btn-admin" onClick={onEditar}>
         Editar categoría
       </button>
-
     </div>
   )
 }

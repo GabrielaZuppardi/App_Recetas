@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router'
-import { GiChefToque } from "react-icons/gi";
-import { MdRestaurantMenu } from "react-icons/md";
-import { LuCookingPot } from "react-icons/lu";
-import { TbToolsKitchen2 } from "react-icons/tb";
+import { GiChefToque } from 'react-icons/gi'
+import { MdRestaurantMenu } from 'react-icons/md'
+import { LuCookingPot } from 'react-icons/lu'
+import { TbToolsKitchen2 } from 'react-icons/tb'
 
 const LoginAdminHeader = () => {
   return (
@@ -17,4 +17,3 @@ const LoginAdminHeader = () => {
 }
 
 export default LoginAdminHeader
-

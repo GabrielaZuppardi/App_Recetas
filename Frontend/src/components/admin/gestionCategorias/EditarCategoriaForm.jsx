@@ -1,61 +1,61 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { useForm } from 'react-hook-form'
+import { joiResolver } from '@hookform/resolvers/joi'
+import { crearCategoriaSchema } from '../../../validators/categoria.validators'
 
-const EditarCategoriaForm = ({
-  categoria,
-  editarC,
-  cancelarEdicion,
-  onClose
-}) => {
+const EditarCategoriaForm = ({ categoria, editarC, cancelarEdicion, onClose }) => {
+  const {
+    register,
+    handleSubmit,
+    setError,
+    clearErrors,
+    formState: { errors }
+  } = useForm({
+    resolver: joiResolver(crearCategoriaSchema),
+    mode: 'onChange',
+    defaultValues: {
+      nombre: categoria.nombre,
+      descripcion: categoria.descripcion
+    }
+  })
 
-  // Estados locales inicializados con los datos actuales de la categoría.
-  const [nombre, setNombre] = useState(categoria.nombre)
-  const [descripcion, setDescripcion] = useState(categoria.descripcion)
+  const procesarForm = (data) => {
+    clearErrors('root')
 
-  // Envía los cambios al componente padre para actualizar la categoría.
-  const handleSubmit = (e) => {
-    e.preventDefault()
-
-    editarC(categoria._id, {
-      nombre,
-      descripcion
-    })
-
-    onClose()
+    editarC(categoria._id, data, setError, onClose)
   }
 
   return (
-    <form className="form-modal" onSubmit={handleSubmit}>
-
+    <form className="form-modal" onSubmit={handleSubmit(procesarForm)}>
       <label>Nombre</label>
       <input
         type="text"
-        value={nombre}
-        onChange={(e) => setNombre(e.target.value)}
+        {...register('nombre', {
+          onChange: () => clearErrors('root')
+        })}
       />
+      {errors.nombre && <span className="error">{errors.nombre.message}</span>}
 
       <label>Descripción</label>
       <textarea
-        value={descripcion}
-        onChange={(e) => setDescripcion(e.target.value)}
         rows="4"
+        {...register('descripcion', {
+          onChange: () => clearErrors('root')
+        })}
       />
+      {errors.descripcion && <span className="error">{errors.descripcion.message}</span>}
+
+      {errors.root && <span className="error">{errors.root.message}</span>}
 
       <div className="modal-actions">
-
         <button type="submit" className="btn-admin">
           Guardar cambios
         </button>
 
-        <button
-          type="button"
-          className="btn secondary"
-          onClick={cancelarEdicion}
-        >
+        <button type="button" className="btn secondary" onClick={cancelarEdicion}>
           Cancelar
         </button>
-
       </div>
-
     </form>
   )
 }

@@ -7,12 +7,11 @@ import UsuariosFiltros from './UsuariosFiltros'
 import UsuariosTabla from './UsuariosTabla'
 import Paginado from '../../../pages/Paginado'
 
+
 const UsuariosAdmin = () => {
-
   // Obtiene la lista de usuarios desde Redux y permite despachar acciones al store.
-  const usuarios = useSelector(state => state.usuarios.usuarios)
+  const usuarios = useSelector((state) => state.usuarios.usuarios)
   const dispatch = useDispatch()
-
 
   // Estado del usuario actualmente seleccionado en el modal.
   const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null)
@@ -26,33 +25,31 @@ const UsuariosAdmin = () => {
   const [filtroRol, setFiltroRol] = useState('')
   const [filtroPlan, setFiltroPlan] = useState('')
 
+
   // Obtiene usuarios del backend cada vez que cambian la página o los criterios de búsqueda.
   useEffect(() => {
-    api.get('/usuarios', {
-      params: {
-        page: paginaActual,
-        limit: 10,
-        busqueda: filtroBusqueda,
-        rol: filtroRol,
-        plan: filtroPlan
-      }
-    })
-      .then(res => {
- 
+    api
+      .get('/usuarios', {
+        params: {
+          page: paginaActual,
+          limit: 10,
+          busqueda: filtroBusqueda,
+          rol: filtroRol,
+          plan: filtroPlan
+        }
+      })
+      .then((res) => {
         // Actualiza la lista global de usuarios en Redux.
-        dispatch(agregarUsuarios( res.data.usuarios ))
-
+        dispatch(agregarUsuarios(res.data.usuarios))
 
         // Actualiza la cantidad total de páginas.
         if (res.data.totalPages) {
           setTotalPaginas(res.data.totalPages)
         }
-
       })
-      .catch(err => {
+      .catch((err) => {
         console.error('Error al obtener usuarios:', err)
       })
-
   }, [dispatch, paginaActual, filtroBusqueda, filtroRol, filtroPlan])
 
   // Elimina un usuario y actualiza Redux para reflejar el cambio en pantalla.
@@ -61,27 +58,35 @@ const UsuariosAdmin = () => {
 
     if (!confirmar) return
 
-    api.delete(`/usuarios/${id}`)
+    api
+      .delete(`/usuarios/${id}`)
       .then(() => {
         dispatch(eliminarUsuario(id))
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err.response?.data || err.message)
       })
   }
-
 
   // Envía los cambios del usuario al backend y actualiza Redux con la versión modificada.
-  const editarU = (id, datosActualizados) => {
-    api.patch(`/usuarios/${id}`, datosActualizados)
+  const editarU = (id, datosActualizados, setError, onClose) => {
+    api
+      .patch(`/usuarios/${id}`, datosActualizados)
       .then((res) => {
         dispatch(editarUsuario(res.data.usuario))
+        onClose()
       })
-      .catch(err => {
-        console.error(err.response?.data || err.message)
+      .catch((err) => {
+        setError('root', {
+          type: 'manual',
+          message: err.response?.data?.message || 'No se pudo editar el usuario'
+        })
+
+        console.error('Error al editar usuario:', err)
       })
   }
 
+ 
   // Navegación entre páginas del listado.
   const paginaAnterior = () => {
     if (paginaActual > 1) {
@@ -97,7 +102,6 @@ const UsuariosAdmin = () => {
 
   return (
     <section className="usuarios-admin">
-
       <h2>Usuarios registrados</h2>
 
       <UsuariosFiltros
