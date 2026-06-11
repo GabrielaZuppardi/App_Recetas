@@ -1,4 +1,3 @@
-import React from 'react'
 import { joiResolver } from '@hookform/resolvers/joi'
 import { useForm } from 'react-hook-form'
 import { loginSchema } from '../../../validators/auth.validators'
@@ -17,7 +16,7 @@ const LoginForm = () => {
     handleSubmit,
     setError,
     clearErrors,
-    formState: { errors, isSubmitting, isDirty, isValid }
+    formState: { errors, isSubmitting, isValid }
   } = useForm({
     resolver: joiResolver(loginSchema),
     mode: 'onChange'
@@ -91,8 +90,8 @@ const LoginForm = () => {
 
       {errors.root && <span className="error error-general">{errors.root.message}</span>}
 
-      <button type="submit" className="submit-btn">
-        Ingresar a la Plataforma →
+      <button type="submit" className="submit-btn" disabled={!isValid || isSubmitting}>
+         Ingresar a la plataforma
       </button>
     </form>
   )

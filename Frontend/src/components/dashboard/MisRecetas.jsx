@@ -101,6 +101,9 @@ const MisRecetas = () => {
         <h3>📖 Mis recetas personales</h3>
       </div>
 
+      {mensajeError && <p className="error error-general">{mensajeError}</p>}
+      {mensajeExito && <p className="success-message">{mensajeExito}</p>}
+
       <div className="content">
         <div className="filters">
           <span className="muted">Filtrar recetas</span>
@@ -175,12 +178,7 @@ const MisRecetas = () => {
           )}
         </div>
 
-        <Paginado
-          paginaActual={paginaActual}
-          totalPaginas={totalPaginas}
-          paginaAnterior={paginaAnterior}
-          paginaSiguiente={paginaSiguiente}
-        />
+        <Paginado paginaActual={paginaActual} totalPaginas={totalPaginas} paginaAnterior={paginaAnterior} paginaSiguiente={paginaSiguiente} />
 
         <ModalReceta
           receta={recetaSeleccionada}

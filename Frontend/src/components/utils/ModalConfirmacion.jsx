@@ -1,5 +1,3 @@
-import React from 'react'
-
 const ModalConfirmacion = ({ titulo, mensaje, onConfirmar, onCancelar }) => {
   return (
     <div className="modal-overlay">

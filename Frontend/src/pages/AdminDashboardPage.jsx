@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import UsuariosAdmin from '../components/admin/gestionUsuarios/UsuariosAdmin'
 import CategoriasAdmin from '../components/admin/gestionCategorias/CategoriasAdmin'

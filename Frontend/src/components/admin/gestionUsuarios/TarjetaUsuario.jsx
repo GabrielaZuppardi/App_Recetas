@@ -1,5 +1,3 @@
-import React from 'react'
-
 const TarjetaUsuario = ({ usuario, onEditar }) => {
   return (
     <div className="admin-info-card">

@@ -1,4 +1,3 @@
-import React from 'react'
 import { useDispatch } from 'react-redux'
 import { cerrarSesion } from '../../../features/usuarios.slice'
 import { useNavigate } from 'react-router'

@@ -1,4 +1,3 @@
-import React from 'react'
 import RegisterHeader from './RegisterHeader'
 import RegisterForm from './RegisterForm'
 import RegisterFooter from './RegisterFooter'

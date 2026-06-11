@@ -1,14 +1,14 @@
-import React from 'react'
+import { useState } from 'react'
 import api from '../../api/api'
 import TarjetaRecetaExterna from './TarjetaRecetaExterna'
 
 const BuscadorRecetasExternas = () => {
-  const [query, setQuery] = React.useState('')
-  const [maxReadyTime, setMaxReadyTime] = React.useState('')
-  const [recetasExternas, setRecetasExternas] = React.useState([])
-  const [total, setTotal] = React.useState(0)
-  const [loading, setLoading] = React.useState(false)
-  const [error, setError] = React.useState('')
+  const [query, setQuery] = useState('')
+  const [maxReadyTime, setMaxReadyTime] = useState('')
+  const [recetasExternas, setRecetasExternas] = useState([])
+  const [total, setTotal] = useState(0)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
 
   const buscarRecetaExterna = async () => {
     if (query.trim() === '') {

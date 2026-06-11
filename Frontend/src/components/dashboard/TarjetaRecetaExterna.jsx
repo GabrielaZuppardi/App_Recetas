@@ -1,5 +1,3 @@
-import React from 'react'
-
 const TarjetaRecetaExterna = ({ receta }) => {
   return (
     <div className="recipe">

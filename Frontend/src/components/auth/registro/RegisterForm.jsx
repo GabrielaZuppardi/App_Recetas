@@ -1,4 +1,3 @@
-import React from 'react'
 import { useForm } from 'react-hook-form'
 import { joiResolver } from '@hookform/resolvers/joi'
 import { useNavigate } from 'react-router'
@@ -17,7 +16,7 @@ const RegisterForm = () => {
     handleSubmit,
     setError,
     clearErrors,
-    formState: { errors, isSubmitting, isDirty, isValid }
+    formState: { errors, isSubmitting, isValid }
   } = useForm({
     resolver: joiResolver(registroSchema),
     mode: 'onChange'
@@ -114,10 +113,30 @@ const RegisterForm = () => {
         {errors.password && <span className="error">{errors.password.message}</span>}
       </div>
 
-      {errors.root && <span className="error error-general">{errors.root.message}</span>}
+      <div className="form-group">
+        <label htmlFor="confirmarPassword">Repetir contraseña</label>
 
-      <button type="submit" className="submit-btn">
-        Crear mi Cuenta Gratis
+        <div className="input-wrap">
+          <span className="icon">
+            <FiLock />
+          </span>
+
+          <input
+            id="confirmarPassword"
+            type="password"
+            placeholder="Repetí tu contraseña"
+            {...register('confirmarPassword', {
+              onChange: () => clearErrors('root')
+            })}
+          />
+        </div>
+
+        {errors.confirmarPassword && <span className="error">{errors.confirmarPassword.message}</span>}
+      </div>
+
+      {errors.root && <span className="error error-general">{errors.root.message}</span>}
+      <button type="submit" className="submit-btn" disabled={!isValid || isSubmitting}>
+        Registrarse
       </button>
     </form>
   )
