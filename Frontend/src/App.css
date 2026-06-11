@@ -453,7 +453,7 @@ textarea {
 .recipe-placeholder-icon {
   font-size: 56px;
   opacity: 0.7;
-    position: static;
+  position: static;
 }
 
 .logo-chef svg {
@@ -666,8 +666,8 @@ footer {
     grid-template-columns: 1fr;
     flex-direction: column;
     align-items: flex-start;
-     position: relative;
-  z-index: 10
+    position: relative;
+    z-index: 10;
   }
 
   .grid {
@@ -679,8 +679,8 @@ footer {
   .stats-grid {
     grid-template-columns: 1fr;
     position: relative;
-  z-index: 1;
-  overflow: hidden;
+    z-index: 1;
+    overflow: hidden;
   }
 
   .two-cols {
@@ -908,7 +908,6 @@ footer {
   font-size: 0.9rem;
   font-weight: 500;
 }
-
 
 /* Errores login / registro */
 .login-card .error,
@@ -1399,7 +1398,6 @@ textarea::placeholder {
   text-decoration: none;
 }
 
-
 /* Charts */
 .charts-container {
   display: flex;
@@ -1429,4 +1427,56 @@ textarea::placeholder {
   .charts-container {
     flex-direction: column;
   }
+}
+
+/* Errores generales admin */
+.admin-card .error,
+.form-modal .error,
+.categorias-admin .error {
+  display: block;
+  margin-top: 8px;
+  color: #b91c1c;
+  font-size: 12px;
+}
+
+.error-general {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+  padding: 10px 12px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  font-size: 12px;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+}
+
+.btn-danger:hover {
+  background-color: #bb2d3b;
+}
+
+/* Errores crear receta */
+.crear-receta-form .error {
+  display: block;
+  margin-top: 6px;
+  margin-bottom: 10px;
+  color: #b91c1c;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.3;
+  text-align: left;
+}
+
+.crear-receta-form .error-general {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+  padding: 10px 12px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  font-size: 12px;
 }

@@ -43,9 +43,8 @@ const EditarCategoriaForm = ({ categoria, editarC, cancelarEdicion, onClose }) =
           onChange: () => clearErrors('root')
         })}
       />
-      {errors.descripcion && <span className="error">{errors.descripcion.message}</span>}
 
-      {errors.root && <span className="error">{errors.root.message}</span>}
+      {errors.root && <span className="error error-general">{errors.root.message}</span>}
 
       <div className="modal-actions">
         <button type="submit" className="btn-admin">

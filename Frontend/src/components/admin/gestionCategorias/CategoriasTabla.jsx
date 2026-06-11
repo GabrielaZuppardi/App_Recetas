@@ -22,14 +22,11 @@ const CategoriasTabla = ({ categorias, setCategoriaSeleccionada, eliminarC }) =>
 
                 <td>
                   <div className="acciones">
-                    <button
-                      className="btn-admin"
-                      onClick={() => setCategoriaSeleccionada(categoria)}
-                    >
+                    <button className="btn-admin" onClick={() => setCategoriaSeleccionada(categoria)}>
                       Ver detalle
                     </button>
 
-                    <button className="btn-delete" onClick={() => eliminarC(categoria._id)}>
+                    <button className="btn-delete" onClick={() => eliminarC(categoria)}>
                       <FaTrash />
                     </button>
                   </div>

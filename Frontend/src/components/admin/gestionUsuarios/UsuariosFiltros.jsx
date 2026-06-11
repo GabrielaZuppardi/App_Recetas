@@ -1,14 +1,6 @@
 import React from 'react'
 
-const UsuariosFiltros = ({
-  filtroBusqueda,
-  setFiltroBusqueda,
-  filtroRol,
-  setFiltroRol,
-  filtroPlan,
-  setFiltroPlan,
-  setPaginaActual
-}) => {
+const UsuariosFiltros = ({ filtroBusqueda, setFiltroBusqueda, filtroRol, setFiltroRol, filtroPlan, setFiltroPlan, setPaginaActual }) => {
   return (
     <div className="barra-filtros">
       <input

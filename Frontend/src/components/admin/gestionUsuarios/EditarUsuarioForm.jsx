@@ -90,9 +90,8 @@ const EditarUsuarioForm = ({ usuario, editarU, cancelarEdicion, onClose }) => {
         <option value="plus">Plus</option>
         <option value="premium">Premium</option>
       </select>
-      {errors.plan && <span className="error">{errors.plan.message}</span>}
 
-      {errors.root && <span className="error">{errors.root.message}</span>}
+      {errors.root && <span className="error error-general">{errors.root.message}</span>}
 
       <div className="modal-actions">
         <button type="submit" className="btn-admin">

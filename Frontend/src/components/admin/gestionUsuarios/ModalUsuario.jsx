@@ -25,18 +25,9 @@ const ModalUsuario = ({ usuario, editarU, onClose }) => {
         </div>
 
         {!modoEdicion ? (
-          <TarjetaUsuario
-            usuario={usuario}
-            onEditar={() => setModoEdicion(true)}
-            onClose={onClose}
-          />
+          <TarjetaUsuario usuario={usuario} onEditar={() => setModoEdicion(true)} onClose={onClose} />
         ) : (
-          <EditarUsuarioForm
-            usuario={usuario}
-            editarU={editarU}
-            cancelarEdicion={() => setModoEdicion(false)}
-            onClose={onClose}
-          />
+          <EditarUsuarioForm usuario={usuario} editarU={editarU} cancelarEdicion={() => setModoEdicion(false)} onClose={onClose} />
         )}
       </div>
     </div>

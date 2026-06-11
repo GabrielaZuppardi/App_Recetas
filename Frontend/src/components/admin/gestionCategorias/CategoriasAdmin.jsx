@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import api from '../../../api/api'
-import {
-  agregarCategorias,
-  eliminarCategoria,
-  editarCategoria
-} from '../../../features/categorias.slice'
+import { agregarCategorias, eliminarCategoria, editarCategoria } from '../../../features/categorias.slice'
 import ModalCategoria from './ModalCategoria'
 import CategoriasTabla from './CategoriasTabla'
+import ModalConfirmacion from '../../utils/ModalConfirmacion'
 
 const CategoriasAdmin = () => {
   // Obtiene la lista de categorías desde Redux y permite despachar acciones al store.
@@ -16,6 +13,11 @@ const CategoriasAdmin = () => {
 
   // Estado de la categoría actualmente seleccionada en el modal.
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null)
+  const [categoriaAEliminar, setCategoriaAEliminar] = useState(null)
+
+  // Mensajes
+  const [mensajeError, setMensajeError] = useState('')
+  const [mensajeExito, setMensajeExito] = useState('')
 
   // Obtiene todas las categorías del backend al cargar el componente.
   useEffect(() => {
@@ -27,21 +29,36 @@ const CategoriasAdmin = () => {
       })
       .catch((err) => {
         console.error('Error al obtener categorías:', err)
+        setMensajeError('No se pudieron cargar las categorías')
       })
   }, [dispatch])
 
   // Elimina una categoría y actualiza Redux para reflejar el cambio en pantalla.
-  const eliminarC = (id) => {
-    const confirmar = window.confirm('¿Desea eliminar esta categoría?')
+  const solicitarEliminarC = (categoria) => {
+    setMensajeError('')
+    setMensajeExito('')
+    setCategoriaAEliminar(categoria)
+  }
 
-    if (!confirmar) return
+  const cancelarEliminarC = () => {
+    setCategoriaAEliminar(null)
+  }
 
+  const confirmarEliminarC = () => {
     api
-      .delete(`/categorias/${id}`)
+      .delete(`/categorias/${categoriaAEliminar._id}`)
       .then(() => {
-        dispatch(eliminarCategoria(id))
+        dispatch(eliminarCategoria(categoriaAEliminar._id))
+        setMensajeExito('Categoría eliminada correctamente')
+        setCategoriaAEliminar(null)
+
+        setTimeout(() => {
+          setMensajeExito('')
+        }, 1500)
       })
       .catch((err) => {
+        setMensajeError(err.response?.data?.message || 'No se pudo eliminar la categoría')
+        setCategoriaAEliminar(null)
         console.error(err.response?.data || err.message)
       })
   }
@@ -68,17 +85,21 @@ const CategoriasAdmin = () => {
     <section className="categorias-admin">
       <h2>Categorías registradas</h2>
 
-      <CategoriasTabla
-        categorias={categorias}
-        setCategoriaSeleccionada={setCategoriaSeleccionada}
-        eliminarC={eliminarC}
-      />
+      {mensajeError && <span className="error error-general">{mensajeError}</span>}
+      {mensajeExito && <span className="success-message">{mensajeExito}</span>}
 
-      <ModalCategoria
-        categoria={categoriaSeleccionada}
-        editarC={editarC}
-        onClose={() => setCategoriaSeleccionada(null)}
-      />
+      <CategoriasTabla categorias={categorias} setCategoriaSeleccionada={setCategoriaSeleccionada} eliminarC={solicitarEliminarC} />
+
+      <ModalCategoria categoria={categoriaSeleccionada} editarC={editarC} onClose={() => setCategoriaSeleccionada(null)} />
+
+      {categoriaAEliminar && (
+        <ModalConfirmacion
+          titulo="Eliminar categoría"
+          mensaje={`¿Desea eliminar la categoría ${categoriaAEliminar.nombre}?`}
+          onConfirmar={confirmarEliminarC}
+          onCancelar={cancelarEliminarC}
+        />
+      )}
     </section>
   )
 }

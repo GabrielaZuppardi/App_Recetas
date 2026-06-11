@@ -1,23 +1,20 @@
 //LA ÚNICA RESPONSABILIDAD DE ESTE ARCHIVO ES CONFIGURAR LA INSTANCIA DE AXIOS PARA HACER LAS PETICIONES AL BACKEND
 
-import axios from "axios";
+import axios from 'axios'
 
 const api = axios.create({
-    baseURL: 'https://app-recetas-qrrs.vercel.app/v1',
-       //"http://localhost:3000/v1" 
-           
-
-});
-
+  baseURL: 'https://app-recetas-qrrs.vercel.app/v1',
+  //baseURL: 'http://localhost:3000/v1'
+})
 
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token')
 
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+    config.headers.Authorization = `Bearer ${token}`
   }
 
-  return config;
-});
+  return config
+})
 
-export default api;
+export default api

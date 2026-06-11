@@ -27,18 +27,9 @@ const ModalCategoria = ({ categoria, editarC, onClose }) => {
         </div>
 
         {!modoEdicion ? (
-          <TarjetaCategoria
-            categoria={categoria}
-            onEditar={() => setModoEdicion(true)}
-            onClose={onClose}
-          />
+          <TarjetaCategoria categoria={categoria} onEditar={() => setModoEdicion(true)} onClose={onClose} />
         ) : (
-          <EditarCategoriaForm
-            categoria={categoria}
-            editarC={editarC}
-            cancelarEdicion={() => setModoEdicion(false)}
-            onClose={onClose}
-          />
+          <EditarCategoriaForm categoria={categoria} editarC={editarC} cancelarEdicion={() => setModoEdicion(false)} onClose={onClose} />
         )}
       </div>
     </div>
