@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { joiResolver } from '@hookform/resolvers/joi'
 import { crearCategoriaSchema } from '../../../validators/categoria.validators'
 
-const CrearCategoriaForm = ({ crearCategoria }) => {
+const CrearCategoriaForm = ({ crearCategoria, mensajeExito }) => {
   const {
     register,
     handleSubmit,
@@ -50,6 +50,7 @@ const CrearCategoriaForm = ({ crearCategoria }) => {
       </div>
 
       {errors.root && <span className="error error-general">{errors.root.message}</span>}
+      {mensajeExito && <span className="success-message">{mensajeExito}</span>}
 
       <button className="btn-admin" type="submit">
         Crear categoría

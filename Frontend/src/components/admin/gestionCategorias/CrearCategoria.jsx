@@ -6,6 +6,7 @@ import CrearCategoriaForm from './CrearCategoriaForm'
 
 const CrearCategoria = () => {
   const dispatch = useDispatch()
+   const [mensajeExito, setMensajeExito] = useState('')
 
   const crearCategoria = (nuevaCategoria, setError, reset) => {
     api
@@ -17,6 +18,7 @@ const CrearCategoria = () => {
         const listaCategorias = res.data.categorias || res.data
 
         dispatch(agregarCategorias(listaCategorias))
+          setMensajeExito('Categoria creada correctamente')
 
         reset()
       })
@@ -34,7 +36,7 @@ const CrearCategoria = () => {
     <section className="admin-card">
       <h2>Crear categoría</h2>
 
-      <CrearCategoriaForm crearCategoria={crearCategoria} />
+      <CrearCategoriaForm crearCategoria={crearCategoria} mensajeExito={mensajeExito}/>
     </section>
   )
 }
