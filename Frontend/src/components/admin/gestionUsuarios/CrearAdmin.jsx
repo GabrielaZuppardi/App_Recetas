@@ -11,13 +11,21 @@ const CrearUsuarioAdmin = () => {
     api
       .post('/usuarios', nuevoUsuario)
       .then((res) => {
-        dispatch(crearAdminAction(res.data.usuario))
+        console.log('RESPUESTA CREAR ADMIN:', res.data)
+
+        const usuarioCreado = res.data
+
+        console.log('USUARIO CREADO:', usuarioCreado)
+
+        dispatch(crearAdminAction(usuarioCreado))
         reset()
       })
       .catch((err) => {
         setError('root', {
           type: 'manual',
-          message: err.response?.data?.message || 'No se pudo crear el administrador'
+          message:
+            err.response?.data?.message ||
+            'No se pudo crear el administrador'
         })
 
         console.error('Error al crear administrador:', err)
