@@ -5,13 +5,14 @@ import { crearAdmin as crearAdminAction } from '../../../features/usuarios.slice
 import CrearUsuarioForm from './CrearAdminForm'
 
 const CrearUsuarioAdmin = () => {
+  
   const dispatch = useDispatch()
 
   const crearU = (nuevoUsuario, setError, reset) => {
     api
       .post('/usuarios', nuevoUsuario)
       .then((res) => {
-        console.log('RESPUESTA CREAR ADMIN:', res.data)
+      
 
         const usuarioCreado = res.data
 
