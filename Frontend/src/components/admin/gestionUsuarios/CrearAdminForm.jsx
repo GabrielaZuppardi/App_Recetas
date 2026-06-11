@@ -1,7 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 
-const CrearAdminForm = ({ crearU }) => {
+const CrearAdminForm = ({ crearU, mensajeExito }) => {
   const {
     register,
     handleSubmit,
