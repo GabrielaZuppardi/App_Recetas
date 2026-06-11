@@ -3,7 +3,6 @@
 import FormularioReceta from './FormularioReceta'
 import MisRecetas from './MisRecetas'
 import Membresia from './Membresia'
-import Estadisticas from './Estadisticas'
 import GeneradorRecetaIA from './GeneradorRecetaIA'
 import BuscadorRecetasExternas from './BuscadorRecetasExternas'
 
@@ -20,7 +19,6 @@ const Dashboard = () => {
         <MisRecetas />
       </div>
       <BuscadorRecetasExternas />
-      <Estadisticas />
     </>
   )
 }
