@@ -6,7 +6,7 @@ const ProtectedRoute = ({ rolPermitido }) => {
   const usuario = JSON.parse(localStorage.getItem('usuario'))
 
   if (!token) {
-    return <Navigate to="/" replace />
+    return <Navigate to={rolPermitido === 'administrador' ? '/loginAdmin' : '/'} replace />
   }
 
   if (usuario?.rol !== rolPermitido) {

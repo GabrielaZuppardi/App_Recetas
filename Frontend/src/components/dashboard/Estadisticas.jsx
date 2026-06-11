@@ -2,8 +2,8 @@ import React from 'react'
 
 const Estadisticas = () => {
   return (
-    <section className="analytics card">
-      <h3>📊 Analíticas rápidas</h3>
+
+    
       <div className="stats-grid">
         <div className="stat">
           <strong>4</strong>
@@ -22,7 +22,7 @@ const Estadisticas = () => {
           <span>Vistas simuladas</span>
         </div>
       </div>
-    </section>
+    
   )
 }
 
