@@ -29,7 +29,7 @@ const UsuariosTabla = ({ usuarios, setUsuarioSeleccionado, eliminarU, editarU })
                     Ver detalle
                   </button>
 
-                  <button className="btn-delete" onClick={() => eliminarU(usuario._id)}>
+                  <button className="btn-delete" onClick={() => eliminarU(usuario)}>
                     <FaTrash />
                   </button>
                 </div>

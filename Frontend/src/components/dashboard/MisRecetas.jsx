@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { agregarReceta, eliminarReceta } from '../../features/recetas.slice'
 import api from '../../api/api'
 import ModalReceta from './ModalReceta'
-import Paginado from '../../pages/Paginado'
+import Paginado from '../utils/Paginado'
+import ModalConfirmacion from '../utils/ModalConfirmacion'
 
 const MisRecetas = () => {
   const dispatch = useDispatch()
@@ -22,6 +23,10 @@ const MisRecetas = () => {
 
   const [paginaActual, setPaginaActual] = React.useState(1)
   const [totalPaginas, setTotalPaginas] = React.useState(1)
+
+  const [recetaAEliminar, setRecetaAEliminar] = React.useState(null)
+  const [mensajeError, setMensajeError] = React.useState('')
+  const [mensajeExito, setMensajeExito] = React.useState('')
 
   const limite = 4
 
@@ -60,14 +65,32 @@ const MisRecetas = () => {
     setPaginaActual((prev) => prev + 1)
   }
 
-  const eliminarR = async (id) => {
-    try {
-      await api.delete(`/recetas/${id}`)
+  const solicitarEliminarR = (receta) => {
+    setMensajeError('')
+    setMensajeExito('')
+    setRecetaAEliminar(receta)
+  }
 
-      dispatch(eliminarReceta(id))
+  const cancelarEliminarR = () => {
+    setRecetaAEliminar(null)
+  }
+
+  const confirmarEliminarR = async () => {
+    try {
+      await api.delete(`/recetas/${recetaAEliminar._id}`)
+
+      dispatch(eliminarReceta(recetaAEliminar._id))
+      setMensajeExito('Receta eliminada correctamente')
+      setRecetaAEliminar(null)
 
       obtenerMisRecetas()
+
+      setTimeout(() => {
+        setMensajeExito('')
+      }, 1500)
     } catch (error) {
+      setMensajeError(error.response?.data?.message || 'No se pudo eliminar la receta')
+      setRecetaAEliminar(null)
       console.log(error.response?.data || error.message)
     }
   }
@@ -140,7 +163,7 @@ const MisRecetas = () => {
                   setAbrirEditando(false)
                   setRecetaSeleccionada(receta)
                 }}
-                onEliminar={eliminarR}
+                onEliminar={solicitarEliminarR}
                 onEditar={() => {
                   setAbrirEditando(true)
                   setRecetaSeleccionada(receta)
@@ -166,8 +189,17 @@ const MisRecetas = () => {
             setRecetaSeleccionada(null)
             setAbrirEditando(false)
           }}
-          onEliminar={eliminarR}
+          onEliminar={solicitarEliminarR}
         />
+
+        {recetaAEliminar && (
+          <ModalConfirmacion
+            titulo="Eliminar receta"
+            mensaje={`¿Desea eliminar la receta ${recetaAEliminar.titulo}?`}
+            onConfirmar={confirmarEliminarR}
+            onCancelar={cancelarEliminarR}
+          />
+        )}
       </div>
     </article>
   )

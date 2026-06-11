@@ -20,21 +20,13 @@ const CrearAdminForm = ({ crearU, mensajeExito }) => {
     <form className="crear-usuario-form" onSubmit={handleSubmit(onSubmit)}>
       <div className="form-group">
         <label>Nombre</label>
-        <input
-          type="text"
-          placeholder="Ej: Administrador General"
-          {...register('nombre', { required: 'El nombre es obligatorio' })}
-        />
+        <input type="text" placeholder="Ej: Administrador General" {...register('nombre', { required: 'El nombre es obligatorio' })} />
         {errors.nombre && <span className="error">{errors.nombre.message}</span>}
       </div>
 
       <div className="form-group">
         <label>Email</label>
-        <input
-          type="email"
-          placeholder="Ej: admin@gourmet.com"
-          {...register('email', { required: 'El email es obligatorio' })}
-        />
+        <input type="email" placeholder="Ej: admin@gourmet.com" {...register('email', { required: 'El email es obligatorio' })} />
         {errors.email && <span className="error">{errors.email.message}</span>}
       </div>
 

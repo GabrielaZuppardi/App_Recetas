@@ -3,9 +3,9 @@ import { useForm } from 'react-hook-form'
 import { joiResolver } from '@hookform/resolvers/joi'
 import { useNavigate } from 'react-router'
 import { useDispatch } from 'react-redux'
-import api from '../../api/api'
-import { registroSchema } from '../../validators/auth.validators'
-import { guardarUsuarioLogueado } from '../../features/usuarios.slice'
+import api from '../../../api/api'
+import { registroSchema } from '../../../validators/auth.validators'
+import { guardarUsuarioLogueado } from '../../../features/usuarios.slice'
 import { FiUser, FiMail, FiLock } from 'react-icons/fi'
 
 const RegisterForm = () => {
@@ -53,7 +53,7 @@ const RegisterForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit(procesarForm)}>
+    <form onSubmit={handleSubmit(procesarForm)} noValidate>
       <div className="form-group">
         <label htmlFor="nombre">Nombre Completo</label>
 
@@ -70,8 +70,8 @@ const RegisterForm = () => {
               onChange: () => clearErrors('root')
             })}
           />
-          {errors.nombre && <span className="error">{errors.nombre.message}</span>}
         </div>
+        {errors.nombre && <span className="error">{errors.nombre.message}</span>}
       </div>
 
       <div className="form-group">
@@ -90,9 +90,8 @@ const RegisterForm = () => {
               onChange: () => clearErrors('root')
             })}
           />
-
-          {errors.email && <span className="error">{errors.email.message}</span>}
         </div>
+        {errors.email && <span className="error">{errors.email.message}</span>}
       </div>
 
       <div className="form-group">
@@ -111,8 +110,8 @@ const RegisterForm = () => {
               onChange: () => clearErrors('root')
             })}
           />
-          {errors.password && <span className="error">{errors.password.message}</span>}
         </div>
+        {errors.password && <span className="error">{errors.password.message}</span>}
       </div>
 
       {errors.root && <span className="error error-general">{errors.root.message}</span>}

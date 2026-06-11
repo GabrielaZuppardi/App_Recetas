@@ -37,7 +37,7 @@ const TarjetaReceta = ({ receta, onClick, onEliminar, onEditar }) => {
               type="button"
               onClick={(e) => {
                 e.stopPropagation()
-                onEliminar(receta._id)
+                onEliminar(receta)
               }}
             >
               🗑️

@@ -40,10 +40,7 @@ const ModalReceta = ({ receta, onClose, abrirEditando, onEliminar }) => {
     resolver: joiResolver(editarRecetaFormSchema)
   })
 
-  const nombreCategoria =
-    receta?.categoria?.nombre ||
-    categorias.find((cat) => cat._id === receta?.categoria)?.nombre ||
-    'Sin categoría'
+  const nombreCategoria = receta?.categoria?.nombre || categorias.find((cat) => cat._id === receta?.categoria)?.nombre || 'Sin categoría'
 
   const mejorarDescripcionIA = async () => {
     try {
@@ -174,9 +171,7 @@ const ModalReceta = ({ receta, onClose, abrirEditando, onEliminar }) => {
 
               <label>Tiempo de preparación</label>
               <input type="number" {...register('tiempoPreparacion', { valueAsNumber: true })} />
-              {errors.tiempoPreparacion && (
-                <span className="error">{errors.tiempoPreparacion.message}</span>
-              )}
+              {errors.tiempoPreparacion && <span className="error">{errors.tiempoPreparacion.message}</span>}
 
               <label>Porciones</label>
               <input type="number" {...register('porciones', { valueAsNumber: true })} />
@@ -185,9 +180,7 @@ const ModalReceta = ({ receta, onClose, abrirEditando, onEliminar }) => {
               <label>Ingredientes</label>
               <small>Ingrese un ingrediente por línea</small>
               <textarea {...register('ingredientesTexto')} rows={6} />
-              {errors.ingredientesTexto && (
-                <span className="error">{errors.ingredientesTexto.message}</span>
-              )}
+              {errors.ingredientesTexto && <span className="error">{errors.ingredientesTexto.message}</span>}
 
               <label>Pasos</label>
               <small>Ingrese un paso por línea</small>
@@ -276,30 +269,31 @@ const ModalReceta = ({ receta, onClose, abrirEditando, onEliminar }) => {
         <div className="modal-actions">
           {modoEdicion ? (
             <>
-              <button type="button" onClick={handleSubmit(guardarCambios)}>
+              <button type="button" className="btn secondary" onClick={handleSubmit(guardarCambios)}>
                 Guardar
               </button>
 
-              <button type="button" onClick={() => setModoEdicion(false)}>
+              <button type="button" className="btn secondary" onClick={() => setModoEdicion(false)}>
                 Cancelar
               </button>
             </>
           ) : (
             <>
-              <button type="button" onClick={activarEdicion}>
+              <button type="button" className="btn secondary" onClick={activarEdicion}>
                 Editar
               </button>
               <button
                 type="button"
+                className="btn secondary"
                 onClick={() => {
-                  onEliminar(receta._id)
+                  onEliminar(receta)
                   onClose()
                 }}
               >
                 Eliminar
               </button>
 
-              <button type="button" onClick={mejorarDescripcionIA}>
+              <button type="button" type="button" className="btn secondary" onClick={mejorarDescripcionIA}>
                 Mejorar con IA
               </button>
             </>

@@ -1,11 +1,11 @@
 import React from 'react'
 import { joiResolver } from '@hookform/resolvers/joi'
 import { useForm } from 'react-hook-form'
-import { loginSchema } from '../../validators/auth.validators'
+import { loginSchema } from '../../../validators/auth.validators'
 import { useNavigate } from 'react-router'
 import { useDispatch } from 'react-redux'
-import api from '../../api/api'
-import { guardarUsuarioLogueado } from '../../features/usuarios.slice'
+import api from '../../../api/api'
+import { guardarUsuarioLogueado } from '../../../features/usuarios.slice'
 import { FiMail, FiLock } from 'react-icons/fi'
 
 const LoginForm = () => {
@@ -33,15 +33,14 @@ const LoginForm = () => {
         console.log(res.data)
         const usuario = res.data.usuario
 
-        if (usuario.rol === 'usuario') {
+        if (usuario.rol === 'administrador') {
           setError('root', {
             type: 'manual',
-            message:
-              'Este acceso es exclusivo para administradores. Ingresá desde el login de usuario.'
+            message: 'Este acceso es exclusivo para usuarios. Ingresá desde el login de administrador.'
           })
 
           setTimeout(() => {
-            navigate('/')
+            navigate('/loginAdmin')
           }, 2000)
 
           return
@@ -52,12 +51,12 @@ const LoginForm = () => {
 
         dispatch(guardarUsuarioLogueado(res.data.usuario))
 
-        navigate('/dashboardAdmin')
+        navigate('/dashboard')
       })
       .catch((err) => {
         setError('root', {
           type: 'manual',
-          message: err.response?.data?.error || 'Email o contraseña incorrectos'
+          message: err.response?.data?.message || 'Email o contraseña incorrectos'
         })
 
         console.error('Error al iniciar sesión:', err)
@@ -65,37 +64,33 @@ const LoginForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit(procesarForm)}>
+    <form onSubmit={handleSubmit(procesarForm)} noValidate>
       <div className="form-group">
         <label>Correo electrónico</label>
+
         <div className="input-wrap">
           <span className="icon">
             <FiMail />{' '}
           </span>
-          <input
-            type="email"
-            placeholder="ejemplo@gourmet.com"
-            {...register('email', { onChange: () => clearErrors('root') })}
-          />
-          {errors.email && <span className="error">{errors.email.message}</span>}
+
+          <input type="email" placeholder="ejemplo@gourmet.com" {...register('email', { onChange: () => clearErrors('root') })} />
         </div>
+        {errors.email && <span className="error">{errors.email.message}</span>}
       </div>
 
       <div className="form-group">
         <div className="top-row">
           <label>Contraseña</label>
         </div>
+
         <div className="input-wrap">
           <span className="icon">
             <FiLock />
           </span>
-          <input
-            type="password"
-            placeholder="••••••••"
-            {...register('password', { onChange: () => clearErrors('root') })}
-          />
-          {errors.password && <span className="error">{errors.password.message}</span>}
+
+          <input type="password" placeholder="••••••••" {...register('password', { onChange: () => clearErrors('root') })} />
         </div>
+        {errors.password && <span className="error">{errors.password.message}</span>}
       </div>
 
       {errors.root && <span className="error error-general">{errors.root.message}</span>}

@@ -10,7 +10,7 @@ import { guardarReceta } from '../../features/recetas.slice'
 const CrearRecetaForm = () => {
   const dispatch = useDispatch()
   const [mostrarFormulario, setMostrarFormulario] = useState(false)
- const [mensajeExito, setMensajeExito] = useState('')
+  const [mensajeExito, setMensajeExito] = useState('')
   const categorias = useSelector((state) => state.categorias.categorias)
 
   const {
@@ -59,8 +59,13 @@ const CrearRecetaForm = () => {
       console.log('RECETA CREADA')
       console.log(respuesta.data)
       dispatch(guardarReceta(respuesta.data.receta))
+      reset()
+
       setMensajeExito('Receta creada con éxito.')
-      reset() // Limpiar formulario
+
+      setTimeout(() => {
+        setMensajeExito('')
+      }, 1500)
     } catch (error) {
       setMensajeExito('')
       setError('root', {
@@ -85,7 +90,7 @@ const CrearRecetaForm = () => {
       </div>
 
       {mostrarFormulario && (
-        <form onSubmit={handleSubmit(procesarForm)}>
+        <form className="crear-receta-form" onSubmit={handleSubmit(procesarForm)}>
           <label>Título de la receta</label>
           <input type="text" placeholder="Ej. Pasta cremosa con tomates" {...register('titulo')} />
           {errors.titulo && <span className="error">{errors.titulo.message}</span>}
@@ -144,7 +149,7 @@ const CrearRecetaForm = () => {
 
           <label>Pasos</label>
           <textarea
-            {...register("pasos")}
+            {...register('pasos')}
             placeholder="Ej. Hervir la pasta, Preparar la salsa, Mezclar y servir."
             defaultValue=""
           />
@@ -161,18 +166,11 @@ const CrearRecetaForm = () => {
           <label>Imagen</label>
           <input type="file" accept="image/*" {...register('imagen')} />
 
-
           {errors.imagen && <span className="error">{errors.imagen.message}</span>}
+          {errors.root && <span className="error error-general">{errors.root.message}</span>}
+          {mensajeExito && <span className="success-message">{mensajeExito}</span>}
 
-          {errors.root && (
-            <span className="error">{errors.root.message}</span>
-          )}
-
-          {mensajeExito && (
-  <span className="success-message">{mensajeExito}</span>
-)}
-
-          <button className="btn" type="submit" style={{ width: '100%' }}>
+          <button className="btn" type="submit" type="button" className="btn secondary" style={{ width: '100%' }}>
             Guardar receta
           </button>
         </form>

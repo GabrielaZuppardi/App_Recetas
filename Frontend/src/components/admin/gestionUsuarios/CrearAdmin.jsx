@@ -26,10 +26,7 @@ const CrearUsuarioAdmin = () => {
       .catch((err) => {
         setError('root', {
           type: 'manual',
-          message:
-            err.response?.data?.message ||
-            err.response?.data?.errores?.[0] ||
-            'No se pudo crear el administrador'
+          message: err.response?.data?.message || err.response?.data?.errores?.[0] || 'No se pudo crear el administrador'
         })
 
         console.error('Error al crear administrador:', err)
