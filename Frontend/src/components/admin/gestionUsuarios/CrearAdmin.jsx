@@ -21,7 +21,7 @@ const CrearUsuarioAdmin = () => {
 
         setTimeout(() => {
           setMensajeExito('')
-        }, 2000)
+        }, 1500)
       })
       .catch((err) => {
         setError('root', {

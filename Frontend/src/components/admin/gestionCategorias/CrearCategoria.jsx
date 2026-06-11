@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import api from '../../../api/api'
 import { useDispatch } from 'react-redux'
 import { agregarCategorias } from '../../../features/categorias.slice'
@@ -6,7 +6,7 @@ import CrearCategoriaForm from './CrearCategoriaForm'
 
 const CrearCategoria = () => {
   const dispatch = useDispatch()
-   const [mensajeExito, setMensajeExito] = useState('')
+  const [mensajeExito, setMensajeExito] = useState('')
 
   const crearCategoria = (nuevaCategoria, setError, reset) => {
     api
@@ -18,9 +18,12 @@ const CrearCategoria = () => {
         const listaCategorias = res.data.categorias || res.data
 
         dispatch(agregarCategorias(listaCategorias))
-          setMensajeExito('Categoria creada correctamente')
+        setMensajeExito('Categoria creada correctamente')
 
         reset()
+        setTimeout(() => {
+          setMensajeExito('')
+        }, 1500)
       })
       .catch((err) => {
         setError('root', {
@@ -36,7 +39,7 @@ const CrearCategoria = () => {
     <section className="admin-card">
       <h2>Crear categoría</h2>
 
-      <CrearCategoriaForm crearCategoria={crearCategoria} mensajeExito={mensajeExito}/>
+      <CrearCategoriaForm crearCategoria={crearCategoria} mensajeExito={mensajeExito} />
     </section>
   )
 }
