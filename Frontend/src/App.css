@@ -763,6 +763,13 @@ footer {
   font-size: 34px;
 }
 
+.register-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: white;
+}
+
 .login-card .subtitle,
 .register-card .subtitle {
   color: #64748b;
@@ -1458,6 +1465,12 @@ textarea::placeholder {
 .btn-danger:hover {
   background-color: #bb2d3b;
 }
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 
 /* Errores crear receta */
 .crear-receta-form .error {

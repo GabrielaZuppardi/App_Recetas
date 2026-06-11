@@ -1,5 +1,3 @@
-import React from 'react'
-
 const TarjetaCategoria = ({ categoria, onEditar }) => {
   return (
     <div className="admin-info-card">

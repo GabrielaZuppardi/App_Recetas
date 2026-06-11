@@ -1,4 +1,4 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { joiResolver } from '@hookform/resolvers/joi'
 import { editarRecetaFormSchema } from '../../validators/receta.validators'
@@ -7,9 +7,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import { modificarReceta } from '../../features/recetas.slice'
 
 const ModalReceta = ({ receta, onClose, abrirEditando, onEliminar }) => {
-  const [modoEdicion, setModoEdicion] = React.useState(false)
+  const [modoEdicion, setModoEdicion] = useState(false)
 
-  const [descripcionSugerida, setDescripcionSugerida] = React.useState('')
+  const [descripcionSugerida, setDescripcionSugerida] = useState('')
 
   const categorias = useSelector((state) => state.categorias.categorias)
 
@@ -102,7 +102,7 @@ const ModalReceta = ({ receta, onClose, abrirEditando, onEliminar }) => {
     }
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (receta) {
       reset({
         titulo: receta.titulo,

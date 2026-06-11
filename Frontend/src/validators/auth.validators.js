@@ -24,7 +24,15 @@ export const registroSchema = Joi.object({
     'string.min': 'La contraseña debe tener al menos {#limit} caracteres',
     'string.max': 'La contraseña no puede superar los {#limit} caracteres',
     'any.required': 'La contraseña es obligatoria'
-  })
+  }),
+
+   confirmarPassword: Joi.any()
+    .valid(Joi.ref('password'))
+    .required()
+    .messages({
+      'any.only': 'Las contraseñas no coinciden',
+      'any.required': 'Tenés que repetir la contraseña'
+    })
 })
 
 export const loginSchema = Joi.object({

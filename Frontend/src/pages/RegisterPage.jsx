@@ -1,4 +1,3 @@
-import React from 'react'
 import RegisterForm from '../components/auth/registro/RegisterForm'
 import RegisterFooter from '../components/auth/registro/RegisterFooter'
 import RegisterHeader from '../components/auth/registro/RegisterHeader'

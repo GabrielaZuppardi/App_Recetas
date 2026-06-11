@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import api from '../../../api/api'
 import { crearAdmin as crearAdminAction } from '../../../features/usuarios.slice'

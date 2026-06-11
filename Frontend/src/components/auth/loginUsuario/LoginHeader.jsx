@@ -1,20 +1,18 @@
-import React from 'react'
-import { Link } from 'react-router'
 import { GiChefToque } from 'react-icons/gi'
 import { MdRestaurantMenu } from 'react-icons/md'
 import { LuCookingPot } from 'react-icons/lu'
 import { TbToolsKitchen2 } from 'react-icons/tb'
 
-const LoginAdminHeader = () => {
+const LoginHeader = () => {
   return (
-    <header>
+    <header className="login-header">
       <h1>ChefsMate</h1>
       <h2>
-        <GiChefToque /> <MdRestaurantMenu /> <LuCookingPot /> <TbToolsKitchen2 />{' '}
+        <GiChefToque /> <MdRestaurantMenu /> <LuCookingPot /> <TbToolsKitchen2 />
       </h2>
       <p className="subtitle">Inicio de sesión</p>
     </header>
   )
 }
 
-export default LoginAdminHeader
+export default LoginHeader

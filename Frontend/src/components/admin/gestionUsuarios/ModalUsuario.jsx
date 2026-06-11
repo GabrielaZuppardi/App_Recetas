@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import EditarUsuarioForm from './EditarUsuarioForm'
 import TarjetaUsuario from './TarjetaUsuario'
 

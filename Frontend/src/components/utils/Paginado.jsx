@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Paginado = ({ paginaActual, totalPaginas, paginaAnterior, paginaSiguiente }) => {
   return (
     <div className="paginado">

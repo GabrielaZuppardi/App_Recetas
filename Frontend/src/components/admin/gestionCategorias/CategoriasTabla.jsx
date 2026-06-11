@@ -1,4 +1,3 @@
-import React from 'react'
 import { FaTrash } from 'react-icons/fa'
 
 const CategoriasTabla = ({ categorias, setCategoriaSeleccionada, eliminarC }) => {

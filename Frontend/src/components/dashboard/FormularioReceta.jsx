@@ -18,7 +18,7 @@ const CrearRecetaForm = () => {
     handleSubmit,
     reset,
     setError,
-    formState: { errors, isSubmitting, isValid }
+    formState: { errors }
   } = useForm({
     resolver: joiResolver(crearRecetaSchema),
     mode: 'onChange'

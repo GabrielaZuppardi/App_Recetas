@@ -1,4 +1,3 @@
-import React from 'react'
 import { LuChefHat } from 'react-icons/lu'
 
 const TarjetaReceta = ({ receta, onClick, onEliminar, onEditar }) => {

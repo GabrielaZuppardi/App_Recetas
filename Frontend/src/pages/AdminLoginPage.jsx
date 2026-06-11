@@ -1,4 +1,3 @@
-import React from 'react'
 import LoginADminHeader from '../components/auth/loginAdmin/LoginAdminHeader'
 import LoginForm from '../components/auth/loginAdmin/LoginAdminForm'
 import LoginFooter from '../components/auth/loginAdmin/LoginAdminFooter'

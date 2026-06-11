@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import api from '../../../api/api'
 import { useDispatch } from 'react-redux'
 import { agregarCategorias } from '../../../features/categorias.slice'
